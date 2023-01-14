@@ -108,7 +108,7 @@ button {
   border-radius: var(--s);
   padding: 10px 30px;
   font-size: var(--m);
-  font-style: "Play";
+  font-family: "Play";
   transition-duration: 0.4s;
 }
 
