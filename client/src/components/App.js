@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Skeleton from "./pages/Skeleton.js";
 import Profile from "./Profile.js";
+import Discover from "./pages/Discover.js";
 import NavBar from "./NavBar.js";
 
 import "../utilities.css";
@@ -51,7 +52,8 @@ const App = () => {
             handleLogout={handleLogout}
             userId={userId}
           />
-          <Profile path="./profile" />
+          <Discover path="/pages/discover.js" />
+          <Profile path="/pages/profile.js" />
           <NotFound default />
         </Router>
       </div>

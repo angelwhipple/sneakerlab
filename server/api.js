@@ -12,6 +12,7 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const Collection = require("./models/collection");
+const Shoe = require("./models/item");
 
 // import authentication library
 const auth = require("./auth");
@@ -34,8 +35,32 @@ router.get("/whoami", (req, res) => {
 });
 
 router.get("/collections", (req, res) => {
-  Collection.find({}).then((collections) => {
+  Collection.find({ id: req.query.id }).then((collections) => {
     res.send(collections);
+  });
+});
+
+router.get("/trending", (req, res) => {
+  Shoe.find({ tag: "trending" }).then((trending) => {
+    res.send(trending);
+  });
+});
+
+router.get("/latest", (req, res) => {
+  Shoe.find({ tag: "latest" }).then((latest) => {
+    res.send(latest);
+  });
+});
+
+router.get("/recommended", (req, res) => {
+  Shoe.find({ tag: "recommended", userId: req.query.id }).then((recommended) => {
+    res.send(recommended);
+  });
+});
+
+router.get("/recents", (req, res) => {
+  Shoe.find({ tag: "recents", userId: req.query.id }).then((recents) => {
+    res.send(recents);
   });
 });
 

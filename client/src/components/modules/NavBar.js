@@ -6,9 +6,13 @@ import "./NavBar.css";
 const NavBar = () => {
   return (
     <nav className="navContainer">
-      <div class="u-reverseFlex">
-        <Link to="/profile/">Profile</Link>
-        <h4>discover</h4>
+      <div className="u-reverseFlex">
+        <Link to="../pages/profile/" className="nav-link">
+          profile
+        </Link>
+        <Link to="../pages/discover/" className="nav-link">
+          discover
+        </Link>
       </div>
     </nav>
   );

@@ -173,13 +173,20 @@ button:hover {
   padding: 0 2%;
 }
 
+.nav-link,
+.nav-link:visited {
+  color: var(--white);
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  transition-duration: 0.6s;
+}
+
 .appContainer {
   max-width: 960px;
   padding: var(--m) var(--m);
   margin: auto;
-}
-
-.contentContainer {
-  padding: 0 35%;
-  background-color: var(--black);
 }
