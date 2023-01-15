@@ -1,0 +1,174 @@
+/**
+* Welcome to your ✨𝔲𝔱𝔦𝔩𝔦𝔱𝔶 𝔰𝔱𝔶𝔩𝔢𝔰✨!
+* This file includes utility classes that are super simple
+* and can be used to add general styles; variable definitions
+* for colors; and styles to html, body, and other high level
+* DOMs.
+* 
+* All utility classes start with a `u-` and all do
+* one basic CSS thing (for example, making the font-weight
+* 600 for bolding) or are super generic.
+* 
+* This is 𝙉𝙊𝙏 the place to define classes for components or
+* do rigorous styling. You shoud not need to change this file
+* much after initial creation.
+*/
+
+/* TODO: REPLACE WITH YOUR OWN FONT! */
+@import url("https://fonts.googleapis.com/css2?family=Play&family=Moon+Dance&family=Oswald:wght@300&family=Rubik+Bubbles&display=swap");
+
+:root {
+  --primary: #396dff;
+  --primary--dim: #6987db;
+  --darkgrey: #d4d4d4;
+  --medgrey: #e0e0e0;
+  --grey: #f7f7f7;
+  --white: #fff;
+  --black: #020006;
+  --red: rgb(221, 29, 29);
+  --orange: rgb(216, 90, 17);
+  --green: rgb(16, 66, 22);
+
+  --xs: 4px;
+  --s: 8px;
+  --m: 16px;
+  --l: 24px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Play";
+  font-weight: 300;
+}
+
+form {
+  flex-grow: 1;
+}
+
+/* UTILITIES */
+
+.u-flex {
+  display: flex;
+}
+
+.u-flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.u-flex-justifyCenter {
+  justify-content: center;
+}
+
+.u-flex-alignCenter {
+  align-items: center;
+}
+
+.u-inlineBlock {
+  display: inline-block;
+}
+
+.u-bold {
+  font-weight: 600;
+}
+
+.u-textCenter {
+  text-align: center;
+}
+
+.u-relative {
+  position: relative;
+}
+
+.u-pointer {
+  cursor: pointer;
+}
+
+.u-link {
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.u-link:hover {
+  color: var(--primary--dim);
+}
+
+.u-reverseFlex {
+  display: flex;
+  column-gap: var(--s);
+  flex-direction: row-reverse;
+  padding: 2% 0;
+}
+
+/* PRESETS */
+
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.smallSplit {
+  height: 100%;
+  width: 30%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.bigSplit {
+  height: 100%;
+  width: 70%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: var(--black);
+}
+
+.right {
+  right: 0;
+}
+
+button {
+  background-color: var(--white);
+  color: var(--black);
+  border: none;
+  border-radius: var(--s);
+  padding: 10px 30px;
+  font-size: var(--l);
+  font-family: "Play";
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: var(--white);
+  color: var(--orange);
+}
+
+/* CONTAINERS */
+
+.appContainer {
+  max-width: 960px;
+  padding: var(--m) var(--m);
+  margin: auto;
+}
