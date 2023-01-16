@@ -65,6 +65,10 @@ form {
   align-items: center;
 }
 
+.u-flex-alignLeft {
+  align-items: right;
+}
+
 .u-inlineBlock {
   display: inline-block;
 }
@@ -97,7 +101,7 @@ form {
 
 .u-reverseFlex {
   display: flex;
-  column-gap: var(--s);
+  column-gap: var(--m);
   flex-direction: row-reverse;
   padding: 2% 0;
 }

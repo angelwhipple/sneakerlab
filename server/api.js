@@ -40,14 +40,20 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
-router.get("/user", (req, res) => {
-  const username = User.findOne({ googleid: req.query.id });
-  res.send(username);
-});
-
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+// update user search history w/ last search query
+router.post("/search", (req, res) => {
+  User.updateOne(
+    { _id: req.body.id },
+    {
+      $set: { searches: [req.body.searchQuery] },
+    }
+  );
+  res.send();
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

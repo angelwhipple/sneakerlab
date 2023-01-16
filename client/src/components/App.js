@@ -45,10 +45,10 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar id={userId} />
       <Router>
         <Discover path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-        <Profile path="/profile/" userId={userId} />
+        <Profile path="/profile/" />
         <NotFound default />
       </Router>
     </>

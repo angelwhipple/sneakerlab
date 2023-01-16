@@ -2,24 +2,27 @@ import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Profile = (props) => {
-  const [username, setUsername] = useState("");
+const Profile = () => {
+  const [displayName, setDisplayName] = useState("");
 
   // mount profile page
   useEffect(() => {
     console.log("mounted profile component");
 
-    get("api/user", { id: userId }).then((name) => {
-      setUsername(name);
+    get("/api/whoami").then((user) => {
+      setDisplayName(user.name);
     });
 
-    // dismount/cleanup callback
     return () => {
-      setUsername("");
+      setDisplayName("");
     };
   }, []);
 
-  return <div>{username ? "Welcome back, " + username : "Login to see content"}</div>;
+  return (
+    <div className="centered">
+      {displayName ? "Welcome back, " + displayName : "Login to see content"}
+    </div>
+  );
 };
 
 export default Profile;
