@@ -24,8 +24,12 @@ function getOrCreateUser(user) {
     if (existingUser) return existingUser;
 
     const newUser = new User({
-      name: user.name,
+      // DONT CHANGE
+      displayName: user.name,
       googleid: user.sub,
+
+      // can add/change
+      about: "about.txt",
       searches: [],
     });
 
