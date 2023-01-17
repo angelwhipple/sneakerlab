@@ -18,16 +18,20 @@ const Profile = () => {
     return () => {
       setDisplayName(""); //what is this
     };
-  }, []);
+  }, [displayName, about]); //re-render every time any profile info changes
 
   return (
-    <div> {displayName ?
+    <div>
       <div className="u-flex-alignCenter">
        <div className="Profile-name">{displayName}+{about}</div>
        <div>insert pfp</div>
        <div>0 followers, 0 following</div>
       </div>
-      : "Login to see cool content :)"}
+      <div className="Profile-collections">
+        {userCollections.map((userCollection) => {
+          <UserCollection />
+        })}
+      </div>
     </div>
   );
 };
