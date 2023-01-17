@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Router, useNavigate } from "@reach/router";
+import { Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+// import { useNavigate } from "@reach/router";
 
-import "./Search.css";
+import "./SearchBar.css";
+import Search from "../pages/Search";
 
 import { get, post } from "../../utilities";
 
-const Search = (props) => {
+const SearchBar = (props) => {
   const [query, setQuery] = useState("");
   const DEFAULT_TEXT = "";
 
@@ -17,6 +22,18 @@ const Search = (props) => {
       setQuery(DEFAULT_TEXT);
     };
   }, []);
+
+  const history = useHistory();
+  const routeChange = () => {
+    console.log("entered");
+    history.push("/search/");
+    console.log("switched pages");
+  };
+
+  // const navigate = useNavigate();
+  // const routeChange = () => {
+  //   navigate("/search/");
+  // };
 
   // called when user types in search box
   const handleInput = (event) => {
@@ -36,12 +53,10 @@ const Search = (props) => {
       console.log("posted search query");
     });
 
-    // testing update to search history
-    get("/api/whoami").then((user) => {
-      console.log(user.searches);
-    });
-
     setQuery(DEFAULT_TEXT);
+
+    // navigate to search results component
+    routeChange();
   };
 
   return (
@@ -65,4 +80,4 @@ const Search = (props) => {
   );
 };
 
-export default Search;
+export default SearchBar;

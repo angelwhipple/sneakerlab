@@ -1,8 +1,9 @@
 import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
+import { googleLogout } from "@react-oauth/google";
 
-const Profile = () => {
+const Profile = ({ handleLogout }) => {
   const [displayName, setDisplayName] = useState("insert display name");
   const [about, setAbout] = useState("insert about info");
 

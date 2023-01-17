@@ -26,7 +26,7 @@
   --white: #fff;
   --black: #020006;
   --red: rgb(221, 29, 29);
-  --orange: rgb(216, 90, 17);
+  --orange: #ff8400;
   --green: rgb(16, 66, 22);
 
   --xs: 4px;
@@ -162,6 +162,22 @@ button {
   font-size: var(--l);
   font-family: "Play";
   transition-duration: 0.4s;
+}
+
+.button1 {
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: var(--s);
+  padding: 10px 30px;
+  font-size: var(--l);
+  font-family: "Play";
+  transition-duration: 0.4s;
+}
+
+.button1:hover {
+  background-color: var(--black);
+  color: var(--orange);
 }
 
 button:hover {
