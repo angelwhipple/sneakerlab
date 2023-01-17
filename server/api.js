@@ -55,6 +55,13 @@ router.post("/search", (req, res) => {
   res.send();
 });
 
+// xenia's edits: everything todo with profile page
+router.get("/user", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    res.send(user);
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
