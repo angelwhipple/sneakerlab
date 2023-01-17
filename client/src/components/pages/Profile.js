@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { googleLogout } from "@react-oauth/google";
 
 const Profile = ({ handleLogout }) => {
-  const [displayName, setDisplayName] = useState("insert display name");
-  const [about, setAbout] = useState("insert about info");
+  const [displayName, setDisplayName] = useState("");
+  const [about, setAbout] = useState("");
 
   // mount profile page
   useEffect(() => {
@@ -20,23 +20,22 @@ const Profile = ({ handleLogout }) => {
     });
 
     return () => {
-      setDisplayName(""); //what is this
+      setDisplayName("");
     };
   }, [displayName, about]); //re-render every time any profile info changes
 
   return (
-    <div>
-      <div className="u-flex-alignCenter">
-       <div className="Profile-name">{displayName}+{about}</div>
-       <div>insert pfp</div>
-       <div>0 followers, 0 following</div>
-      </div>
-      <div className="Profile-collections">
-        {userCollections.map((userCollection) => {
-          <UserCollection />
-        })}
-      </div>
+    <div className="centered">
+      <p>Insert profile picture</p>
+      <p className="Profile-name">{displayName}</p>
+      <p>{about}</p>
+      <p>0 followers, 0 following</p>
     </div>
+    // <div className="Profile-collections">
+    //   {/* {userCollections.map((userCollection) => {
+    //     <UserCollection />;
+    //   })} */}
+    // </div>
   );
 };
 
