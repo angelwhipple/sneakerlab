@@ -18,20 +18,24 @@ const Profile = ({ handleLogout }) => {
         setAbout(user.about);
       }
     });
-  });
+
+    return () => {
+      setDisplayName(""); //what is this
+    };
+  }, [displayName, about]); //re-render every time any profile info changes
 
   return (
     <div>
-      {displayName ? (
-        <div className="centered">
-          <div className="Profile-name">{displayName}</div>
-          <p>{about}</p>
-          <div>insert pfp</div>
-          <p>0 followers, 0 following</p>
-        </div>
-      ) : (
-        <div className="centered">Login to see cool content :)</div>
-      )}
+      <div className="u-flex-alignCenter">
+       <div className="Profile-name">{displayName}+{about}</div>
+       <div>insert pfp</div>
+       <div>0 followers, 0 following</div>
+      </div>
+      <div className="Profile-collections">
+        {userCollections.map((userCollection) => {
+          <UserCollection />
+        })}
+      </div>
     </div>
   );
 };

@@ -27,10 +27,9 @@ function getOrCreateUser(user) {
       // DONT CHANGE
       displayName: user.name,
       googleid: user.sub,
-
-      // can add/change
-      about: "about.txt",
-      searches: [],
+      about: '',
+      searchHistory: [],
+      clickHistory: []
     });
 
     return newUser.save();
