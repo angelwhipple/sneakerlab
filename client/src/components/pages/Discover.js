@@ -31,7 +31,7 @@ const Discover = ({ userId, handleLogin, handleLogout }) => {
         }
       });
     }
-  }, []);
+  });
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

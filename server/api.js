@@ -44,22 +44,11 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// update user search history w/ last search query
+// update user search history w/ last search query (works now)
 router.post("/search", (req, res) => {
-  User.updateOne(
-    { _id: req.body.id },
-    {
-      $set: { searches: [req.body.searchQuery] },
-    }
+  User.findByIdAndUpdate(req.body.id, { $push: { searches: req.body.searchQuery } }).then(
+    res.send({})
   );
-  res.send();
-});
-
-// xenia's edits: everything todo with profile page
-router.get("/user", (req, res) => {
-  User.findById(req.query.userid).then((user) => {
-    res.send(user);
-  });
 });
 
 // anything else falls to this "not found" case

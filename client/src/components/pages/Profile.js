@@ -3,16 +3,19 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 const Profile = () => {
-  const [displayName, setDisplayName] = useState("add display name");
-  const [about, setAbout] = useState("add about info")
+  const [displayName, setDisplayName] = useState("insert display name");
+  const [about, setAbout] = useState("insert about info");
 
   // mount profile page
   useEffect(() => {
     console.log("mounted profile component");
 
     get("/api/whoami").then((user) => {
-      setDisplayName(user.name);
-      setAbout(user.about); //hey how do you do this part
+      // check if a user is returned first (logged in)
+      if (user) {
+        setDisplayName(user.displayName);
+        setAbout(user.about);
+      }
     });
 
     return () => {
