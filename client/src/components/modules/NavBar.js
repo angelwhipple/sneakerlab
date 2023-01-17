@@ -19,28 +19,30 @@ const NavBar = (props) => {
         </Link>
         <div className="u-reverseFlex">
           {props.id ? (
-            <button1
-              className="u-pointer"
-              onClick={() => {
-                googleLogout();
-                props.handleLogout();
-              }}
-            >
-              logout
-            </button1>
+            <>
+              <button1
+                className="u-pointer"
+                onClick={() => {
+                  googleLogout();
+                  props.handleLogout();
+                }}
+              >
+                logout
+              </button1>
+              <Link to="/profile/" className="nav-link">
+                profile
+              </Link>
+              <Link to="/" className="nav-link">
+                discover
+              </Link>
+              <Link to="/search/" className="nav-link">
+                search results
+              </Link>
+            </>
           ) : (
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}
-          <Link to="/profile/" className="nav-link">
-            profile
-          </Link>
-          <Link to="/" className="nav-link">
-            discover
-          </Link>
           <SearchBar id={props.id} />
-          <Link to="/search/" className="nav-link">
-            search results
-          </Link>
         </div>
       </nav>
     </GoogleOAuthProvider>
