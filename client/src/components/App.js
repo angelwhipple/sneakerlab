@@ -6,12 +6,14 @@ import NotFound from "./pages/NotFound.js";
 import Discover from "./pages/Discover.js";
 import Profile from "./pages/Profile.js";
 import NavBar from "./modules/NavBar.js";
+import Search from "./pages/Search.js";
 
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import { Route, Switch } from "react-router-dom";
 
 /**
  * Define the "App" component
@@ -36,6 +38,7 @@ const App = () => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
     });
+    ``;
   };
 
   const handleLogout = () => {
@@ -45,10 +48,12 @@ const App = () => {
 
   return (
     <>
-      <NavBar id={userId} />
+      <NavBar id={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
       <Router>
-        <Discover path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-        <Profile path="/profile/" />
+        <Discover path="/" handleLogin={handleLogin} userId={userId} />
+        <Profile path="/profile/" handleLogout={handleLogout} />
+        <Search path="/search/" userId={userId} />
+        {/* <Route path="/search/" userId={userId} /> */}
         <NotFound default />
       </Router>
     </>

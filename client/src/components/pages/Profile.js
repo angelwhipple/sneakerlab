@@ -1,6 +1,7 @@
 import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
+import { googleLogout } from "@react-oauth/google";
 
 const Profile = () => {
   const [displayName, setDisplayName] = useState("");
@@ -33,7 +34,7 @@ const Profile = () => {
     });
 
     return () => {
-      setDisplayName(""); //what is this
+      setDisplayName("");
     };
   }, []);
 
@@ -41,16 +42,21 @@ const Profile = () => {
   return (
     <div>
       <div className="u-flex-alignCenter">
-       <div className="Profile-name">{displayName}</div>
-       <div></div>
+       <div className="Profile-name">{displayName}+{about}</div>
+       <div>insert pfp</div>
        <div>0 followers, 0 following</div>
       </div>
       <div className="Profile-collections">
         {userCollections.map((userCollection) => {
-          <CollectionDisplay />
+          <UserCollection />
         })}
       </div>
     </div>
+    // <div className="Profile-collections">
+    //   {/* {userCollections.map((userCollection) => {
+    //     <UserCollection />;
+    //   })} */}
+    // </div>
   );
 };
 
