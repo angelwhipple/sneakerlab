@@ -1,7 +1,5 @@
-// import
 const mongoose = require("mongoose");
 
-// attributes
 const ShoeSchema = new mongoose.Schema({
   shoe_name: String,
   color: String,
@@ -10,5 +8,7 @@ const ShoeSchema = new mongoose.Schema({
   url: String,
 });
 
-// export
-module.exports = mongoose.model("shoe", ShoeSchema);
+module.exports = {
+  shoeSchema: ShoeSchema,
+  shoeModel: mongoose.model("shoe", ShoeSchema),
+}

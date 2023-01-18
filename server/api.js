@@ -12,6 +12,7 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const Shoe = require("./models/shoe");
+const Collection = require("./models/collection");
 
 // import authentication library
 const auth = require("./auth");
@@ -49,6 +50,11 @@ router.post("/search", (req, res) => {
   User.findByIdAndUpdate(req.body.id, { $push: { searches: req.body.searchQuery } }).then(
     res.send({})
   );
+});
+
+// for rendering profile page
+router.get("/usercollections", (req, res) => {
+  Collection.find({creator: req.query.creator}).then((collections) => {res.send(collections)});
 });
 
 // anything else falls to this "not found" case
