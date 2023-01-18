@@ -45,18 +45,18 @@ const Profile = () => {
        <div className="Profile-name">{displayName}+{about}</div>
        <div>insert pfp</div>
        <div>0 followers, 0 following</div>
-      </div>
+      </div>;
       <div className="Profile-collections">
         {userCollections.map((userCollection) => {
           <UserCollection />
         })}
-      </div>
+      </div>;
+    </div>;
+    <div className="Profile-collections">
+      {userCollections.map((userCollection) => {
+        <UserCollection />;
+      })}
     </div>
-    // <div className="Profile-collections">
-    //   {/* {userCollections.map((userCollection) => {
-    //     <UserCollection />;
-    //   })} */}
-    // </div>
   );
 };
 
