@@ -1,0 +1,10 @@
+.Listing-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  column-gap: var(--m);
+}
+
+.Listing-scroll::-webkit-scrollbar {
+  display: none;
+}

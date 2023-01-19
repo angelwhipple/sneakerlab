@@ -48,6 +48,9 @@ form {
   display: flex;
 }
 
+.u-inlineFlex {
+  display: inline-flex;
+}
 .u-flexColumn {
   display: flex;
   flex-direction: column;

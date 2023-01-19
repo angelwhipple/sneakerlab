@@ -1,0 +1,57 @@
+.Listing-icon {
+  /* round edges */
+  border-radius: 25%;
+
+  /* Centering on image`s center*/
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+
+  align-self: center;
+}
+
+.Listing-colorway {
+  font-size: var(--m);
+  font-weight: 350;
+}
+
+.Listing-release {
+  font-size: 12px;
+  font-weight: 200;
+}
+
+.Listing-container {
+  border-radius: 5%;
+  border: 2px solid var(--black);
+  column-gap: 12px;
+  transition-duration: 0.4s;
+  padding-inline: 1%;
+}
+
+.Listing-container:hover {
+  border: 2px solid var(--orange);
+}
+
+.Listing-card {
+  flex: 0 0 auto;
+}
+
+.buy-link,
+.buy-link:visited {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--black);
+  text-decoration: none;
+  border: 1px solid var(--black);
+}
+
+.buy-link:hover {
+  color: var(--orange);
+  transition-duration: 0.6s;
+  border: 1px solid var(--orange);
+}
+
+.Buy-links-container {
+  align-self: center;
+  row-gap: var(--s);
+}

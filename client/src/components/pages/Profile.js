@@ -2,6 +2,8 @@ import { get } from "../../utilities";
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
 
+import anonymous from "../../public/anon.jpg";
+
 const Profile = () => {
   const [displayName, setDisplayName] = useState("add Display name");
   const [about, setAbout] = useState("add About section");
