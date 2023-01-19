@@ -20,7 +20,7 @@ const ShoeListing = (props) => {
 
   return (
     <div className="u-inlineFlex Listing-container Listing-card">
-      <img src={props.image} className="Listing-icon" width="100" height="100" />
+      <img src={props.image} className="Listing-icon" width="180" height="180" />
       <div className="u-flexColumn">
         <h3>{props.name}</h3>
         <p className="Listing-colorway">{props.colorway}</p>
