@@ -54,7 +54,7 @@ router.post("/search", (req, res) => {
   );
 });
 
-// for rendering profile page
+// get user collections for rendering profile page
 router.get("/usercollections", (req, res) => {
   Collection.find({ creator: req.query.creator }).then((collections) => {
     res.send(collections);
@@ -69,6 +69,13 @@ router.get("/searchresults", (req, res) => {
   };
 
   getResults();
+});
+
+// add shoe to collection
+router.post("/addtocollection", (req, res) => {
+  Collection.findByIdAndUpdate(req.body.collection.id, { $push: { shoes: [...shoes.concat(req.body.shoe._id)] } }).then(
+    res.send({})
+  );
 });
 
 // anything else falls to this "not found" case

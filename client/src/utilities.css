@@ -15,19 +15,15 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
-  --darkgrey: #d4d4d4;
-  --medgrey: #e0e0e0;
-  --grey: #f7f7f7;
+  --primary: #ff8400;
+  --darkgrey: #727272;
+  --medgrey: #8b8b8b;
+  --lightgrey: #d6d6d6;
   --white: #fff;
   --black: #020006;
-  --red: rgb(221, 29, 29);
-  --orange: #ff8400;
-  --green: rgb(16, 66, 22);
 
   --xs: 4px;
   --s: 8px;
