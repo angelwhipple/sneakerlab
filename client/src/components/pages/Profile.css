@@ -13,7 +13,7 @@
 }
 
 .Profile-picContainer {
-    padding: .5%;
+    padding: 1%;
 }
 
 .Profile-pic {
@@ -23,6 +23,19 @@
 
 .Profile-interaction {
     font-size: 20px;
+}
+
+.Profile-button {
+    color: var(--medgrey);
+    font-size: 15px;
+}
+
+.Profile-button:hover {
+    color: var(--primary);
+}
+
+.Profile-editModal {
+
 }
 
 .Profile-collections {

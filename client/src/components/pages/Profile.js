@@ -1,7 +1,6 @@
 import { get } from "../../utilities";
-import React from "react";
-import { useState, useEffect } from "react";
 import "./Profile.css";
+import React, { useState, useEffect } from "react";
 
 import anonymous from "../../public/anon.jpg";
 
@@ -32,35 +31,75 @@ const Profile = () => {
     });
   }, []);
 
-  return (
-    <div>
-      <div className="u-flex-alignCenter">
-        <div className="Profile-name">
-          {displayName}+{about}
+  const [profileModal, setProfileModal] = useState(false);
+  const toggleProfileModal = () => {
+    setProfileModal(!profileModal);
+  };
+  
+  const logout = () => {
+
+  };
+
+  if (!displayName) {
+    return (
+    <div className="centered">Login to see content!</div>
+    );
+  } else {
+    return (
+      <div>
+        <div className="Profile-container">
+          <div className="u-flexColumn u-flex-justifyCenter">
+            <div className="Profile-interaction">0 followers</div>
+            <div className="Profile-interaction">0 following</div>
+          </div>
+          <div className="Profile-picContainer">
+            <img src={pfp} width="100" className="Profile-pic" />
+          </div>
+          <div className="u-flexColumn u-flex-justifyCenter">
+            <div className="Profile-name">{displayName}</div>
+            <div className="Profile-about">{about}</div>
+          </div>
         </div>
-        <div>insert pfp</div>
-        <div>0 followers, 0 following</div>
+
+        <div className="u-flex u-flex-justifyCenter">
+          <div className="Profile-editModal">
+            <button onClick={toggleProfileModal} className="Profile-button" >
+              edit profile
+            </button>
+            {profileModal ? (
+            <div>
+              <button onClick={toggleProfileModal}>done</button>
+              <form>
+                <label>display name</label>
+                <input type="text" />
+                <label>about</label>
+                <input type="text" />
+                <label>profile picture url</label>
+                <input type="text" />
+              </form>
+            </div>
+            ) : <></>
+            }
+          </div>
+
+          <button onClick={() => {logout();}} className="Profile-button">
+            logout
+          </button>
+          <div>
+            
+          </div>
+        </div>
+
+        <hr></hr>
+
+        <div className="Profile-collections">
+          {userCollections.map((collection) => {
+            <CollectionDisplay collection={collection.creator} title={collection.title} shoes={collection.shoes} />
+          })}
+        </div>
       </div>
-      <div className="Profile-collections">
-        {userCollections.map((collection) => {
-          <CollectionDisplay
-            collection={collection.creator}
-            title={collection.title}
-            shoes={collection.shoes}
-          />;
-        })}
-      </div>
-    </div>
-    // <div className="Profile-collections">
-    //   {userCollections.map((collection) => {
-    //     <CollectionDisplay
-    //       collection={collection.creator}
-    //       title={collection.title}
-    //       shoes={collection.shoes}
-    //     />;
-    //   })}
-    // </div>
-  );
-};
+    );
+  };
+}
 
 export default Profile;
