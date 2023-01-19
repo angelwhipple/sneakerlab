@@ -1,24 +1,43 @@
 import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
+import ShoeListing from "../modules/ShoeListing";
 
 const Search = (props) => {
-  const [name, setName] = useState("");
   const [query, setQuery] = useState("");
 
   console.log("mounted search results page");
   useEffect(() => {
-    get("/api/whoami").then((user) => {
-      setName(user.displayName);
-      setQuery(props.searchQuery);
-    });
+    setQuery(props.query);
   });
 
+  // only update search results when search query changes
+  useEffect(() => {
+    get("/api/searchresults", { searchQuery: query }).then((searchResults) => {
+      props.setResults(searchResults);
+    });
+  }, [query]);
+  console.log(props.results);
+
+  let listings = null;
+  if (props.results) {
+    listings = props.results.map((shoe) => {
+      <ShoeListing
+        name={shoe.make}
+        release={shoe.releaseDate}
+        colorway={shoe.colorway}
+        image={shoe.thumbnail}
+        prices={shoe.lowestResellPrice}
+        links={shoe.resellLinks}
+      />;
+    });
+  }
+  console.log(listings);
+
   return (
-    <div className="centered">
-      <p>user: {name}</p>
-      <p>id: {props.id}</p>
-      <p>search query: {query}</p>
+    <div>
+      <h2 className="u-textCenter">Showing results for: {query}</h2>
+      <div>{listings}</div>
     </div>
   );
 };

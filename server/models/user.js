@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
   googleid: String,
   about: String,
   searches: [String],
-  pfp: String //stored as url
+  clicks: [String],
 });
 
 // compile model from schema

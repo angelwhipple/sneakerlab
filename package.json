@@ -33,6 +33,7 @@
     "react-dom": "^16.14.0",
     "react-google-button": "^0.7.2",
     "react-router-dom": "^5.2.0",
+    "sneaks-api": "^1.2.3",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.1",
     "url-loader": "^4.1.1"

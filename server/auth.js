@@ -30,8 +30,8 @@ function getOrCreateUser(user) {
 
       // change
       about: "Insert about info",
-      searchHistory: [],
-      clickHistory: [],
+      searches: [],
+      clicks: [],
     });
 
     return newUser.save();

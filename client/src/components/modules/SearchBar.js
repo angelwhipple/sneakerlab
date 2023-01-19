@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Router, useNavigate } from "@reach/router";
-import { Route } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-// import { useNavigate } from "@reach/router";
+import { useNavigate } from "@reach/router";
 
 import "./SearchBar.css";
-import Search from "../pages/Search";
 
 import { get, post } from "../../utilities";
 
@@ -23,17 +19,10 @@ const SearchBar = (props) => {
     };
   }, []);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const routeChange = () => {
-    console.log("entered");
-    history.push("/search/");
-    console.log("switched pages");
+    navigate("/search/");
   };
-
-  // const navigate = useNavigate();
-  // const routeChange = () => {
-  //   navigate("/search/");
-  // };
 
   // called when user types in search box
   const handleInput = (event) => {
@@ -53,6 +42,8 @@ const SearchBar = (props) => {
       console.log("posted search query");
     });
 
+    // set overall app search query state
+    props.setSearch(query);
     setQuery(DEFAULT_TEXT);
 
     // navigate to search results component

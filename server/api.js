@@ -13,6 +13,8 @@ const express = require("express");
 const User = require("./models/user");
 const Shoe = require("./models/shoe");
 const Collection = require("./models/collection");
+const SneaksAPI = require("sneaks-api");
+const sneaks = new SneaksAPI();
 
 // import authentication library
 const auth = require("./auth");
@@ -54,7 +56,19 @@ router.post("/search", (req, res) => {
 
 // for rendering profile page
 router.get("/usercollections", (req, res) => {
-  Collection.find({creator: req.query.creator}).then((collections) => {res.send(collections)});
+  Collection.find({ creator: req.query.creator }).then((collections) => {
+    res.send(collections);
+  });
+});
+
+router.get("/searchresults", (req, res) => {
+  const getResults = async () => {
+    await sneaks.getProducts(req.query.searchQuery, 10, (err, products) => {
+      res.send(products);
+    });
+  };
+
+  getResults();
 });
 
 // anything else falls to this "not found" case

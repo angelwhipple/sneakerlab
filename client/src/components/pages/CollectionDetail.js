@@ -2,12 +2,12 @@ import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
 
-const CollectionDetail = () => {
+// const CollectionDetail = () => {
 
-};
+// };
 
-return (
+// return (
 
-);
+// );
 
-export default CollectionDetail;
+// export default CollectionDetail;

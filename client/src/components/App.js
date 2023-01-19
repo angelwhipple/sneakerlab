@@ -7,6 +7,7 @@ import Discover from "./pages/Discover.js";
 import Profile from "./pages/Profile.js";
 import NavBar from "./modules/NavBar.js";
 import Search from "./pages/Search.js";
+import Login from "./pages/Login.js";
 
 import "../utilities.css";
 
@@ -20,6 +21,8 @@ import { Route, Switch } from "react-router-dom";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -48,12 +51,25 @@ const App = () => {
 
   return (
     <>
-      <NavBar id={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
+      <Router primary={false}>
+        <NavBar
+          default
+          id={userId}
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          setSearch={setSearchQuery}
+        />
+      </Router>
       <Router>
         <Discover path="/" handleLogin={handleLogin} userId={userId} />
         <Profile path="/profile/" handleLogout={handleLogout} />
-        <Search path="/search/" userId={userId} />
-        {/* <Route path="/search/" userId={userId} /> */}
+        <Login path="/login/" handleLogin={handleLogin} />
+        <Search
+          path="/search/"
+          query={searchQuery}
+          results={searchResults}
+          setResults={setSearchResults}
+        />
         <NotFound default />
       </Router>
     </>
