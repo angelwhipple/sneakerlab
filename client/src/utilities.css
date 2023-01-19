@@ -177,7 +177,7 @@ button {
 
 .button1:hover {
   background-color: var(--black);
-  color: var(--orange);
+  color: var(--white);
 }
 
 button:hover {

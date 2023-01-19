@@ -28,7 +28,7 @@ const NavBar = (props) => {
           {props.id ? (
             <>
               <button1
-                className="u-pointer"
+                className="nav-link u-pointer"
                 onClick={() => {
                   googleLogout();
                   props.handleLogout();
@@ -43,6 +43,7 @@ const NavBar = (props) => {
               <Link to="/" className="nav-link">
                 discover
               </Link>
+              <button1 className="u-pointer nav-link">trade</button1>
             </>
           ) : (
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
