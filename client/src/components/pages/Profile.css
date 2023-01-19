@@ -1,7 +1,30 @@
+.Profile-container {
+    display: flex;
+    justify-content: center;
+    padding: .35%;
+}
+
 .Profile-name {
-    font-size: 40px
+    font-size: 40px;
+}
+
+.Profile-about {
+    font-size: 20px;
+}
+
+.Profile-picContainer {
+    padding: .5%;
+}
+
+.Profile-pic {
+    border-radius: 50%;
+    display: block;
+}
+
+.Profile-interaction {
+    font-size: 20px;
 }
 
 .Profile-collections {
-    margin: 0
+    margin: 0;
 }

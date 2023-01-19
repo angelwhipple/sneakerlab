@@ -29,9 +29,10 @@ function getOrCreateUser(user) {
       googleid: user.sub,
 
       // change
-      about: "Insert about info",
-      searches: [],
-      clicks: [],
+      about: "add a bio!",
+      pfp: "https://i.pinimg.com/236x/28/17/c3/2817c3f578a17cb3e98acd25e68a4a4b.jpg",
+      searchHistory: [],
+      clickHistory: [],
     });
 
     return newUser.save();
