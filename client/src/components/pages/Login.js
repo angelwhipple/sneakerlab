@@ -10,6 +10,7 @@ const Login = (props) => {
   const navigate = useNavigate();
   const routeChange = () => {
     navigate("/");
+    props.setOnLoginPage(false);
   };
 
   return (

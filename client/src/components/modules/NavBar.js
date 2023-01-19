@@ -45,6 +45,8 @@ const NavBar = (props) => {
               </Link>
               <button1 className="u-pointer nav-link">trade</button1>
             </>
+          ) : props.onLoginPage ? (
+            <></>
           ) : (
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}

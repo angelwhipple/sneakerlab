@@ -14,7 +14,6 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
-import { Route, Switch } from "react-router-dom";
 
 /**
  * Define the "App" component
@@ -23,6 +22,7 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [pageLogin, setPageLogin] = useState(false);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -58,12 +58,13 @@ const App = () => {
           handleLogin={handleLogin}
           handleLogout={handleLogout}
           setSearch={setSearchQuery}
+          onLoginPage={pageLogin}
         />
       </Router>
       <Router>
-        <Discover path="/" handleLogin={handleLogin} userId={userId} />
+        <Discover path="/" userId={userId} setOnLoginPage={setPageLogin} />
         <Profile path="/profile/" handleLogout={handleLogout} />
-        <Login path="/login/" handleLogin={handleLogin} />
+        <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
         <Search
           path="/search/"
           query={searchQuery}

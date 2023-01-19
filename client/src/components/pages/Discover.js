@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "@reach/router";
 
 import "../../utilities.css";
 import "./Discover.css";
 import logo from "../../public/sneakerlab.png";
 
-//TODO: REPLACE WITH YOUR OWN CLIENT_ID
-const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.googleusercontent.com";
-
-const Discover = ({ userId, handleLogin }) => {
+const Discover = ({ userId, setOnLoginPage }) => {
   const navigate = useNavigate();
   const routeChange = () => {
     navigate("/login/");
+    setOnLoginPage(true);
   };
 
   useEffect(() => {
