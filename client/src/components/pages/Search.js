@@ -1,7 +1,8 @@
 import { get } from "../../utilities";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ShoeListing from "../modules/ShoeListing";
+
+import "./Search.css";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
@@ -21,7 +22,7 @@ const Search = (props) => {
 
   let listings = null;
   if (props.results) {
-    listings = props.results.map((shoe) => {
+    listings = props.results.map((shoe) => (
       <ShoeListing
         name={shoe.make}
         release={shoe.releaseDate}
@@ -29,15 +30,15 @@ const Search = (props) => {
         image={shoe.thumbnail}
         prices={shoe.lowestResellPrice}
         links={shoe.resellLinks}
-      />;
-    });
+      />
+    ));
   }
-  console.log(listings);
+  // console.log(listings);
 
   return (
     <div>
-      <h2 className="u-textCenter">Showing results for: {query}</h2>
-      <div>{listings}</div>
+      <h2 className="u-textCenter">Search results for: {query}</h2>
+      <div className="Listing-scroll">{listings}</div>
     </div>
   );
 };

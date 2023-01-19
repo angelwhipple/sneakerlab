@@ -2,6 +2,8 @@ import { get } from "../../utilities";
 import React from "react";
 import { useState, useEffect } from "react";
 
+import anonymous from "../../public/anon.jpg";
+
 const Profile = () => {
   const [displayName, setDisplayName] = useState("add Display name");
   const [about, setAbout] = useState("add About section");
@@ -28,24 +30,21 @@ const Profile = () => {
   }, []);
 
   return (
-    <div>
-      <div className="u-flex-alignCenter">
-        <div className="Profile-name">
-          {displayName}+{about}
-        </div>
-        <div>insert pfp</div>
-        <div>0 followers, 0 following</div>
-      </div>
-      <div className="Profile-collections">
-        {userCollections.map((collection) => {
-          <CollectionDisplay
-            collection={collection.creator}
-            title={collection.title}
-            shoes={collection.shoes}
-          />;
-        })}
-      </div>
+    <div className="centered">
+      <img src={anonymous} height="100" width="100" />
+      <h3 className="Profile-name">{displayName}</h3>
+      <h4>{about}</h4>
+      <p>0 followers, 0 following</p>
     </div>
+    // <div className="Profile-collections">
+    //   {userCollections.map((collection) => {
+    //     <CollectionDisplay
+    //       collection={collection.creator}
+    //       title={collection.title}
+    //       shoes={collection.shoes}
+    //     />;
+    //   })}
+    // </div>
   );
 };
 

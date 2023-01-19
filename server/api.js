@@ -63,7 +63,7 @@ router.get("/usercollections", (req, res) => {
 
 router.get("/searchresults", (req, res) => {
   const getResults = async () => {
-    await sneaks.getProducts(req.query.searchQuery, 10, (err, products) => {
+    await sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
       res.send(products);
     });
   };
