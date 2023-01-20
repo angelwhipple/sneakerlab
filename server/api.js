@@ -86,6 +86,11 @@ router.post("/addtocollection", (req, res) => {
   }).then(res.send({}));
 });
 
+// create new collection
+router.post("/newcollection", (req, res) => {
+  Collection.insertOne()
+})
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
