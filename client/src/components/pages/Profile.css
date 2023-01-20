@@ -39,6 +39,7 @@
     background: var(--white);
     padding: .5%;
     width: 70%;
+    border-radius: 12px;
 }
 
 .Profile-modalContainer {

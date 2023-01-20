@@ -32,6 +32,8 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-google-button": "^0.7.2",
+    "react-heart": "^1.0.6",
+    "react-icons": "^4.7.1",
     "react-router-dom": "^5.2.0",
     "sneaks-api": "^1.2.3",
     "socket.io": "^2.3.0",
