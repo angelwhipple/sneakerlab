@@ -24,6 +24,7 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+const { ProgressPlugin } = require("webpack");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -47,7 +48,7 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// update user search history w/ last search query (works now)
+// update user search history w/ last search query
 router.post("/search", (req, res) => {
   User.findByIdAndUpdate(req.body.id, { $push: { searches: req.body.searchQuery } }).then(
     res.send({})
@@ -71,11 +72,18 @@ router.get("/searchresults", (req, res) => {
   getResults();
 });
 
+// update user profile info
+router.post("/updateprofile", (req, res) => {
+  User.findByIdAndUpdate(req.body.id, {
+    $set: { displayName: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp },
+  }).then(res.send({}));
+});
+
 // add shoe to collection
 router.post("/addtocollection", (req, res) => {
-  Collection.findByIdAndUpdate(req.body.collection.id, { $push: { shoes: [...shoes.concat(req.body.shoe._id)] } }).then(
-    res.send({})
-  );
+  Collection.findByIdAndUpdate(req.body.collection.id, {
+    $push: { shoes: [...shoes.concat(req.body.shoe._id)] },
+  }).then(res.send({}));
 });
 
 // anything else falls to this "not found" case

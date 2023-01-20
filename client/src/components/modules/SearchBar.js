@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "@reach/router";
-import { Link } from "@reach/router";
 
 import "./SearchBar.css";
 import "./NavBar.css";
 
-import { get, post } from "../../utilities";
+import { post } from "../../utilities";
 
 const SearchBar = (props) => {
   const [query, setQuery] = useState("");

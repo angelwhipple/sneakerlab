@@ -63,7 +63,7 @@ const App = () => {
       </Router>
       <Router>
         <Discover path="/" userId={userId} setOnLoginPage={setPageLogin} />
-        <Profile path="/profile/" handleLogout={handleLogout} />
+        <Profile path="/profile/" id={userId} handleLogout={handleLogout} />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
         <Search
           path="/search/"
