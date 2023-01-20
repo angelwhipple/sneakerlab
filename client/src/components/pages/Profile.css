@@ -1,43 +1,42 @@
 .Profile-container {
-    display: flex;
-    justify-content: center;
-    padding: .35%;
+  display: flex;
+  justify-content: center;
+  padding: 0.35%;
 }
 
 .Profile-name {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .Profile-about {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .Profile-picContainer {
-    padding: 1%;
+  padding: 1%;
 }
 
 .Profile-pic {
-    border-radius: 50%;
-    display: block;
+  border-radius: 50%;
+  display: block;
 }
 
 .Profile-interaction {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .Profile-button {
-    color: var(--medgrey);
-    font-size: 15px;
+  color: var(--medgrey);
+  font-size: 15px;
 }
 
 .Profile-button:hover {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 .Profile-editModal {
-
 }
 
 .Profile-collections {
-    margin: 0;
+  margin: 0;
 }
