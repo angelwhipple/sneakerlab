@@ -33,15 +33,11 @@ const Profile = () => {
   const toggleProfileModal = () => {
     setProfileModal(!profileModal);
   };
-  
-  const logout = () => {
 
-  };
+  const logout = () => {};
 
   if (!displayName) {
-    return (
-    <div className="centered">Login to see content!</div>
-    );
+    return <div className="centered">Login to see content!</div>;
   } else {
     return (
       <div>
@@ -91,24 +87,31 @@ const Profile = () => {
             }
           </div>
 
-          <button onClick={() => {logout();}} className="Profile-button">
+          <button
+            onClick={() => {
+              logout();
+            }}
+            className="Profile-button"
+          >
             logout
           </button>
-          <div>
-            
-          </div>
+          <div></div>
         </div>
 
         <hr></hr>
 
         <div className="Profile-collections">
           {userCollections.map((collection) => {
-            <CollectionDisplay collection={collection.creator} title={collection.title} shoes={collection.shoes} />
+            <CollectionDisplay
+              collection={collection.creator}
+              title={collection.title}
+              shoes={collection.shoes}
+            />;
           })}
         </div>
       </div>
     );
-  };
-}
+  }
+};
 
 export default Profile;

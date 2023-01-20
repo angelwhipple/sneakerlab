@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   displayName: String,
   googleid: String,
-  about: String,
   pfp: String,
+  about: String,
   searchHistory: [String],
   clickHistory: [String],
 });
