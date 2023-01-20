@@ -2,8 +2,6 @@ import { get } from "../../utilities";
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
 
-import anonymous from "../../public/anon.jpg";
-
 const Profile = () => {
   const [displayName, setDisplayName] = useState("add Display name");
   const [about, setAbout] = useState("add About section");
@@ -62,21 +60,32 @@ const Profile = () => {
         </div>
 
         <div className="u-flex u-flex-justifyCenter">
-          <div className="Profile-editModal">
+          <div>
             <button onClick={toggleProfileModal} className="Profile-button" >
               edit profile
             </button>
             {profileModal ? (
-            <div>
-              <button onClick={toggleProfileModal}>done</button>
-              <form>
-                <label>display name</label>
-                <input type="text" />
-                <label>about</label>
-                <input type="text" />
-                <label>profile picture url</label>
-                <input type="text" />
-              </form>
+            <div className="Profile-modalContainer">
+            <div className="Profile-modalContent">
+              <div className="Profile-modalButton">
+                <button onClick={toggleProfileModal} className="Profile-button" >cancel</button>
+                <button onClick={toggleProfileModal} className="Profile-button" >done</button>
+              </div>
+              <form><div className="u-flex u-flexColumn">
+                <div>
+                  <label className="col-20">display name</label>
+                  <input className="col-70" type="text" placeholder="enter text" />
+                </div>
+                <div>
+                  <label className="col-20">about</label>
+                  <input className="col-70" type="text" placeholder="enter text" />
+                </div>
+                <div>
+                  <label className="col-20">profile picture</label>
+                  <input className="col-70" type="text" placeholder="enter url" />
+                </div>
+                </div></form>
+            </div>
             </div>
             ) : <></>
             }
