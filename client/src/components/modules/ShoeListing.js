@@ -24,6 +24,9 @@ const ShoeListing = (props) => {
   const toggleSaveModal = () => {
     setSaveModal(!saveModal);
   };
+  // const saveIcon = styled(FaRegHeart){
+  //   :hover{background-color:red;
+  // };
   const [user, setUser] = useState();
   const [userCollections, setUserCollections] = useState([]);
 
@@ -41,38 +44,53 @@ const ShoeListing = (props) => {
     });
   }, [userCollections]);
 
-  if (!user) {
-    return (<>Login to see content!</>);
-  } else {
-    return (
-      <div className="u-inlineFlex Listing-container Listing-card">
-        <img src={props.image} className="Listing-icon" width="100" height="100" />
-        <div className="u-flexColumn">
-          <h3>{props.name}</h3>
-          <p className="Listing-colorway">{props.colorway}</p>
-          <p className="Listing-release">Release: {props.release}</p>
+  return (
+    <div className="u-flexColumn Listing-container">
+      <div className="Listing-info">
+        <img src={props.image} className="Listing-icon" />
+        <div className="Listing-content">
+          <div className="Listing-name">{props.name}</div>
+          <div className="Listing-colorway">{props.colorway}</div>
+          <div className="Listing-release">Release: {props.release}</div>
         </div>
-        <div className="u-flexColumn u-flex-alignCenter Buy-links-container">{buyLinks}</div>
-
+      </div>
+      <div className="Buy-links-container">
+        <div>{buyLinks}</div>
         <div>
-          <button onClick={toggleSaveModal} ><FaRegHeart /></button>
+          <button onClick={toggleSaveModal} className="Listing-heartContainer"><FaRegHeart className="Listing-heart" /></button>
           {saveModal ? (
           <div className="Listing-modalContainer">
           <div className="Listing-modalContent">
             <button onClick={toggleSaveModal} className="Listing-cancelbutton" >cancel</button>
             <div>{userCollections.map((collection) => {collection.title})}</div>
-            <div>favorites</div>
-            <div>red</div>
+            <p>favorites</p>
+            <p>red</p>
             <button>create new collection</button>
           </div>
           </div>
           ) : <></>
           }
         </div>
-      
-      </div> 
-    );
-  };
+      </div>
+
+      {/* <div>
+        <button onClick={toggleSaveModal}><FaRegHeart className="Listing-heart" /></button>
+        {saveModal ? (
+        <div className="Listing-modalContainer">
+        <div className="Listing-modalContent">
+          <button onClick={toggleSaveModal} className="Listing-cancelbutton" >cancel</button>
+          <div>{userCollections.map((collection) => {collection.title})}</div>
+          <p>favorites</p>
+          <p>red</p>
+          <button>create new collection</button>
+        </div>
+        </div>
+        ) : <></>
+        }
+      </div> */}
+    
+    </div> 
+  );
 };
 
 export default ShoeListing;
