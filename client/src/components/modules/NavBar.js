@@ -37,22 +37,16 @@ const NavBar = (props) => {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <nav className="navContainer ">
-        <Link to="/">
-          <img src={logo} className="logo-icon floatLeft u-pointer u-relative" />
-        </Link>
+        {props.id ? (
+          <Link to="/">
+            <img src={logo} className="logo-icon floatLeft u-pointer u-relative" />
+          </Link>
+        ) : (
+          <></>
+        )}
         <div className="u-reverseFlex">
           {props.id ? (
             <>
-              {/* <button1
-                className="nav-link u-pointer"
-                onClick={() => {
-                  googleLogout();
-                  props.handleLogout();
-                  routeHome();
-                }}
-              >
-                logout
-              </button1> */}
               <button1 onClick={routeProfile} className="nav-link u-pointer">
                 <img src={pfp} className="profile-icon" />
               </button1>

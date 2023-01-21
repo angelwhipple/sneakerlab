@@ -29,7 +29,7 @@ const ShoeListing = (props) => {
                 image: props.image,
               });
             }}
-            className="listing-link u-pointer"
+            className="buy-link u-pointer"
           >
             {reseller} : ${price}
           </button>
@@ -58,7 +58,7 @@ const ShoeListing = (props) => {
             });
             toggleSaveModal();
           }}
-          className="listing-link u-pointer"
+          className="buy-link u-pointer"
         >
           {collection.name}
         </button>
@@ -77,81 +77,84 @@ const ShoeListing = (props) => {
   };
 
   return (
-    <div className="u-inlineFlex Listing-container Listing-card">
-      <img src={props.image} className="Listing-icon" />
-      <div className="u-flexColumn">
-        <h3>{props.name}</h3>
-        <p className="Listing-colorway">{props.colorway}</p>
-        <p className="Listing-release">Release: {props.release}</p>
-      </div>
-      <div className="u-flexColumn u-flex-alignCenter Buy-links-container">{buyLinks}</div>
-
-      {/* only display save button/modal if logged in */}
-      {props.userId ? (
-        <div>
-          <button className="u-pointer save-button" onClick={toggleSaveModal}>
-            <FaRegHeart />
-          </button>
-          {saveModal ? (
-            <div className="Listing-modalContainer">
-              <div className="Listing-modalContent">
-                <h2 className="u-textCenter">save to a collection</h2>
-                {creatingCollection ? (
-                  <div>
-                    <label className="col-20">collection name</label>
-                    <input
-                      className="col-70"
-                      type="text"
-                      placeholder="enter collection name"
-                      onChange={handleInput_name}
-                    />
-                    <button
-                      onClick={() => {
-                        setCreatingCollection(false);
-                      }}
-                      className="listing-button u-pointer floatRight"
-                    >
-                      cancel
-                    </button>
-                    <button
-                      onClick={createCollection}
-                      type="submit"
-                      value="Submit"
-                      className="listing-button u-pointer floatRight"
-                    >
-                      create
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="Collections-scroll u-flex-justifyCenter">
-                      {collectionButtons}
-                    </div>
-                    <button
-                      onClick={() => {
-                        setCreatingCollection(true);
-                      }}
-                      className="listing-button u-pointer"
-                    >
-                      create new collection
-                    </button>
-                    <button
-                      onClick={toggleSaveModal}
-                      className="listing-button u-pointer floatRight"
-                    >
-                      cancel
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          ) : (
-            <></>
-          )}
+    <div className="u-flexColumn Listing-container">
+      <div className="Listing-info">
+        <img src={props.image} className="Listing-icon" />
+        <div className="Listing-content">
+          <div className="Listing-name">{props.name}</div>
+          <div className="Listing-colorway">{props.colorway}</div>
+          <div className="Listing-release">Release Date: {props.release}</div>
         </div>
-      ) : (
-        <></>
-      )}
+      </div>
+      <div className="Buy-links-container">
+        <div>{buyLinks}</div>
+        {/* only display save button/modal if logged in */}
+        {props.userId ? (
+          <div>
+            <button onClick={toggleSaveModal} className="Listing-heartContainer u-pointer">
+              <FaRegHeart />
+            </button>
+            {saveModal ? (
+              <div className="Listing-modalContainer">
+                <div className="Listing-modalContent">
+                  <h2 className="u-textCenter">save to a collection</h2>
+                  {creatingCollection ? (
+                    <div>
+                      <label className="col-20">collection name</label>
+                      <input
+                        className="col-70"
+                        type="text"
+                        placeholder="enter collection name"
+                        onChange={handleInput_name}
+                      />
+                      <button
+                        onClick={() => {
+                          setCreatingCollection(false);
+                        }}
+                        className="listing-button u-pointer floatRight"
+                      >
+                        cancel
+                      </button>
+                      <button
+                        onClick={createCollection}
+                        type="submit"
+                        value="Submit"
+                        className="listing-button u-pointer floatRight"
+                      >
+                        create
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="Collections-scroll u-flex-justifyCenter">
+                        {collectionButtons}
+                      </div>
+                      <button
+                        onClick={() => {
+                          setCreatingCollection(true);
+                        }}
+                        className="listing-button u-pointer"
+                      >
+                        create new collection
+                      </button>
+                      <button
+                        onClick={toggleSaveModal}
+                        className="listing-button u-pointer floatRight"
+                      >
+                        cancel
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };

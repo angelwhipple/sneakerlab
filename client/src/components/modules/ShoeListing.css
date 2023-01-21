@@ -1,20 +1,24 @@
-.Listing-icon {
-  /* round edges */
-  border-radius: 25%;
+.Listing-info {
+  display: flex;
+  width: 400px;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
 
-  /* Centering on image`s center*/
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
+.Listing-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  align-self: center;
-
-  height: auto;
-  width: 100px;
+.Listing-name {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .Listing-colorway {
-  font-size: var(--m);
+  font-size: 12px;
   font-weight: 350;
 }
 
@@ -23,50 +27,30 @@
   font-weight: 200;
 }
 
+.Listing-icon {
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  max-width: 150px;
+  max-height: 100px;
+  align-self: center;
+
+  height: auto;
+  width: 100px;
+  margin: 2%;
+}
+
 .Listing-container {
-  border-radius: 5%;
+  border-radius: 12px;
   border: 2px solid var(--black);
-  column-gap: 12px;
-  transition-duration: 0.4s;
-  padding-inline: 1%;
+  padding: 4px;
+  width: 500px;
+  display: block;
 }
 
 .Listing-container:hover {
+  transition-duration: 0.4s;
   border: 2px solid var(--primary);
-}
-
-.Listing-card {
-  flex: 0 0 auto;
-}
-
-.listing-link,
-.listing-link:visited {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--black);
-  text-decoration: none;
-  border: 1px solid var(--black);
-}
-
-.listing-link:hover {
-  color: var(--primary);
-  transition-duration: 0.6s;
-  border: 1px solid var(--primary);
-}
-
-.save-button,
-.save-button:visited {
-  color: var(--black);
-}
-
-.save-button:hover {
-  color: var(--primary);
-  transition-duration: 0.6s;
-}
-
-.Buy-links-container {
-  align-self: center;
-  row-gap: var(--s);
 }
 
 .listing-button,
@@ -78,6 +62,44 @@
 .listing-button:hover {
   color: var(--primary);
   transition-duration: 0.6s;
+}
+
+.buy-link {
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 4px 8px 4px 8px;
+  border: solid var(--black);
+  margin: 4px;
+}
+
+.buy-link:hover {
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 4px 8px 4px 8px;
+  border: solid var(--primary);
+  margin: 4px;
+}
+
+.Buy-links-container {
+  display: flex;
+  align-self: center;
+  padding: 2px;
+  margin: 2px;
+  justify-content: space-between;
+}
+
+.Listing-heartContainer {
+  padding: 2px;
+}
+
+.Listing-heart {
+  stroke-width: 1px;
+  justify-self: center;
+}
+
+.Listing-heart:hover {
+  transition-duration: 0.4s;
+  color: var(--primary);
 }
 
 .Listing-modalContent {

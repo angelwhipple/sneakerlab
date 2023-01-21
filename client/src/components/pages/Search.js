@@ -35,7 +35,6 @@ const Search = (props) => {
       />
     ));
   }
-  // console.log(listings);
 
   return (
     <div>
