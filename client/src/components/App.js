@@ -8,6 +8,7 @@ import Profile from "./pages/Profile.js";
 import NavBar from "./modules/NavBar.js";
 import Search from "./pages/Search.js";
 import Login from "./pages/Login.js";
+import Trade from "./pages/Trade.js";
 
 import "../utilities.css";
 
@@ -63,13 +64,16 @@ const App = () => {
       </Router>
       <Router>
         <Discover path="/" userId={userId} setOnLoginPage={setPageLogin} />
-        <Profile path="/profile/" id={userId} handleLogout={handleLogout} />
+        <Profile path="/profile/" userId={userId} handleLogout={handleLogout} />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
+        <Trade path="/trade/" />
         <Search
           path="/search/"
           query={searchQuery}
           results={searchResults}
           setResults={setSearchResults}
+          setOnLoginPage={setPageLogin}
+          userId={userId}
         />
         <NotFound default />
       </Router>

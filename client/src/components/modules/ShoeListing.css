@@ -8,6 +8,9 @@
   background-repeat: no-repeat;
 
   align-self: center;
+
+  height: auto;
+  width: 100px;
 }
 
 .Listing-colorway {
@@ -36,8 +39,8 @@
   flex: 0 0 auto;
 }
 
-.buy-link,
-.buy-link:visited {
+.listing-link,
+.listing-link:visited {
   font-size: 12px;
   font-weight: 400;
   color: var(--black);
@@ -45,10 +48,20 @@
   border: 1px solid var(--black);
 }
 
-.buy-link:hover {
+.listing-link:hover {
   color: var(--primary);
   transition-duration: 0.6s;
   border: 1px solid var(--primary);
+}
+
+.save-button,
+.save-button:visited {
+  color: var(--black);
+}
+
+.save-button:hover {
+  color: var(--primary);
+  transition-duration: 0.6s;
 }
 
 .Buy-links-container {
@@ -56,14 +69,21 @@
   row-gap: var(--s);
 }
 
-.Listing-cancelbutton {
+.listing-button,
+.listing-button:visited {
   font-size: 12px;
+  color: var(--black);
+}
+
+.listing-button:hover {
+  color: var(--primary);
+  transition-duration: 0.6s;
 }
 
 .Listing-modalContent {
   align-self: center;
   background: var(--white);
-  padding: .5%;
+  padding: 0.5%;
   width: 70%;
   border-radius: 12px;
 }
@@ -73,10 +93,21 @@
   display: flex;
   position: fixed;
   padding: 0;
-  margin:0;
-  top:0;
-  left:0;
+  margin: 0;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
   background: var(--translucent);
+}
+
+.Collections-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  column-gap: var(--s);
+}
+
+.Collections-scroll::-webkit-scrollbar {
+  display: none;
 }

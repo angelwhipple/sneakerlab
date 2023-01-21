@@ -10,6 +10,7 @@ const Search = (props) => {
   console.log("mounted search results page");
   useEffect(() => {
     setQuery(props.query);
+    props.setOnLoginPage(false);
   });
 
   // only update search results when search query changes
@@ -30,6 +31,7 @@ const Search = (props) => {
         image={shoe.thumbnail}
         prices={shoe.lowestResellPrice}
         links={shoe.resellLinks}
+        userId={props.userId}
       />
     ));
   }
@@ -37,7 +39,7 @@ const Search = (props) => {
 
   return (
     <div>
-      <h2 className="u-textCenter">Search results for: {query}</h2>
+      <h2 className="u-textCenter">search results for: {query}</h2>
       <div className="Listing-scroll">{listings}</div>
     </div>
   );

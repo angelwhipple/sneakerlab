@@ -2,7 +2,6 @@
   background-color: var(--black);
   -webkit-text-fill-color: var(--white);
   padding-left: 0%;
-  padding-right: 2%;
 }
 
 .nav-link,
@@ -15,4 +14,15 @@
 .nav-link:hover {
   opacity: 1;
   transition-duration: 0.6s;
+}
+
+.profile-icon {
+  height: 30px;
+  width: auto;
+  border-radius: 50%;
+}
+
+.logo-icon {
+  height: auto;
+  width: 280px;
 }

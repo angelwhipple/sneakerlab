@@ -14,22 +14,22 @@ const Discover = ({ userId, setOnLoginPage }) => {
 
   useEffect(() => {
     console.log("mounted discover page");
+    if (!userId) {
+      setOnLoginPage(true);
+    }
   });
 
   return (
     <div>
       {userId ? (
-        <h1 className="u-textCenter">Discover</h1>
+        <h1 className="u-textCenter">discover</h1>
       ) : (
         <>
           <div class="centered">
             <img src={logo} width="600" height="150" />
             <div className="u-flex-alignCenter">
               <button className="u-pointer" onClick={routeChange}>
-                login
-              </button>
-              <button className="u-pointer" onClick={routeChange}>
-                signup
+                login/signup
               </button>
             </div>
           </div>

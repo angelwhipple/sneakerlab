@@ -8,42 +8,60 @@ import "./NavBar.css";
 import SearchBar from "./SearchBar";
 
 import logo from "../../public/sneakerlab.png";
+import { get } from "../../utilities";
 
 const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.googleusercontent.com";
 
 const NavBar = (props) => {
+  const [pfp, setPfp] = useState("");
+
   // return to home onClick logout button
   const navigate = useNavigate();
-  const routeChange = () => {
+  const routeHome = () => {
     navigate("/");
   };
 
+  // navigate to profile onClick pfp
+  const routeProfile = () => {
+    navigate("/profile/");
+  };
+
+  useEffect(() => {
+    if (props.id) {
+      get("/api/whoami").then((user) => {
+        setPfp(user.pfp);
+      });
+    }
+  });
+
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <nav className="navContainer">
+      <nav className="navContainer ">
         <Link to="/">
-          <img src={logo} height="75" width="250" className="floatLeft u-pointer u-relative" />
+          <img src={logo} className="logo-icon floatLeft u-pointer u-relative" />
         </Link>
         <div className="u-reverseFlex">
           {props.id ? (
             <>
-              <button1
+              {/* <button1
                 className="nav-link u-pointer"
                 onClick={() => {
                   googleLogout();
                   props.handleLogout();
-                  routeChange();
+                  routeHome();
                 }}
               >
                 logout
+              </button1> */}
+              <button1 onClick={routeProfile} className="nav-link u-pointer">
+                <img src={pfp} className="profile-icon" />
               </button1>
-              <Link to="/profile/" className="nav-link">
-                profile
-              </Link>
               <Link to="/" className="nav-link">
                 discover
               </Link>
-              <button1 className="u-pointer nav-link">trade</button1>
+              <Link to="/trade/" className="nav-link">
+                trade
+              </Link>
             </>
           ) : props.onLoginPage ? (
             <></>

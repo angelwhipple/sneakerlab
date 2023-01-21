@@ -8,13 +8,13 @@ import React from "react";
  * @param {list} shoes
  */
 const CollectionDisplay = (props) => {
-    return (
-        <div>
-            <Link to={collectiondetail/props._id}>
-                <div className="u-bold">{props.title}</div>
-            </Link>
-        </div>
-    );
+  return (
+    <div>
+      <Link to={collectiondetail / props._id}>
+        <div className="u-bold">{props.title}</div>
+      </Link>
+    </div>
+  );
 };
 
 export default CollectionDisplay;

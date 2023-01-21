@@ -103,7 +103,8 @@ form {
   display: flex;
   column-gap: var(--m);
   flex-direction: row-reverse;
-  padding: 2% 0;
+  padding: 2%;
+  align-items: center;
 }
 
 /* PRESETS */
@@ -182,7 +183,7 @@ button {
 
 button:hover {
   background-color: var(--white);
-  color: var(--orange);
+  color: var(--primary);
 }
 
 /* CONTAINERS */

@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const shoe = require("./shoe");
 
 const CollectionSchema = new mongoose.Schema({
-  creator: String, //user._id
-  title: String,
-  shoes: [shoe.shoeSchema],
+  creator: String,
+  name: String,
+  shoes: [],
 });
 
 module.exports = mongoose.model("collection", CollectionSchema);

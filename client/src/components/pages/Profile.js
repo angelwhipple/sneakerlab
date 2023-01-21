@@ -1,58 +1,55 @@
 import { get, post } from "../../utilities";
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
+import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
+import { useNavigate } from "@reach/router";
+
+const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.googleusercontent.com";
 
 const Profile = (props) => {
-  const [displayName, setDisplayName] = useState("add Display name");
-  const [about, setAbout] = useState("add About section");
+  const [displayName, setDisplayName] = useState("");
+  const [about, setAbout] = useState("");
   const [pfp, setPfp] = useState("");
   const [userCollections, setUserCollections] = useState([]);
+  const [profileModal, setProfileModal] = useState(false);
+
+  let temp_name = null;
+  let temp_about = null;
+  let temp_pfp = null;
+
+  // return to home onClick logout button
+  const navigate = useNavigate();
+  const routeChange = () => {
+    navigate("/");
+  };
 
   // mount profile page
   useEffect(() => {
-    console.log("mounted profile component");
+    console.log("mounted profile page");
 
     get("/api/whoami").then((user) => {
-      // check if a user is logged in
-      if (user) {
-        setDisplayName(user.displayName);
-        setAbout(user.about);
-        setPfp(user.pfp);
+      setDisplayName(user.displayName);
+      setAbout(user.about);
+      setPfp(user.pfp);
 
-        get("/api/usercollections", { creator: user._id }).then((collections) => {
-          // find all of the user's collections
-          setUserCollections(collections);
-        });
-      }
+      // get("/api/usercollections", { creator: user._id }).then((collections) => {
+      //   setUserCollections(collections);
+      // });
     });
-  });
+  }, []);
 
-  let temp_name = displayName;
   const handleInput_name = (event) => {
     temp_name = event.target.value;
   };
-  console.log(temp_name);
 
-  let temp_about = about;
   const handleInput_about = (event) => {
     temp_about = event.target.value;
   };
-  // console.log(temp_about);
 
-  let temp_pfp = pfp;
   const handleInput_pfp = (event) => {
     temp_pfp = event.target.value;
   };
-  // console.log(temp_pfp);
 
-  const body = {
-    id: props.id,
-    newName: temp_name,
-    newAbout: temp_about,
-    newPfp: temp_pfp,
-  };
-
-  const [profileModal, setProfileModal] = useState(false);
   const toggleProfileModal = () => {
     setProfileModal(!profileModal);
   };
@@ -60,80 +57,128 @@ const Profile = (props) => {
   // update info to user profile document
   const updateProfile = (event) => {
     event.preventDefault();
-    post("/api/updateprofile", body).then((profile) => {
-      console.log("updated user profile");
-    });
+
+    const body = { id: props.userId };
+    if (temp_name) {
+      setDisplayName(temp_name);
+      body["newName"] = temp_name;
+    } else {
+      body["newName"] = displayName;
+    }
+    if (temp_about) {
+      setAbout(temp_about);
+      body["newAbout"] = temp_about;
+    } else {
+      body["newAbout"] = about;
+    }
+    if (temp_pfp) {
+      setPfp(temp_pfp);
+      body["newPfp"] = temp_pfp;
+    } else {
+      body["newPfp"] = pfp;
+    }
+    post("/api/updateprofile", body);
     toggleProfileModal();
   };
 
-  if (!displayName) {
-    return <div className="centered">Login to see content!</div>;
-  } else {
-    return (
-      <div>
-        <div className="Profile-container">
-          <div className="u-flexColumn u-flex-justifyCenter">
-            <div className="Profile-interaction">0 followers</div>
-            <div className="Profile-interaction">0 following</div>
-          </div>
-          <div className="Profile-picContainer">
-            <img src={pfp} width="100" className="Profile-pic" />
-          </div>
-          <div className="u-flexColumn u-flex-justifyCenter">
-            <div className="Profile-name">{displayName}</div>
-            <div className="Profile-about">{about}</div>
-          </div>
+  return (
+    <>
+      <div className="Profile-container">
+        <div className="u-flexColumn u-flex-justifyCenter">
+          <div className="Profile-interaction">0 followers</div>
+          <div className="Profile-interaction">0 following</div>
         </div>
+        <div className="Profile-picContainer">
+          <img src={pfp} width="100" className="Profile-pic" />
+        </div>
+        <div className="u-flexColumn u-flex-justifyCenter">
+          <div className="Profile-name">{displayName}</div>
+          <div className="Profile-about">{about}</div>
+        </div>
+      </div>
 
-        <div className="u-flex u-flex-justifyCenter">
-          <div className="Profile-editModal">
-            <button onClick={toggleProfileModal} className="Profile-button u-pointer">
-              edit profile
-            </button>
-            {profileModal ? (
-              <div>
-                <button className="u-pointer" onClick={updateProfile}>
+      <div className="u-flex u-flex-justifyCenter">
+        <button onClick={toggleProfileModal} className="Profile-button u-pointer">
+          edit profile
+        </button>
+        {profileModal ? (
+          <div className="Profile-modalContainer">
+            <div className="Profile-modalContent">
+              <div className="Profile-modalButton">
+                <button onClick={toggleProfileModal} className="Profile-button u-pointer">
+                  cancel
+                </button>
+                <button
+                  onClick={updateProfile}
+                  type="submit"
+                  value="Submit"
+                  className="Profile-button u-pointer"
+                >
                   done
                 </button>
-                <form>
-                  <label>display name</label>
-                  <input type="text" onChange={handleInput_name} />
-                  <label>about</label>
-                  <input type="text" onChange={handleInput_about} />
-                  <label>profile picture url </label>
-                  <input type="text" onChange={handleInput_pfp} />
-                </form>
               </div>
-            ) : (
-              <></>
-            )}
+              <div className="u-flex u-flexColumn">
+                <div>
+                  <label className="col-20">display name</label>
+                  <input
+                    className="col-70"
+                    type="text"
+                    placeholder="enter a display name"
+                    onChange={handleInput_name}
+                  />
+                </div>
+                <div>
+                  <label className="col-20">about</label>
+                  <input
+                    className="col-70"
+                    type="text"
+                    placeholder="enter new about info"
+                    onChange={handleInput_about}
+                  />
+                </div>
+                <div>
+                  <label className="col-20">profile picture</label>
+                  <input
+                    className="col-70"
+                    type="text"
+                    placeholder="enter a url"
+                    onChange={handleInput_pfp}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
+        ) : (
+          <></>
+        )}
 
+        <GoogleOAuthProvider>
           <button
             onClick={() => {
-              logout();
+              googleLogout();
+              props.handleLogout();
+              routeChange();
             }}
             className="Profile-button u-pointer"
           >
             logout
           </button>
-          <div></div>
-        </div>
-
-        <hr></hr>
-
-        <div className="Profile-collections">
-          {userCollections.map((collection) => {
-            <CollectionDisplay
-              collection={collection.creator}
-              title={collection.title}
-              shoes={collection.shoes}
-            />;
-          })}
-        </div>
+        </GoogleOAuthProvider>
       </div>
-    );
-  }
+
+      <hr></hr>
+
+      {/* <div className="Profile-collections">
+        {userCollections.map((collection) => {
+          <CollectionDisplay
+            collection={collection.creator}
+            title={collection.title}
+            shoes={collection.shoes}
+          />;
+        })}
+      </div> */}
+    </>
+  );
 };
 
 export default Profile;

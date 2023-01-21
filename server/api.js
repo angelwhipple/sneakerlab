@@ -50,16 +50,9 @@ router.post("/initsocket", (req, res) => {
 
 // update user search history w/ last search query
 router.post("/search", (req, res) => {
-  User.findByIdAndUpdate(req.body.id, { $push: { searches: req.body.searchQuery } }).then(
+  User.findByIdAndUpdate(req.body.id, { $push: { searchHistory: req.body.searchQuery } }).then(
     res.send({})
   );
-});
-
-// get user collections for rendering profile page
-router.get("/usercollections", (req, res) => {
-  Collection.find({ creator: req.query.creator }).then((collections) => {
-    res.send(collections);
-  });
 });
 
 router.get("/searchresults", (req, res) => {
@@ -79,17 +72,55 @@ router.post("/updateprofile", (req, res) => {
   }).then(res.send({}));
 });
 
-// add shoe to collection
-router.post("/addtocollection", (req, res) => {
-  Collection.findByIdAndUpdate(req.body.collection.id, {
-    $push: { shoes: [...shoes.concat(req.body.shoe._id)] },
-  }).then(res.send({}));
+// get a user's collection data
+router.get("/usercollections", (req, res) => {
+  Collection.find({ creator: req.query.id }).then((collectionObjs) => {
+    res.send(collectionObjs);
+  });
 });
 
 // create new collection
-router.post("/newcollection", (req, res) => {
-  Collection.insertOne()
-})
+router.post("/createcollection", (req, res) => {
+  const newCollection = new Collection({
+    creator: req.body.id,
+    name: req.body.name,
+    shoes: [],
+  });
+  newCollection.save().then(res.send({}));
+});
+
+// save a shoe to user view history
+router.post("/savetoclickhistory", (req, res) => {
+  const newShoe = new Shoe({
+    shoeName: req.body.shoeName,
+    release: req.body.release,
+    colorway: req.body.colorway,
+    image: req.body.image,
+  });
+  newShoe.save().then((shoe) => {
+    User.findByIdAndUpdate(req.body.id, {
+      $push: { clickHistory: shoe._id },
+    }).then(res.send({}));
+  });
+});
+
+// save a shoe to collection
+router.post("/savetocollection", (req, res) => {
+  const newShoe = new Shoe({
+    shoeName: req.body.shoeName,
+    release: req.body.release,
+    colorway: req.body.colorway,
+    image: req.body.image,
+  });
+  newShoe.save().then((shoe) => {
+    Collection.findOneAndUpdate(
+      { creator: req.body.id, name: req.body.collectionName },
+      {
+        $push: { shoes: shoe._id },
+      }
+    ).then(res.send({}));
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
