@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import "./ShoeListing.css";
 import { FaRegHeart } from "react-icons/fa";
 
+import SaveModal from "./SaveModal";
+
 const ShoeListing = (props) => {
   const [saveModal, setSaveModal] = useState(false);
   let buyLinks = [];
 
-  // for saving to/adding user collections
+  // for saving to user collections
   const [collectionButtons, setCollectionButtons] = useState([]);
-  const [creatingCollection, setCreatingCollection] = useState(false);
-  const [tempName, setTempName] = useState("");
 
   // check for non-null price object first
   if (props.prices) {
@@ -38,10 +38,6 @@ const ShoeListing = (props) => {
     }
   }
 
-  const toggleSaveModal = () => {
-    setSaveModal(!saveModal);
-  };
-
   // generate user collection buttons on any mount/state change
   useEffect(() => {
     get("/api/usercollections", { id: props.userId }).then((collections) => {
@@ -56,7 +52,7 @@ const ShoeListing = (props) => {
               colorway: props.colorway,
               image: props.image,
             });
-            toggleSaveModal();
+            setSaveModal(false);
           }}
           className="buy-link u-pointer"
         >
@@ -66,15 +62,6 @@ const ShoeListing = (props) => {
       setCollectionButtons(buttons);
     });
   });
-
-  const createCollection = () => {
-    post("/api/createcollection", { id: props.userId, name: tempName });
-    setCreatingCollection(false);
-  };
-
-  const handleInput_name = (event) => {
-    setTempName(event.target.value);
-  };
 
   return (
     <div className="u-flexColumn Listing-container">
@@ -91,62 +78,16 @@ const ShoeListing = (props) => {
         {/* only display save button/modal if logged in */}
         {props.userId ? (
           <div>
-            <button onClick={toggleSaveModal} className="Listing-heartContainer u-pointer">
+            <button
+              onClick={() => {
+                setSaveModal(true);
+              }}
+              className="Listing-heartContainer u-pointer"
+            >
               <FaRegHeart />
             </button>
             {saveModal ? (
-              <div className="Listing-modalContainer">
-                <div className="Listing-modalContent">
-                  <h2 className="u-textCenter">save to a collection</h2>
-                  {creatingCollection ? (
-                    <div>
-                      <label className="col-20">collection name</label>
-                      <input
-                        className="col-70"
-                        type="text"
-                        placeholder="enter collection name"
-                        onChange={handleInput_name}
-                      />
-                      <button
-                        onClick={() => {
-                          setCreatingCollection(false);
-                        }}
-                        className="listing-button u-pointer floatRight"
-                      >
-                        cancel
-                      </button>
-                      <button
-                        onClick={createCollection}
-                        type="submit"
-                        value="Submit"
-                        className="listing-button u-pointer floatRight"
-                      >
-                        create
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="Collections-scroll u-flex-justifyCenter">
-                        {collectionButtons}
-                      </div>
-                      <button
-                        onClick={() => {
-                          setCreatingCollection(true);
-                        }}
-                        className="listing-button u-pointer"
-                      >
-                        create new collection
-                      </button>
-                      <button
-                        onClick={toggleSaveModal}
-                        className="listing-button u-pointer floatRight"
-                      >
-                        cancel
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
+              <SaveModal buttons={collectionButtons} toggleModal={setSaveModal} />
             ) : (
               <></>
             )}
