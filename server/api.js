@@ -25,6 +25,7 @@ const router = express.Router();
 //initialize socket
 const socketManager = require("./server-socket");
 const { ProgressPlugin } = require("webpack");
+const { response } = require("express");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -48,21 +49,34 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+// get product results from sneakers API
+router.get("/searchresults", (req, res) => {
+  const getResults = async () => {
+    await sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
+      if (err) {
+        console.log(err);
+        res.send({});
+      } else {
+        res.send(products);
+      }
+    });
+  };
+
+  getResults();
+});
+
+// get a user by ID
+router.get("/getuser", (req, res) => {
+  User.findOne({ _id: req.query.id }).then((userObj) => {
+    res.send(userObj);
+  });
+});
+
 // update user search history w/ last search query
 router.post("/search", (req, res) => {
   User.findByIdAndUpdate(req.body.id, { $push: { searchHistory: req.body.searchQuery } }).then(
     res.send({})
   );
-});
-
-router.get("/searchresults", (req, res) => {
-  const getResults = async () => {
-    await sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
-      res.send(products);
-    });
-  };
-
-  getResults();
 });
 
 // find & send users with names matching search query
@@ -136,6 +150,17 @@ router.post("/followuser", (req, res) => {
   }).then(
     User.findByIdAndUpdate(req.body.otherId, {
       $push: { followers: req.body.id },
+    }).then(res.send({}))
+  );
+});
+
+// unfollow another user, update followers/following arrays
+router.post("/unfollowuser", (req, res) => {
+  User.findByIdAndUpdate(req.body.id, {
+    $pull: { following: req.body.otherId },
+  }).then(
+    User.findByIdAndUpdate(req.body.otherId, {
+      $pull: { followers: req.body.id },
     }).then(res.send({}))
   );
 });

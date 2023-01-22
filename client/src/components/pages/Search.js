@@ -44,17 +44,7 @@ const Search = (props) => {
 
   let users = null;
   if (props.users) {
-    users = props.users.map((user) => (
-      <ProfileCard
-        name={user.displayName}
-        about={user.about}
-        pfp={user.pfp}
-        followers={user.followers.length}
-        following={user.following.length}
-        profileId={user._id}
-        userId={props.userId}
-      />
-    ));
+    users = props.users.map((user) => <ProfileCard profileId={user._id} userId={props.userId} />);
   }
 
   return (
