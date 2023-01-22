@@ -25,7 +25,7 @@ const Discover = ({ userId, setOnLoginPage }) => {
         <h1 className="u-textCenter">discover</h1>
       ) : (
         <>
-          <div class="centered">
+          <div className="centered">
             <img src={logo} width="600" height="150" />
             <div className="u-flex-alignCenter">
               <button className="u-pointer" onClick={routeChange}>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./SaveModal.css";
+import "./Modal.css";
 import "./ShoeListing.css";
+import { post } from "../../utilities";
 
 const SaveModal = (props) => {
   const [creatingCollection, setCreatingCollection] = useState(false);

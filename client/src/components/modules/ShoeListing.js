@@ -40,27 +40,29 @@ const ShoeListing = (props) => {
 
   // generate user collection buttons on any mount/state change
   useEffect(() => {
-    get("/api/usercollections", { id: props.userId }).then((collections) => {
-      let buttons = collections.map((collection) => (
-        <button
-          onClick={() => {
-            post("/api/savetocollection", {
-              id: props.userId,
-              collectionName: collection.name,
-              shoeName: props.name,
-              release: props.release,
-              colorway: props.colorway,
-              image: props.image,
-            });
-            setSaveModal(false);
-          }}
-          className="buy-link u-pointer"
-        >
-          {collection.name}
-        </button>
-      ));
-      setCollectionButtons(buttons);
-    });
+    if (props.userId) {
+      get("/api/usercollections", { id: props.userId }).then((collections) => {
+        let buttons = collections.map((collection) => (
+          <button
+            onClick={() => {
+              post("/api/savetocollection", {
+                id: props.userId,
+                collectionName: collection.name,
+                shoeName: props.name,
+                release: props.release,
+                colorway: props.colorway,
+                image: props.image,
+              });
+              setSaveModal(false);
+            }}
+            className="buy-link u-pointer"
+          >
+            {collection.name}
+          </button>
+        ));
+        setCollectionButtons(buttons);
+      });
+    }
   });
 
   return (
@@ -87,7 +89,11 @@ const ShoeListing = (props) => {
               <FaRegHeart />
             </button>
             {saveModal ? (
-              <SaveModal buttons={collectionButtons} toggleModal={setSaveModal} />
+              <SaveModal
+                userId={props.userId}
+                buttons={collectionButtons}
+                toggleModal={setSaveModal}
+              />
             ) : (
               <></>
             )}

@@ -3,19 +3,16 @@ import "./Profile.css";
 import React, { useState, useEffect } from "react";
 import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "@reach/router";
-
-const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.googleusercontent.com";
+import EditProfileModal from "../modules/EditProfileModal";
 
 const Profile = (props) => {
   const [displayName, setDisplayName] = useState("");
   const [about, setAbout] = useState("");
   const [pfp, setPfp] = useState("");
-  const [userCollections, setUserCollections] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [profileModal, setProfileModal] = useState(false);
-
-  let temp_name = null;
-  let temp_about = null;
-  let temp_pfp = null;
+  const [userCollections, setUserCollections] = useState([]);
 
   // return to home onClick logout button
   const navigate = useNavigate();
@@ -31,6 +28,8 @@ const Profile = (props) => {
       setDisplayName(user.displayName);
       setAbout(user.about);
       setPfp(user.pfp);
+      setFollowers(user.followers);
+      setFollowing(user.following);
 
       // get("/api/usercollections", { creator: user._id }).then((collections) => {
       //   setUserCollections(collections);
@@ -38,55 +37,12 @@ const Profile = (props) => {
     });
   }, []);
 
-  const handleInput_name = (event) => {
-    temp_name = event.target.value;
-  };
-
-  const handleInput_about = (event) => {
-    temp_about = event.target.value;
-  };
-
-  const handleInput_pfp = (event) => {
-    temp_pfp = event.target.value;
-  };
-
-  const toggleProfileModal = () => {
-    setProfileModal(!profileModal);
-  };
-
-  // update info to user profile document
-  const updateProfile = (event) => {
-    event.preventDefault();
-
-    const body = { id: props.userId };
-    if (temp_name) {
-      setDisplayName(temp_name);
-      body["newName"] = temp_name;
-    } else {
-      body["newName"] = displayName;
-    }
-    if (temp_about) {
-      setAbout(temp_about);
-      body["newAbout"] = temp_about;
-    } else {
-      body["newAbout"] = about;
-    }
-    if (temp_pfp) {
-      setPfp(temp_pfp);
-      body["newPfp"] = temp_pfp;
-    } else {
-      body["newPfp"] = pfp;
-    }
-    post("/api/updateprofile", body);
-    toggleProfileModal();
-  };
-
   return (
     <>
       <div className="Profile-container">
         <div className="u-flexColumn u-flex-justifyCenter">
-          <div className="Profile-interaction">0 followers</div>
-          <div className="Profile-interaction">0 following</div>
+          <div className="Profile-interaction">{followers.length} followers</div>
+          <div className="Profile-interaction">{following.length} following</div>
         </div>
         <div className="Profile-picContainer">
           <img src={pfp} width="100" className="Profile-pic" />
@@ -98,60 +54,28 @@ const Profile = (props) => {
       </div>
 
       <div className="u-flex u-flex-justifyCenter">
-        <button onClick={toggleProfileModal} className="Profile-button u-pointer">
+        <button
+          onClick={() => {
+            setProfileModal(true);
+          }}
+          className="Profile-button u-pointer"
+        >
           edit profile
         </button>
         {profileModal ? (
-          <div className="Profile-modalContainer">
-            <div className="Profile-modalContent">
-              <div className="Profile-modalButton">
-                <button onClick={toggleProfileModal} className="Profile-button u-pointer">
-                  cancel
-                </button>
-                <button
-                  onClick={updateProfile}
-                  type="submit"
-                  value="Submit"
-                  className="Profile-button u-pointer"
-                >
-                  done
-                </button>
-              </div>
-              <div className="u-flex u-flexColumn">
-                <div>
-                  <label className="col-20">display name</label>
-                  <input
-                    className="col-70"
-                    type="text"
-                    placeholder="enter a display name"
-                    onChange={handleInput_name}
-                  />
-                </div>
-                <div>
-                  <label className="col-20">about</label>
-                  <input
-                    className="col-70"
-                    type="text"
-                    placeholder="enter new about info"
-                    onChange={handleInput_about}
-                  />
-                </div>
-                <div>
-                  <label className="col-20">profile picture</label>
-                  <input
-                    className="col-70"
-                    type="text"
-                    placeholder="enter a url"
-                    onChange={handleInput_pfp}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <EditProfileModal
+            userId={props.userId}
+            setNewName={setDisplayName}
+            setNewPfp={setPfp}
+            setNewAbout={setAbout}
+            oldName={displayName}
+            oldPfp={pfp}
+            oldAbout={about}
+            toggleModal={setProfileModal}
+          />
         ) : (
           <></>
         )}
-
         <GoogleOAuthProvider>
           <button
             onClick={() => {
@@ -165,7 +89,6 @@ const Profile = (props) => {
           </button>
         </GoogleOAuthProvider>
       </div>
-
       <hr></hr>
 
       {/* <div className="Profile-collections">

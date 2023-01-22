@@ -65,6 +65,13 @@ router.get("/searchresults", (req, res) => {
   getResults();
 });
 
+// find & send users with names matching search query
+router.get("/userresults", (req, res) => {
+  User.find({ displayName: { $regex: req.query.searchQuery, $options: "-i" } }).then((userObjs) => {
+    res.send(userObjs);
+  });
+});
+
 // update user profile info
 router.post("/updateprofile", (req, res) => {
   User.findByIdAndUpdate(req.body.id, {
@@ -120,6 +127,17 @@ router.post("/savetocollection", (req, res) => {
       }
     ).then(res.send({}));
   });
+});
+
+// follow another user, update followers/following arrays
+router.post("/followuser", (req, res) => {
+  User.findByIdAndUpdate(req.body.id, {
+    $push: { following: req.body.otherId },
+  }).then(
+    User.findByIdAndUpdate(req.body.otherId, {
+      $push: { followers: req.body.id },
+    }).then(res.send({}))
+  );
 });
 
 // anything else falls to this "not found" case

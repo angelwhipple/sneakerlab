@@ -23,6 +23,7 @@ const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [userResults, setUserResults] = useState([]);
   const [pageLogin, setPageLogin] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,12 @@ const App = () => {
         setUserId(user._id);
       }
     });
+
+    return () => {
+      setSearchQuery("");
+      setSearchResults("");
+      setUserResults("");
+    };
   }, []);
 
   const handleLogin = (credentialResponse) => {
@@ -72,6 +79,8 @@ const App = () => {
           query={searchQuery}
           results={searchResults}
           setResults={setSearchResults}
+          users={userResults}
+          setUsers={setUserResults}
           setOnLoginPage={setPageLogin}
           userId={userId}
         />

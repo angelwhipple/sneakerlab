@@ -7,6 +7,8 @@ const UserSchema = new mongoose.Schema({
   about: String,
   searchHistory: [String],
   clickHistory: [String],
+  followers: [],
+  following: [],
 });
 
 // compile model from schema
