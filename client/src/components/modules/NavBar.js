@@ -15,7 +15,8 @@ const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.goo
 const NavBar = (props) => {
   const [pfp, setPfp] = useState("");
 
-  // navigate to profile onClick pfp
+  // return to home onClick logout button
+  const navigate = useNavigate();
   const routeProfile = () => {
     navigate("/profile/");
   };
