@@ -7,11 +7,6 @@ const SaveModal = (props) => {
   const [creatingCollection, setCreatingCollection] = useState(false);
   const [tempName, setTempName] = useState("");
 
-  const createCollection = () => {
-    post("/api/createcollection", { id: props.userId, name: tempName });
-    setCreatingCollection(false);
-  };
-
   const handleInput_name = (event) => {
     setTempName(event.target.value);
   };
@@ -38,7 +33,11 @@ const SaveModal = (props) => {
               cancel
             </button>
             <button
-              onClick={createCollection}
+              onClick={() => {
+                post("/api/createcollection", { id: props.userId, name: tempName }).then(
+                  setCreatingCollection(false)
+                );
+              }}
               type="submit"
               value="Submit"
               className="listing-button u-pointer floatRight"

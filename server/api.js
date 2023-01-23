@@ -51,18 +51,9 @@ router.post("/initsocket", (req, res) => {
 
 // get product results from sneakers API
 router.get("/searchresults", (req, res) => {
-  const getResults = async () => {
-    await sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
-      if (err) {
-        console.log(err);
-        res.send({});
-      } else {
-        res.send(products);
-      }
-    });
-  };
-
-  getResults();
+  sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
+    res.send(products);
+  });
 });
 
 // get a user by ID

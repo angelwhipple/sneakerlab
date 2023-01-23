@@ -45,6 +45,12 @@
   width: auto;
   margin: 2%;
   border-radius: 50%;
+  border: 1px var(--white);
+  transition-duration: 0.4s;
+}
+
+.Profilecard-icon:hover {
+  border: 1px solid var(--primary);
 }
 
 .Follow-heartContainer {

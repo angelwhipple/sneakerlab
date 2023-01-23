@@ -1,4 +1,4 @@
-import { get, post } from "../../utilities";
+import { get } from "../../utilities";
 import "./Profile.css";
 import React, { useState, useEffect } from "react";
 import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
@@ -65,12 +65,13 @@ const Profile = (props) => {
         {profileModal ? (
           <EditProfileModal
             userId={props.userId}
-            setNewName={setDisplayName}
-            setNewPfp={setPfp}
-            setNewAbout={setAbout}
             oldName={displayName}
             oldPfp={pfp}
             oldAbout={about}
+            setNewName={setDisplayName}
+            setNewAbout={setAbout}
+            setNewPfp={setPfp}
+            setNavBarPfp={props.setNavBarPfp}
             toggleModal={setProfileModal}
           />
         ) : (

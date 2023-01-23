@@ -8,26 +8,15 @@ import "./NavBar.css";
 import SearchBar from "./SearchBar";
 
 import logo from "../../public/sneakerlab.png";
-import { get } from "../../utilities";
 
 const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.googleusercontent.com";
 
 const NavBar = (props) => {
-  const [pfp, setPfp] = useState("");
-
   // return to home onClick logout button
   const navigate = useNavigate();
   const routeProfile = () => {
     navigate("/profile/");
   };
-
-  useEffect(() => {
-    if (props.id) {
-      get("/api/whoami").then((user) => {
-        setPfp(user.pfp);
-      });
-    }
-  });
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
@@ -43,7 +32,7 @@ const NavBar = (props) => {
           {props.id ? (
             <>
               <button1 onClick={routeProfile} className="nav-link u-pointer">
-                <img src={pfp} className="profile-icon" />
+                <img src={props.navBarPfp} className="profile-icon" />
               </button1>
               <Link to="/" className="nav-link">
                 discover

@@ -16,8 +16,9 @@ const EditProfileModal = (props) => {
     temp_about = event.target.value;
   };
 
+  // reads a FileList obj, extract File
   const handleInput_pfp = (event) => {
-    temp_pfp = event.target.value;
+    temp_pfp = event.target.files[0];
   };
 
   // update info to user profile document
@@ -38,8 +39,11 @@ const EditProfileModal = (props) => {
       body["newAbout"] = props.oldAbout;
     }
     if (temp_pfp) {
-      props.setNewPfp(temp_pfp);
-      body["newPfp"] = temp_pfp;
+      const newPfp = document.createElement("img");
+      newPfp.src = URL.createObjectURL(temp_pfp);
+      props.setNewPfp(newPfp.src);
+      props.setNavBarPfp(newPfp.src);
+      body["newPfp"] = newPfp.src;
     } else {
       body["newPfp"] = props.oldPfp;
     }
@@ -89,12 +93,7 @@ const EditProfileModal = (props) => {
           </div>
           <div>
             <label className="col-20">profile picture</label>
-            <input
-              className="col-70"
-              type="text"
-              placeholder="enter a url"
-              onChange={handleInput_pfp}
-            />
+            <input className="col-70" type="file" accept="image/*" onChange={handleInput_pfp} />
           </div>
         </div>
       </div>

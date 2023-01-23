@@ -50,16 +50,14 @@ const Search = (props) => {
   return (
     <div>
       <h2 className="u-textCenter">product results for: {query}</h2>
-      {props.results ? (
-        <div className="Listing-scroll">{listings}</div>
+      <div className="Listing-scroll">{listings}</div>
+      {props.userId ? (
+        <>
+          <h2 className="u-textCenter">users:</h2>
+          <div className="Listing-scroll u-flex-justifyCenter">{users}</div>
+        </>
       ) : (
-        <p className="u-textCenter">no products found</p>
-      )}
-      <h2 className="u-textCenter">users:</h2>
-      {props.users ? (
-        <div className="Listing-scroll u-flex-justifyCenter">{users}</div>
-      ) : (
-        <p className="u-textCenter">no users found</p>
+        <></>
       )}
     </div>
   );
