@@ -63,11 +63,14 @@ const SearchBar = (props) => {
         }}
         className="search-input"
       />
-      <form onSubmit={handleSearch}>
-        <button type="submit" className="search-button u-pointer" value="Submit">
-          search
-        </button>
-      </form>
+      <button
+        type="submit"
+        onClick={handleSearch}
+        className="search-button u-pointer"
+        value="Submit"
+      >
+        search
+      </button>
     </div>
   );
 };
