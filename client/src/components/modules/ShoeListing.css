@@ -121,14 +121,3 @@
   width: 100vw;
   background: var(--translucent);
 }
-
-.Collections-scroll {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  column-gap: var(--s);
-}
-
-.Collections-scroll::-webkit-scrollbar {
-  display: none;
-}

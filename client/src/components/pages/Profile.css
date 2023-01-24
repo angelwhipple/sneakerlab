@@ -69,3 +69,15 @@ input {
 .Profile-collections {
   margin: 0;
 }
+
+.Collection-scroll {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+  column-gap: var(--m);
+}
+
+.Collection-scroll::-webkit-scrollbar {
+  display: none;
+}

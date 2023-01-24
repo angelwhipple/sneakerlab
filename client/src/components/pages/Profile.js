@@ -6,6 +6,7 @@ import { useNavigate } from "@reach/router";
 import EditProfileModal from "../modules/EditProfileModal";
 import { socket } from "../../client-socket";
 import CollectionDisplay from "../modules/CollectionDisplay";
+import "./Search.css";
 
 const Profile = (props) => {
   const [displayName, setDisplayName] = useState("");
@@ -103,7 +104,7 @@ const Profile = (props) => {
       </div>
       <hr></hr>
 
-      <div>{userCollections}</div>
+      <div className="Collection-scroll">{userCollections}</div>
     </>
   );
 };

@@ -22,7 +22,7 @@ const CollectionDisplay = (props) => {
       get("/api/getshoe", { id: shoeId }).then((shoe) => {
         console.log(shoe);
         shoePics.push(
-          <div className="Listing-container">
+          <div className="Shoe-container">
             <img className="Listing-icon" src={shoe.image} />
           </div>
         );
@@ -33,8 +33,8 @@ const CollectionDisplay = (props) => {
 
   return (
     <div>
+      <div className="Listing-scroll Collection-shoeContainer">{shoeImages}</div>
       <h3 className="Collection-name">{props.name}</h3>
-      <div className="Listing-scroll">{shoeImages}</div>
     </div>
   );
 };
