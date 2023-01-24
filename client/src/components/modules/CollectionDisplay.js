@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { get } from "../../utilities";
 import "../pages/Search.css";
 import "./ShoeListing.css";
+import "./CollectionDisplay.css";
 
 /**
  * Component to render a single collection for discover or profile
