@@ -121,3 +121,14 @@
   width: 100vw;
   background: var(--translucent);
 }
+
+.Collections-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  column-gap: 8px;
+}
+
+.Collections-scroll::-webkit-scrollbar {
+  display: none;
+}
