@@ -1,7 +1,6 @@
 import { get } from "../../utilities";
 import React, { useState, useEffect } from "react";
 import ShoeListing from "../modules/ShoeListing";
-
 import "./Search.css";
 import ProfileCard from "../modules/ProfileCard";
 
@@ -25,7 +24,6 @@ const Search = (props) => {
     });
   }, [query]);
   console.log(props.results);
-  console.log(props.users);
 
   let listings = null;
   if (props.results) {
@@ -37,6 +35,7 @@ const Search = (props) => {
         image={shoe.thumbnail}
         prices={shoe.lowestResellPrice}
         links={shoe.resellLinks}
+        styleId={shoe.styleID}
         userId={props.userId}
       />
     ));

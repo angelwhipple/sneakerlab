@@ -16,10 +16,16 @@ const CollectionDisplay = (props) => {
 
   useEffect(() => {
     console.log("mounted collection display");
+    console.log(props.shoes);
     let shoePics = [];
     for (const shoeId of props.shoes) {
       get("/api/getshoe", { id: shoeId }).then((shoe) => {
-        shoePics.push(<img className="Listing-icon" src={shoe.image} />);
+        console.log(shoe);
+        shoePics.push(
+          <div className="Listing-container">
+            <img className="Listing-icon" src={shoe.image} />
+          </div>
+        );
       });
     }
     setShoeImages(shoePics);
@@ -27,7 +33,7 @@ const CollectionDisplay = (props) => {
 
   return (
     <div>
-      <p>{props.name}</p>
+      <h3 className="Collection-name">{props.name}</h3>
       <div className="Listing-scroll">{shoeImages}</div>
     </div>
   );

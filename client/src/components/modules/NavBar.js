@@ -13,11 +13,19 @@ const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.goo
 const NavBar = (props) => {
   const [pfp, setPfp] = useState("");
 
-  if (!pfp) {
-    get("/api/whoami").then((user) => {
+  useEffect(async () => {
+    if (!props.id) {
+      console.log("props.id: ", props.id);
+      let user = await get("/api/whoami");
       setPfp(user.pfp);
-    });
-  }
+    }
+  }, []);
+
+  // if (!props.id) {
+  //   get("/api/whoami").then((user) => {
+  //     setPfp(user.pfp);
+  //   });
+  // }
 
   socket.on("profile", (updatedInfo) => {
     console.log(updatedInfo);

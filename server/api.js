@@ -56,6 +56,13 @@ router.get("/searchresults", (req, res) => {
   });
 });
 
+// get trending products
+router.get("/trending", (req, res) => {
+  sneaks.getMostPopular(100, (err, products) => {
+    res.send(products);
+  });
+});
+
 // get a user by ID
 router.get("/getuser", (req, res) => {
   User.findOne({ _id: req.query.id }).then((userObj) => {
@@ -103,9 +110,7 @@ router.post("/createcollection", (req, res) => {
     name: req.body.name,
     shoes: [],
   });
-  newCollection.save();
-  socketManager.getIo.emit("collection", newCollection);
-  res.send({});
+  newCollection.save().then(res.send({}));
 });
 
 // save a shoe to user view history
@@ -115,10 +120,11 @@ router.post("/savetoclickhistory", (req, res) => {
     release: req.body.release,
     colorway: req.body.colorway,
     image: req.body.image,
+    styleId: req.body.styleId,
   });
   newShoe.save().then((shoe) => {
     User.findByIdAndUpdate(req.body.id, {
-      $push: { clickHistory: shoe._id },
+      $push: { clickHistory: req.body.styleId },
     }).then(res.send({}));
   });
 });
@@ -130,20 +136,33 @@ router.post("/savetocollection", (req, res) => {
     release: req.body.release,
     colorway: req.body.colorway,
     image: req.body.image,
+    styleId: req.body.styleId,
   });
   newShoe.save().then((shoe) => {
     Collection.findOneAndUpdate(
       { creator: req.body.id, name: req.body.collectionName },
       {
-        $push: { shoes: shoe._id },
+        $push: { shoes: req.body.styleId },
       }
     ).then(res.send({}));
   });
 });
 
+// create a shoe in the database
+router.post("/createshoe", (req, res) => {
+  const newShoe = new Shoe({
+    shoeName: req.body.shoeName,
+    release: req.body.release,
+    colorway: req.body.colorway,
+    image: req.body.image,
+    styleId: req.body.styleId,
+  });
+  newShoe.save().then(res.send({}));
+});
+
 // get shoe details from the database
 router.get("/getshoe", (req, res) => {
-  Shoe.findById(req.query.id).then((shoe) => {
+  Shoe.findOne({ styleId: req.query.id }).then((shoe) => {
     res.send(shoe);
   });
 });

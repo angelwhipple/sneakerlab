@@ -38,6 +38,7 @@ const App = () => {
       setSearchQuery("");
       setSearchResults([]);
       setUserResults([]);
+      setUserId("");
     };
   }, []);
 

@@ -3,6 +3,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   column-gap: var(--m);
+  padding: 0 1%;
 }
 
 .Listing-scroll::-webkit-scrollbar {
