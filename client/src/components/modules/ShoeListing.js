@@ -2,7 +2,7 @@ import { get, post } from "../../utilities";
 import React, { useState, useEffect } from "react";
 import "./ShoeListing.css";
 import { FaRegHeart } from "react-icons/fa";
-
+import { socket } from "../../client-socket";
 import SaveModal from "./SaveModal";
 
 const ShoeListing = (props) => {
@@ -11,6 +11,29 @@ const ShoeListing = (props) => {
 
   // for saving to user collections
   const [collectionButtons, setCollectionButtons] = useState([]);
+
+  // socket.on("collection", (newCollection) => {
+  //   console.log("new collection created");
+  //   setCollectionButtons([
+  //     ...collectionButtons,
+  //     <button
+  //       onClick={() => {
+  //         post("/api/savetocollection", {
+  //           id: props.userId,
+  //           collectionName: newCollection.name,
+  //           shoeName: props.name,
+  //           release: props.release,
+  //           colorway: props.colorway,
+  //           image: props.image,
+  //         });
+  //         setSaveModal(false);
+  //       }}
+  //       className="buy-link u-pointer"
+  //     >
+  //       {newCollection.name}
+  //     </button>,
+  //   ]);
+  // });
 
   // check for non-null price object first
   if (props.prices) {

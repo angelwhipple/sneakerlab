@@ -2,23 +2,24 @@ import React from "react";
 import "./Modal.css";
 import "../pages/Profile.css";
 import { post } from "../../utilities";
+import { useState } from "react";
 
 const EditProfileModal = (props) => {
-  let temp_name = null;
-  let temp_about = null;
-  let temp_pfp = null;
+  const [temp_name, setTempName] = useState("");
+  const [temp_about, setTempAbout] = useState("");
+  const [temp_pfp, setTempPfp] = useState("");
 
   const handleInput_name = (event) => {
-    temp_name = event.target.value;
+    setTempName(event.target.value);
   };
 
   const handleInput_about = (event) => {
-    temp_about = event.target.value;
+    setTempAbout(event.target.value);
   };
 
   // reads a FileList obj, extract File
   const handleInput_pfp = (event) => {
-    temp_pfp = event.target.files[0];
+    setTempPfp(event.target.files[0]);
   };
 
   // update info to user profile document
@@ -27,8 +28,10 @@ const EditProfileModal = (props) => {
 
     const body = { id: props.userId };
     if (temp_name) {
+      console.log("new name entered");
       body["newName"] = temp_name;
     } else {
+      console.log("new name not entered");
       body["newName"] = props.oldName;
     }
     if (temp_about) {
@@ -43,6 +46,7 @@ const EditProfileModal = (props) => {
     } else {
       body["newPfp"] = props.oldPfp;
     }
+    console.log("body: ", body);
     post("/api/updateprofile", body);
     props.toggleModal(false);
   };

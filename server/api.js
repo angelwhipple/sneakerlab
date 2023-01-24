@@ -35,7 +35,6 @@ router.get("/whoami", (req, res) => {
     return res.send({});
   }
 
-  socketManager.getIo().emit("launch", req.user);
   res.send(req.user);
 });
 
@@ -83,7 +82,6 @@ router.post("/updateprofile", (req, res) => {
   User.findByIdAndUpdate(req.body.id, {
     $set: { displayName: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp },
   }).then((user) => {
-    // const newInfo = { name: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp };
     socketManager
       .getIo()
       .emit("profile", { name: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp });
@@ -105,7 +103,9 @@ router.post("/createcollection", (req, res) => {
     name: req.body.name,
     shoes: [],
   });
-  newCollection.save().then(res.send({}));
+  newCollection.save();
+  socketManager.getIo.emit("collection", newCollection);
+  res.send({});
 });
 
 // save a shoe to user view history
