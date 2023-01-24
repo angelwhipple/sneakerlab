@@ -27,13 +27,11 @@ const EditProfileModal = (props) => {
 
     const body = { id: props.userId };
     if (temp_name) {
-      props.setNewName(temp_name);
       body["newName"] = temp_name;
     } else {
       body["newName"] = props.oldName;
     }
     if (temp_about) {
-      props.setNewAbout(temp_about);
       body["newAbout"] = temp_about;
     } else {
       body["newAbout"] = props.oldAbout;
@@ -41,8 +39,6 @@ const EditProfileModal = (props) => {
     if (temp_pfp) {
       const newPfp = document.createElement("img");
       newPfp.src = URL.createObjectURL(temp_pfp);
-      props.setNewPfp(newPfp.src);
-      props.setNavBarPfp(newPfp.src);
       body["newPfp"] = newPfp.src;
     } else {
       body["newPfp"] = props.oldPfp;

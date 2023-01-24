@@ -17,7 +17,7 @@
 }
 
 .profile-icon {
-  height: 30px;
+  max-height: 30px;
   width: auto;
   border-radius: 50%;
 }

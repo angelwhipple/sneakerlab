@@ -25,21 +25,19 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [userResults, setUserResults] = useState([]);
   const [pageLogin, setPageLogin] = useState(false);
-  const [navBarPfp, setNavBarPfp] = useState("");
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         setUserId(user._id);
-        setNavBarPfp(user.pfp);
       }
     });
 
     return () => {
       setSearchQuery("");
-      setSearchResults("");
-      setUserResults("");
+      setSearchResults([]);
+      setUserResults([]);
     };
   }, []);
 
@@ -68,17 +66,11 @@ const App = () => {
           handleLogout={handleLogout}
           setSearch={setSearchQuery}
           onLoginPage={pageLogin}
-          navBarPfp={navBarPfp}
         />
       </Router>
       <Router>
         <Discover path="/" userId={userId} setOnLoginPage={setPageLogin} />
-        <Profile
-          path="/profile/"
-          userId={userId}
-          handleLogout={handleLogout}
-          setNavBarPfp={setNavBarPfp}
-        />
+        <Profile path="/profile/" userId={userId} handleLogout={handleLogout} />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
         <Trade path="/trade/" />
         <Search

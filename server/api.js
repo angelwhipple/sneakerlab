@@ -35,6 +35,7 @@ router.get("/whoami", (req, res) => {
     return res.send({});
   }
 
+  socketManager.getIo().emit("launch", req.user);
   res.send(req.user);
 });
 
@@ -81,7 +82,13 @@ router.get("/userresults", (req, res) => {
 router.post("/updateprofile", (req, res) => {
   User.findByIdAndUpdate(req.body.id, {
     $set: { displayName: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp },
-  }).then(res.send({}));
+  }).then((user) => {
+    // const newInfo = { name: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp };
+    socketManager
+      .getIo()
+      .emit("profile", { name: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp });
+    res.send({});
+  });
 });
 
 // get a user's collection data
@@ -131,6 +138,13 @@ router.post("/savetocollection", (req, res) => {
         $push: { shoes: shoe._id },
       }
     ).then(res.send({}));
+  });
+});
+
+// get shoe details from the database
+router.get("/getshoe", (req, res) => {
+  Shoe.findById(req.query.id).then((shoe) => {
+    res.send(shoe);
   });
 });
 

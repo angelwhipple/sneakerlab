@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "@reach/router";
 import EditProfileModal from "../modules/EditProfileModal";
+import { socket } from "../../client-socket";
+import CollectionDisplay from "../modules/CollectionDisplay";
 
 const Profile = (props) => {
   const [displayName, setDisplayName] = useState("");
@@ -20,6 +22,23 @@ const Profile = (props) => {
     navigate("/");
   };
 
+  socket.on("profile", (updatedInfo) => {
+    setDisplayName(updatedInfo.name);
+    setAbout(updatedInfo.about);
+    setPfp(updatedInfo.pfp);
+  });
+
+  get("/api/usercollections", { id: props.userId }).then((collections) => {
+    let collectionDisplays = collections.map((collection) => (
+      <CollectionDisplay
+        creator={collection.creator}
+        name={collection.name}
+        shoes={collection.shoes}
+      />
+    ));
+    setUserCollections(collectionDisplays);
+  });
+
   // mount profile page
   useEffect(() => {
     console.log("mounted profile page");
@@ -30,10 +49,6 @@ const Profile = (props) => {
       setPfp(user.pfp);
       setFollowers(user.followers);
       setFollowing(user.following);
-
-      // get("/api/usercollections", { creator: user._id }).then((collections) => {
-      //   setUserCollections(collections);
-      // });
     });
   }, []);
 
@@ -68,10 +83,6 @@ const Profile = (props) => {
             oldName={displayName}
             oldPfp={pfp}
             oldAbout={about}
-            setNewName={setDisplayName}
-            setNewAbout={setAbout}
-            setNewPfp={setPfp}
-            setNavBarPfp={props.setNavBarPfp}
             toggleModal={setProfileModal}
           />
         ) : (
@@ -92,15 +103,7 @@ const Profile = (props) => {
       </div>
       <hr></hr>
 
-      {/* <div className="Profile-collections">
-        {userCollections.map((collection) => {
-          <CollectionDisplay
-            collection={collection.creator}
-            title={collection.title}
-            shoes={collection.shoes}
-          />;
-        })}
-      </div> */}
+      <div>{userCollections}</div>
     </>
   );
 };
