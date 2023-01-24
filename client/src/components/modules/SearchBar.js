@@ -56,16 +56,18 @@ const SearchBar = (props) => {
         placeholder={query}
         value={query}
         onChange={handleInput}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            handleSearch(event);
+          }
+        }}
         className="search-input"
       />
-      <button
-        type="submit"
-        className="search-button u-pointer"
-        value="Submit"
-        onClick={handleSearch}
-      >
-        search
-      </button>
+      <form onSubmit={handleSearch}>
+        <button type="submit" className="search-button u-pointer" value="Submit">
+          search
+        </button>
+      </form>
     </div>
   );
 };
