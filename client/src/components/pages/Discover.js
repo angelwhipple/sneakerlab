@@ -38,7 +38,7 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
     get("/api/featured").then((collection) => {
       setFeatured(collection.shoes);
       get("/api/getuser", { id: collection.creator }).then((user) => {
-        setFeaturedName("featured: " + collection.name + " by " + user.displayName);
+        setFeaturedName("featured : " + collection.name + " by " + user.displayName);
       });
     });
   }, []);

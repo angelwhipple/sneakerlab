@@ -32,6 +32,7 @@ const Profile = (props) => {
 
   socket.on("profilechange", (user) => {
     console.log("received profile change emission");
+    // setCurrentProfileId(user._id);
     setDisplayName(user.displayName);
     setAbout(user.about);
     setPfp(user.pfp);
@@ -48,7 +49,6 @@ const Profile = (props) => {
       ));
       setUserCollections(collectionDisplays);
     });
-    // setCurrentProfileId(user._id);
   });
 
   // mount profile page
