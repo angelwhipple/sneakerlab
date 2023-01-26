@@ -9,6 +9,8 @@ import CollectionDisplay from "../modules/CollectionDisplay";
 const Discover = ({ userId, setOnLoginPage, setSearch }) => {
   const [trending, setTrending] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
+  const [featured, setFeatured] = useState([]);
+  const [featuredName, setFeaturedName] = useState({});
 
   const navigate = useNavigate();
   const routeChange = () => {
@@ -33,6 +35,12 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
       }
       setTrending(trendingShoes);
     });
+    get("/api/featured").then((collection) => {
+      setFeatured(collection.shoes);
+      get("/api/getuser", { id: collection.creator }).then((user) => {
+        setFeaturedName("featured: " + collection.name + " by " + user.displayName);
+      });
+    });
   }, []);
 
   if (userId) {
@@ -52,7 +60,7 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
     <div>
       {userId ? (
         <>
-          {trending.length > 0 && recentlyViewed.length > 0 ? (
+          {trending.length > 0 && featured.length > 0 && recentlyViewed.length > 0 ? (
             <>
               <h1 className="u-textCenter">discover</h1>
               <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
@@ -61,11 +69,13 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
                 shoes={recentlyViewed}
                 setSearch={setSearch}
               />
+              <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
             </>
-          ) : trending.length > 0 ? (
+          ) : trending.length > 0 && featured.length > 0 ? (
             <>
               <h1 className="u-textCenter">discover</h1>
               <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
             </>
           ) : (
             <div className="centered">loading discover page...</div>

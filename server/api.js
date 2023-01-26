@@ -106,6 +106,14 @@ router.get("/usercollections", (req, res) => {
   });
 });
 
+// generate & send a random featured collection
+router.get("/featured", (req, res) => {
+  Collection.find({}).then((collections) => {
+    let featured = collections[Math.floor(Math.random() * collections.length)];
+    res.send(featured);
+  });
+});
+
 // create new collection
 router.post("/createcollection", (req, res) => {
   const newCollection = new Collection({
