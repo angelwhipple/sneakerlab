@@ -1,8 +1,8 @@
 import { Link } from "@reach/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "@reach/router";
-import { get } from "../../utilities";
-import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
+import { get, post } from "../../utilities";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import "./NavBar.css";
 import SearchBar from "./SearchBar";
 import logo from "../../public/sneakerlab.png";
@@ -13,22 +13,12 @@ const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.goo
 const NavBar = (props) => {
   const [pfp, setPfp] = useState("");
 
-  // useEffect(async () => {
-  //   if (!props.id) {
-  //     console.log("props.id: ", props.id);
-  //     let user = await get("/api/whoami");
-  //     setPfp(user.pfp);
-  //   }
-  // }, []);
-
-  // if (!props.id) {
-  //   get("/api/whoami").then((user) => {
-  //     setPfp(user.pfp);
-  //   });
-  // }
-  get("/api/whoami").then((user) => {
-    setPfp(user.pfp);
-  });
+  // always get current user's pfp
+  if (props.id) {
+    get("/api/getuser", { id: props.id }).then((user) => {
+      setPfp(user.pfp);
+    });
+  }
 
   socket.on("profile", (updatedInfo) => {
     console.log(updatedInfo);
@@ -38,6 +28,8 @@ const NavBar = (props) => {
   // return to home onClick logout button
   const navigate = useNavigate();
   const routeProfile = () => {
+    props.setCurrentProfileId(props.id);
+    post("/api/changeprofile", { newId: props.id });
     navigate("/profile/");
   };
 

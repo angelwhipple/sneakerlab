@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { get } from "../../utilities";
+import { useNavigate } from "@reach/router";
 import "../pages/Search.css";
 import "./ShoeListing.css";
 import "./CollectionDisplay.css";
@@ -14,21 +15,35 @@ import "./CollectionDisplay.css";
 const CollectionDisplay = (props) => {
   const [shoeImages, setShoeImages] = useState([]);
 
+  const navigate = useNavigate();
+  const routeSearch = () => {
+    navigate("/search/");
+  };
+
   useEffect(() => {
     console.log("mounted collection display");
-    console.log(props.shoes);
-    let shoePics = [];
     for (const shoeId of props.shoes) {
+      console.log(shoeId);
       get("/api/getshoe", { id: shoeId }).then((shoe) => {
-        console.log(shoe);
-        shoePics.push(
+        let shoeImage = (
           <div className="Shoe-container">
-            <img className="Listing-icon" src={shoe.image} />
+            <button
+              className="u-pointer"
+              // search shoe on select
+              onClick={() => {
+                routeSearch();
+                props.setSearch(shoe.shoeName);
+              }}
+            >
+              <img className="Listing-icon" src={shoe.image} />
+            </button>
           </div>
         );
+        setShoeImages((oldShoeImages) => {
+          return [...oldShoeImages, shoeImage];
+        });
       });
     }
-    setShoeImages(shoePics);
   }, []);
 
   return (

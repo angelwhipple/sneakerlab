@@ -29,27 +29,48 @@ const Profile = (props) => {
     setPfp(updatedInfo.pfp);
   });
 
-  get("/api/usercollections", { id: props.userId }).then((collections) => {
-    let collectionDisplays = collections.map((collection) => (
-      <CollectionDisplay
-        creator={collection.creator}
-        name={collection.name}
-        shoes={collection.shoes}
-      />
-    ));
-    setUserCollections(collectionDisplays);
+  socket.on("profilechange", (user) => {
+    console.log("received profile change emission");
+    setDisplayName(user.displayName);
+    setAbout(user.about);
+    setPfp(user.pfp);
+    setFollowers(user.followers);
+    setFollowing(user.following);
+    get("/api/usercollections", { id: user._id }).then((collections) => {
+      let collectionDisplays = collections.map((collection) => (
+        <CollectionDisplay
+          creator={collection.creator}
+          name={collection.name}
+          shoes={collection.shoes}
+          setSearch={props.setSearch}
+        />
+      ));
+      setUserCollections(collectionDisplays);
+    });
   });
 
   // mount profile page
   useEffect(() => {
     console.log("mounted profile page");
 
-    get("/api/whoami").then((user) => {
+    get("/api/getuser", { id: props.currentProfileId }).then((user) => {
       setDisplayName(user.displayName);
       setAbout(user.about);
       setPfp(user.pfp);
       setFollowers(user.followers);
       setFollowing(user.following);
+    });
+
+    get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
+      let collectionDisplays = collections.map((collection) => (
+        <CollectionDisplay
+          creator={collection.creator}
+          name={collection.name}
+          shoes={collection.shoes}
+          setSearch={props.setSearch}
+        />
+      ));
+      setUserCollections(collectionDisplays);
     });
   }, []);
 
@@ -69,39 +90,44 @@ const Profile = (props) => {
         </div>
       </div>
 
-      <div className="u-flex u-flex-justifyCenter">
-        <button
-          onClick={() => {
-            setProfileModal(true);
-          }}
-          className="Profile-button u-pointer"
-        >
-          edit profile
-        </button>
-        {profileModal ? (
-          <EditProfileModal
-            userId={props.userId}
-            oldName={displayName}
-            oldPfp={pfp}
-            oldAbout={about}
-            toggleModal={setProfileModal}
-          />
-        ) : (
-          <></>
-        )}
-        <GoogleOAuthProvider>
+      {/* only display edit/logout on main user profile  */}
+      {props.currentProfileId == props.userId ? (
+        <div className="u-flex u-flex-justifyCenter">
           <button
             onClick={() => {
-              googleLogout();
-              props.handleLogout();
-              routeChange();
+              setProfileModal(true);
             }}
             className="Profile-button u-pointer"
           >
-            logout
+            edit profile
           </button>
-        </GoogleOAuthProvider>
-      </div>
+          {profileModal ? (
+            <EditProfileModal
+              userId={props.userId}
+              oldName={displayName}
+              oldPfp={pfp}
+              oldAbout={about}
+              toggleModal={setProfileModal}
+            />
+          ) : (
+            <></>
+          )}
+          <GoogleOAuthProvider>
+            <button
+              onClick={() => {
+                googleLogout();
+                props.handleLogout();
+                routeChange();
+              }}
+              className="Profile-button u-pointer"
+            >
+              logout
+            </button>
+          </GoogleOAuthProvider>
+        </div>
+      ) : (
+        <></>
+      )}
       <hr></hr>
 
       <div className="Collection-scroll">{userCollections}</div>

@@ -3,6 +3,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { BiMinus } from "react-icons/bi";
 import { get, post } from "../../utilities";
 import { useState, useEffect } from "react";
+import { useNavigate } from "@reach/router";
 
 import "./ProfileCard.css";
 
@@ -12,6 +13,11 @@ const ProfileCard = (props) => {
   const [pfp, setPfp] = useState("");
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+
+  const navigate = useNavigate();
+  const routeProfile = () => {
+    navigate("/profile/");
+  };
 
   useEffect(() => {
     get("/api/getuser", { id: props.profileId }).then((otherUser) => {
@@ -26,7 +32,15 @@ const ProfileCard = (props) => {
   return (
     <div className="u-flexColumn Profilecard-container">
       <div className="Profilecard-info">
-        <img src={pfp} className="Profilecard-icon u-pointer" />
+        <button
+          onClick={() => {
+            props.setCurrentProfileId(props.profileId);
+            routeProfile();
+          }}
+          className="u-pointer"
+        >
+          <img src={pfp} className="Profilecard-icon" />
+        </button>
         <div className="Profile-content">
           <p className="Profilecard-name">{name}</p>
           <p className="Profilecard-about">{about}</p>

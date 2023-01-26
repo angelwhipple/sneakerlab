@@ -25,12 +25,14 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [userResults, setUserResults] = useState([]);
   const [pageLogin, setPageLogin] = useState(false);
+  const [currentProfileId, setCurrentProfileId] = useState([]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         setUserId(user._id);
+        setCurrentProfileId(user._id);
       }
     });
 
@@ -67,11 +69,23 @@ const App = () => {
           handleLogout={handleLogout}
           setSearch={setSearchQuery}
           onLoginPage={pageLogin}
+          setCurrentProfileId={setCurrentProfileId}
         />
       </Router>
       <Router>
-        <Discover path="/" userId={userId} setOnLoginPage={setPageLogin} />
-        <Profile path="/profile/" userId={userId} handleLogout={handleLogout} />
+        <Discover
+          path="/"
+          userId={userId}
+          setOnLoginPage={setPageLogin}
+          setSearch={setSearchQuery}
+        />
+        <Profile
+          path="/profile/"
+          userId={userId}
+          handleLogout={handleLogout}
+          currentProfileId={currentProfileId}
+          setSearch={setSearchQuery}
+        />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
         <Trade path="/trade/" />
         <Search
@@ -83,6 +97,7 @@ const App = () => {
           setUsers={setUserResults}
           setOnLoginPage={setPageLogin}
           userId={userId}
+          setCurrentProfileId={setCurrentProfileId}
         />
         <NotFound default />
       </Router>

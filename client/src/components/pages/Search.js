@@ -19,9 +19,11 @@ const Search = (props) => {
       props.setResults(productResults);
     });
 
-    get("/api/userresults", { searchQuery: query }).then((userResults) => {
-      props.setUsers(userResults);
-    });
+    if (query) {
+      get("/api/userresults", { searchQuery: query }).then((userResults) => {
+        props.setUsers(userResults);
+      });
+    }
   }, [query]);
   console.log(props.results);
 
@@ -43,17 +45,31 @@ const Search = (props) => {
 
   let users = null;
   if (props.users) {
-    users = props.users.map((user) => <ProfileCard profileId={user._id} userId={props.userId} />);
+    users = props.users.map((user) => (
+      <ProfileCard
+        profileId={user._id}
+        userId={props.userId}
+        setCurrentProfileId={props.setCurrentProfileId}
+      />
+    ));
   }
 
   return (
     <div>
       <h2 className="u-textCenter">product results for: {query}</h2>
-      <div className="Listing-scroll">{listings}</div>
-      {props.userId ? (
+      {listings ? (
+        <div className="Listing-scroll">{listings}</div>
+      ) : (
+        <p className="u-textCenter">loading search results...</p>
+      )}
+      {props.userId && query ? (
         <>
           <h2 className="u-textCenter">users:</h2>
-          <div className="Listing-scroll u-flex-justifyCenter">{users}</div>
+          {users ? (
+            <div className="Listing-scroll">{users}</div>
+          ) : (
+            <p className="u-textCenter">loading users...</p>
+          )}
         </>
       ) : (
         <></>

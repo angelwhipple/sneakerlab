@@ -6,8 +6,9 @@ import logo from "../../public/sneakerlab.png";
 import { get, post } from "../../utilities";
 import CollectionDisplay from "../modules/CollectionDisplay";
 
-const Discover = ({ userId, setOnLoginPage }) => {
+const Discover = ({ userId, setOnLoginPage, setSearch }) => {
   const [trending, setTrending] = useState([]);
+  const [recentlyViewed, setRecentlyViewed] = useState([]);
 
   const navigate = useNavigate();
   const routeChange = () => {
@@ -17,9 +18,8 @@ const Discover = ({ userId, setOnLoginPage }) => {
 
   // on initial mount
   useEffect(() => {
-    let trendingShoes = [];
     get("/api/trending").then((trendingProducts) => {
-      console.log(trendingProducts);
+      let trendingShoes = [];
       for (const shoeObj of trendingProducts) {
         post("/api/createshoe", {
           shoeName: shoeObj.make,
@@ -27,16 +27,22 @@ const Discover = ({ userId, setOnLoginPage }) => {
           colorway: shoeObj.colorway,
           image: shoeObj.thumbnail,
           styleId: shoeObj.styleID,
-        }).then(trendingShoes.push(shoeObj.styleID));
+        }).then(() => {
+          trendingShoes.push(shoeObj.styleID);
+        });
       }
+      setTrending(trendingShoes);
     });
-    setTrending(trendingShoes);
   }, []);
-  console.log(trending);
+
+  if (userId) {
+    get("/api/getuser", { id: userId }).then((user) => {
+      setRecentlyViewed(user.clickHistory);
+    });
+  }
 
   // any mount/state change
   useEffect(() => {
-    console.log("mounted discover page");
     if (!userId) {
       setOnLoginPage(true);
     }
@@ -46,8 +52,24 @@ const Discover = ({ userId, setOnLoginPage }) => {
     <div>
       {userId ? (
         <>
-          <h1 className="u-textCenter">discover</h1>
-          <CollectionDisplay name="trending" shoes={trending} />
+          {trending.length > 0 && recentlyViewed.length > 0 ? (
+            <>
+              <h1 className="u-textCenter">discover</h1>
+              <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay
+                name="recently viewed"
+                shoes={recentlyViewed}
+                setSearch={setSearch}
+              />
+            </>
+          ) : trending.length > 0 ? (
+            <>
+              <h1 className="u-textCenter">discover</h1>
+              <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+            </>
+          ) : (
+            <div className="centered">loading discover page...</div>
+          )}
         </>
       ) : (
         <>

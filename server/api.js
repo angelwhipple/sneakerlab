@@ -56,6 +56,13 @@ router.get("/searchresults", (req, res) => {
   });
 });
 
+// find & send users with names matching search query, return all if empty query
+router.get("/userresults", (req, res) => {
+  User.find({ displayName: { $regex: req.query.searchQuery, $options: "-i" } }).then((userObjs) => {
+    res.send(userObjs);
+  });
+});
+
 // get trending products
 router.get("/trending", (req, res) => {
   sneaks.getMostPopular(100, (err, products) => {
@@ -75,13 +82,6 @@ router.post("/search", (req, res) => {
   User.findByIdAndUpdate(req.body.id, { $push: { searchHistory: req.body.searchQuery } }).then(
     res.send({})
   );
-});
-
-// find & send users with names matching search query
-router.get("/userresults", (req, res) => {
-  User.find({ displayName: { $regex: req.query.searchQuery, $options: "-i" } }).then((userObjs) => {
-    res.send(userObjs);
-  });
 });
 
 // update user profile info
@@ -187,6 +187,13 @@ router.post("/unfollowuser", (req, res) => {
       $pull: { followers: req.body.id },
     }).then(res.send({}))
   );
+});
+
+router.post("/changeprofile", (req, res) => {
+  User.findById(req.body.newId).then((user) => {
+    socketManager.getIo().emit("profilechange", user);
+    res.send({});
+  });
 });
 
 // anything else falls to this "not found" case
