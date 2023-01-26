@@ -64,12 +64,12 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
             <>
               <h1 className="u-textCenter">discover</h1>
               <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
               <CollectionDisplay
                 name="recently viewed"
                 shoes={recentlyViewed}
                 setSearch={setSearch}
               />
-              <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
             </>
           ) : trending.length > 0 && featured.length > 0 ? (
             <>
