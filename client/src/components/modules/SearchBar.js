@@ -33,7 +33,7 @@ const SearchBar = (props) => {
     event.preventDefault();
     console.log("hit submit");
 
-    // save to user's recent searches
+    // save to user's recent searches, emit search query
     const body = { id: props.id, searchQuery: query };
     console.log(body);
 

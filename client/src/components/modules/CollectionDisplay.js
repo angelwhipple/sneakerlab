@@ -23,7 +23,6 @@ const CollectionDisplay = (props) => {
   useEffect(() => {
     console.log("mounted collection display");
     for (const shoeId of props.shoes) {
-      console.log(shoeId);
       get("/api/getshoe", { id: shoeId }).then((shoe) => {
         let shoeImage = (
           <div className="Shoe-container">

@@ -3,15 +3,56 @@ import React, { useState, useEffect } from "react";
 import ShoeListing from "../modules/ShoeListing";
 import "./Search.css";
 import ProfileCard from "../modules/ProfileCard";
+import { socket } from "../../client-socket";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
+  let products = null;
+  let users = null;
+  // const [products, setProducts] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   console.log("mounted search results page");
   useEffect(() => {
     setQuery(props.query);
     props.setOnLoginPage(false);
   });
+
+  // listen for search query emission
+  // socket.on("newsearch", (newSearch) => {
+  //   console.log(newSearch);
+  //   setQuery(newSearch);
+  //   get("/api/searchresults", { searchQuery: newSearch }).then((productResults) => {
+  //     temp_products = productResults;
+  //   });
+  //   console.log(temp_products);
+  //   if (newSearch) {
+  //     get("/api/userresults", { searchQuery: query }).then((userResults) => {
+  //       temp_users = userResults;
+  //     });
+  //   }
+  //   let listingCards = temp_products.map((shoe) => (
+  //     <ShoeListing
+  //       name={shoe.make}
+  //       release={shoe.releaseDate}
+  //       colorway={shoe.colorway}
+  //       image={shoe.thumbnail}
+  //       prices={shoe.lowestResellPrice}
+  //       links={shoe.resellLinks}
+  //       styleId={shoe.styleID}
+  //       userId={props.userId}
+  //     />
+  //   ));
+  //   setProducts(listingCards);
+  //   let userCards = temp_users.map((user) => (
+  //     <ProfileCard
+  //       profileId={user._id}
+  //       userId={props.userId}
+  //       setCurrentProfileId={props.setCurrentProfileId}
+  //     />
+  //   ));
+  //   setUsers(userCards);
+  // });
 
   // only update search results when search query changes
   useEffect(() => {
@@ -27,9 +68,8 @@ const Search = (props) => {
   }, [query]);
   console.log(props.results);
 
-  let listings = null;
   if (props.results) {
-    listings = props.results.map((shoe) => (
+    products = props.results.map((shoe) => (
       <ShoeListing
         name={shoe.make}
         release={shoe.releaseDate}
@@ -43,7 +83,6 @@ const Search = (props) => {
     ));
   }
 
-  let users = null;
   if (props.users) {
     users = props.users.map((user) => (
       <ProfileCard
@@ -57,18 +96,18 @@ const Search = (props) => {
   return (
     <div>
       <h2 className="u-textCenter">product results for: {query}</h2>
-      {listings ? (
-        <div className="Listing-scroll">{listings}</div>
+      {products.length > 0 ? (
+        <div className="Listing-scroll">{products}</div>
       ) : (
-        <p className="u-textCenter">loading search results...</p>
+        <p className="u-textCenter">no results to display</p>
       )}
       {props.userId && query ? (
         <>
           <h2 className="u-textCenter">users:</h2>
-          {users ? (
+          {users.length > 0 ? (
             <div className="Listing-scroll">{users}</div>
           ) : (
-            <p className="u-textCenter">loading users...</p>
+            <p className="u-textCenter">no users to display</p>
           )}
         </>
       ) : (

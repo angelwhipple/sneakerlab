@@ -80,7 +80,10 @@ router.get("/getuser", (req, res) => {
 // update user search history w/ last search query
 router.post("/search", (req, res) => {
   User.findByIdAndUpdate(req.body.id, { $push: { searchHistory: req.body.searchQuery } }).then(
-    res.send({})
+    () => {
+      // socketManager.getIo().emit("newsearch", req.body.searchQuery);
+      res.send({});
+    }
   );
 });
 

@@ -35,6 +35,7 @@ const ProfileCard = (props) => {
         <button
           onClick={() => {
             props.setCurrentProfileId(props.profileId);
+            // post("/api/changeprofile", { newId: props.profileId });
             routeProfile();
           }}
           className="u-pointer"

@@ -16,6 +16,7 @@ const Profile = (props) => {
   const [following, setFollowing] = useState([]);
   const [profileModal, setProfileModal] = useState(false);
   const [userCollections, setUserCollections] = useState([]);
+  // const [currentProfileId, setCurrentProfileId] = useState("");
 
   // return to home onClick logout button
   const navigate = useNavigate();
@@ -29,29 +30,15 @@ const Profile = (props) => {
     setPfp(updatedInfo.pfp);
   });
 
-  socket.on("profilechange", (user) => {
-    console.log("received profile change emission");
-    setDisplayName(user.displayName);
-    setAbout(user.about);
-    setPfp(user.pfp);
-    setFollowers(user.followers);
-    setFollowing(user.following);
-    get("/api/usercollections", { id: user._id }).then((collections) => {
-      let collectionDisplays = collections.map((collection) => (
-        <CollectionDisplay
-          creator={collection.creator}
-          name={collection.name}
-          shoes={collection.shoes}
-          setSearch={props.setSearch}
-        />
-      ));
-      setUserCollections(collectionDisplays);
-    });
-  });
+  // socket.on("profilechange", (user) => {
+  //   console.log("received profile change emission");
+  //   setCurrentProfileId(user._id);
+  // });
 
   // mount profile page
   useEffect(() => {
     console.log("mounted profile page");
+    // setCurrentProfileId(props.userId);
 
     get("/api/getuser", { id: props.currentProfileId }).then((user) => {
       setDisplayName(user.displayName);
@@ -130,7 +117,11 @@ const Profile = (props) => {
       )}
       <hr></hr>
 
-      <div className="Collection-scroll">{userCollections}</div>
+      {userCollections.length > 0 ? (
+        <div className="Collection-scroll">{userCollections}</div>
+      ) : (
+        <p className="u-textCenter">loading user collections...</p>
+      )}
     </>
   );
 };
