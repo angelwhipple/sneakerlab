@@ -37,6 +37,17 @@ const Profile = (props) => {
     setPfp(user.pfp);
     setFollowers(user.followers);
     setFollowing(user.following);
+    get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
+      let collectionDisplays = collections.map((collection) => (
+        <CollectionDisplay
+          creator={collection.creator}
+          name={collection.name}
+          shoes={collection.shoes}
+          setSearch={props.setSearch}
+        />
+      ));
+      setUserCollections(collectionDisplays);
+    });
     // setCurrentProfileId(user._id);
   });
 
