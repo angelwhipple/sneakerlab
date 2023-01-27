@@ -6,6 +6,16 @@
   margin: 0;
 }
 
+.Listing-info {
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll;
+}
+
+.Listing-info::-webkit-scrollbar {
+  display: none;
+}
+
 .Listing-name {
   font-size: var(--m);
   font-weight: 500;
@@ -19,11 +29,6 @@
 .Listing-release {
   font-size: 12px;
   font-weight: 200;
-}
-
-.Listing-flexBetween {
-  display: flex;
-  justify-content: space-between;
 }
 
 .Listing-icon {
@@ -90,6 +95,9 @@
 
 .Listing-heartContainer {
   padding: 2px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .Listing-modalContent {

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { get } from "../../utilities";
 import { useNavigate } from "@reach/router";
-import "../pages/Search.css";
 import "./ShoeListing.css";
 import "./CollectionDisplay.css";
 

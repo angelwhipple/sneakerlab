@@ -72,31 +72,27 @@ const ShoeListing = (props) => {
         <img src={props.image} className="Listing-icon" />
         <div className="Buy-links-container">{buyLinks}</div>
       </div>
-      <div className="u-flexColumn">
+      <div className="Listing-info">
         <div className="Listing-name">{props.name}</div>
-        <div className="Listing-flexBetween">
-          <div className="u-flexColumn">
-            <div className="Listing-colorway">{props.colorway}</div>
-            <div className="Listing-release">Release Date: {props.release}</div>
+        <div className="Listing-colorway">{props.colorway}</div>
+        <div className="Listing-release">Release Date: {props.release}</div>
+        {props.userId ? (
+          <div className="u-relative">
+            <button
+              onClick={() => {setSaveModal(true);}}
+              className="Listing-heartContainer u-pointer"
+            >
+              <FaRegHeart />
+            </button>
+            {saveModal ? (
+              <SaveModal
+                userId={props.userId}
+                buttons={collectionButtons}
+                toggleModal={setSaveModal}
+              />
+            ) : (<></>)}
           </div>
-          {props.userId ? (
-            <div>
-              <button
-                onClick={() => {setSaveModal(true);}}
-                className="Listing-heartContainer u-pointer"
-              >
-                <FaRegHeart />
-              </button>
-              {saveModal ? (
-                <SaveModal
-                  userId={props.userId}
-                  buttons={collectionButtons}
-                  toggleModal={setSaveModal}
-                />
-              ) : (<></>)}
-            </div>
-          ) : (<></>)}
-        </div>
+        ) : (<></>)}
       </div>
     </div>
   );
