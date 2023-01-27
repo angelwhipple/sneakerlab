@@ -1,15 +1,36 @@
+.Profile-all {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.Profile-left {
+  padding: 8px;
+  margin: 8px;
+  position: relative;
+  top: 100px;
+}
+
+.Profile-right {
+  padding: 8px;
+  margin: 8px;
+}
+
 .Profile-container {
   display: flex;
-  justify-content: center;
-  padding: 0.35%;
+  flex-direction: column;
+  align-items: center;
+  /* position: relative;
+  top: 100px; */
+  position: sticky;
+  top: 100px;
 }
 
 .Profile-name {
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .Profile-about {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .Profile-picContainer {
@@ -25,12 +46,21 @@
 }
 
 .Profile-interaction {
-  font-size: 20px;
+  font-size: 16px;
+}
+
+.Profile-personal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 12px;
 }
 
 .Profile-button {
   color: var(--medgrey);
-  font-size: 15px;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
 }
 
 .Profile-button:hover {
@@ -64,10 +94,6 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: "Poppins";
-}
-
-.Profile-collections {
-  margin: 0;
 }
 
 .Collection-scroll {

@@ -75,7 +75,7 @@ const ShoeListing = (props) => {
       <div className="u-flexColumn">
         <div className="Listing-name">{props.name}</div>
         <div className="Listing-flexBetween">
-          <div className="u-flexColumn">
+          <div className="Listing-minorDetails">
             <div className="Listing-colorway">{props.colorway}</div>
             <div className="Listing-release">Release Date: {props.release}</div>
           </div>

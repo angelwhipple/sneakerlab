@@ -84,6 +84,13 @@
   margin: 2px;
 }
 
+.Listing-minorDetails {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  overflow-x: scroll;
+}
+
 .Listing-heartContainer {
   padding: 2px;
 }
