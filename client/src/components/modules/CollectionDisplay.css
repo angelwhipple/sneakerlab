@@ -1,14 +1,18 @@
 .Collection-shoeContainer {
-  /* display: block; */
   border: 1px solid var(--black);
   border-radius: 12px;
   padding: 12px;
-  margin: var(--m);
+  margin: 4px 16px 4px 16px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
+
 
 .Collection-name {
   font-size: 18px;
-  padding: 0 0.5%;
+  padding: 0;
+  margin: 0px 0px 24px 24px;
 }
 
 .Shoe-container {

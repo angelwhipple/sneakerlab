@@ -97,7 +97,7 @@ const Search = (props) => {
     <div>
       <h2 className="u-textCenter">product results for: {query}</h2>
       {products.length > 0 ? (
-        <div className="Listing-scroll">{products}</div>
+        <div className="Search-scroll">{products}</div>
       ) : (
         <p className="u-textCenter">no results to display</p>
       )}
@@ -105,7 +105,7 @@ const Search = (props) => {
         <>
           <h2 className="u-textCenter">users:</h2>
           {users.length > 0 ? (
-            <div className="Listing-scroll">{users}</div>
+            <div className="Search-scroll">{users}</div>
           ) : (
             <p className="u-textCenter">no users to display</p>
           )}
