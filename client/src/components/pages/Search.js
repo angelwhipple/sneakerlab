@@ -94,25 +94,28 @@ const Search = (props) => {
   }
 
   return (
-    <div>
-      <h2 className="u-textCenter">product results for: {query}</h2>
-      {products.length > 0 ? (
-        <div className="Listing-scroll">{products}</div>
-      ) : (
-        <p className="u-textCenter">no results to display</p>
-      )}
-      {props.userId && query ? (
-        <>
-          <h2 className="u-textCenter">users:</h2>
-          {users.length > 0 ? (
-            <div className="Listing-scroll">{users}</div>
-          ) : (
-            <p className="u-textCenter">no users to display</p>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
+    <div className="searchPageContainer">
+      <div className="resultsContainer">
+        <h2 className="u-textCenter">product results for: {query}</h2>
+        {products.length > 0 ? (
+          <div className="Listing-scroll">{products}</div>
+        ) : (
+          <p className="u-textCenter">no results to display</p>
+        )}
+        {props.userId && query ? (
+          <>
+            <h2 className="u-textCenter">users:</h2>
+            {users.length > 0 ? (
+              <div className="Listing-scroll">{users}</div>
+            ) : (
+              <p className="u-textCenter">no users to display</p>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
+      <div className="filterBar">filters</div>
     </div>
   );
 };

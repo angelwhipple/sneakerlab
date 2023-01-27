@@ -1,11 +1,34 @@
 .Listing-scroll {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-x: auto;
-  column-gap: var(--m);
+  column-gap: var(--s);
+  row-gap: var(--s);
   padding: 0 1%;
 }
 
 .Listing-scroll::-webkit-scrollbar {
   display: none;
+}
+
+.searchPageContainer {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.resultsContainer {
+  /* flex-basis: 36; */
+  float: left;
+  width: 85%;
+}
+
+.filterBar {
+  /* flex-basis: 1; */
+  float: right;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  top: 100px;
 }

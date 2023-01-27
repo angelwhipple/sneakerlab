@@ -1,6 +1,6 @@
 .Listing-info {
   display: flex;
-  width: 400px;
+  width: 250px;
   justify-content: space-around;
   padding: 0;
   margin: 0;
@@ -13,17 +13,17 @@
 }
 
 .Listing-name {
-  font-size: 20px;
+  font-size: var(--m);
   font-weight: 500;
 }
 
 .Listing-colorway {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 350;
 }
 
 .Listing-release {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 200;
 }
 
@@ -45,6 +45,7 @@
   border: 2px solid var(--black);
   padding: 4px;
   display: block;
+  width: 250px;
 }
 
 .Listing-container:hover {

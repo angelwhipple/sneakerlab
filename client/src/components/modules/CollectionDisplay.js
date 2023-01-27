@@ -47,7 +47,7 @@ const CollectionDisplay = (props) => {
 
   return (
     <div>
-      <div className="Listing-scroll Collection-shoeContainer">{shoeImages}</div>
+      <div className="Collection-shoeContainer">{shoeImages}</div>
       <h3 className="Collection-name">{props.name}</h3>
     </div>
   );

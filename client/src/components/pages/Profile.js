@@ -28,6 +28,9 @@ const Profile = (props) => {
     setDisplayName(updatedInfo.name);
     setAbout(updatedInfo.about);
     setPfp(updatedInfo.pfp);
+    // let newPfp = document.createElement("img");
+    // newPfp.src = URL.createObjectURL(updatedInfo.pfp);
+    // setPfp(newPfp.src);
   });
 
   socket.on("profilechange", (user) => {
@@ -36,6 +39,9 @@ const Profile = (props) => {
     setDisplayName(user.displayName);
     setAbout(user.about);
     setPfp(user.pfp);
+    // let newPfp = document.createElement("img");
+    // newPfp.src = URL.createObjectURL(user.pfp);
+    // setPfp(newPfp.src);
     setFollowers(user.followers);
     setFollowing(user.following);
     get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
@@ -60,6 +66,9 @@ const Profile = (props) => {
       setDisplayName(user.displayName);
       setAbout(user.about);
       setPfp(user.pfp);
+      // let newPfp = document.createElement("img");
+      // newPfp.src = URL.createObjectURL(user.pfp);
+      // setPfp(newPfp.src);
       setFollowers(user.followers);
       setFollowing(user.following);
     });
