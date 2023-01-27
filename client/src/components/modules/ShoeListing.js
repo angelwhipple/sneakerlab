@@ -68,40 +68,35 @@ const ShoeListing = (props) => {
 
   return (
     <div className="u-flexColumn Listing-container">
-      <div className="Listing-info">
+      <div className="u-flex">
         <img src={props.image} className="Listing-icon" />
-        <div className="Listing-content">
-          <div className="Listing-name">{props.name}</div>
-          <div className="Listing-colorway">{props.colorway}</div>
-          <div className="Listing-release">Release Date: {props.release}</div>
-        </div>
+        <div className="Buy-links-container">{buyLinks}</div>
       </div>
-      <div className="Buy-links-container">
-        <div>{buyLinks}</div>
-        {/* only display save button/modal if logged in */}
-        {props.userId ? (
-          <div>
-            <button
-              onClick={() => {
-                setSaveModal(true);
-              }}
-              className="Listing-heartContainer u-pointer"
-            >
-              <FaRegHeart />
-            </button>
-            {saveModal ? (
-              <SaveModal
-                userId={props.userId}
-                buttons={collectionButtons}
-                toggleModal={setSaveModal}
-              />
-            ) : (
-              <></>
-            )}
+      <div className="u-flexColumn">
+        <div className="Listing-name">{props.name}</div>
+        <div className="Listing-flexBetween">
+          <div className="u-flexColumn">
+            <div className="Listing-colorway">{props.colorway}</div>
+            <div className="Listing-release">Release Date: {props.release}</div>
           </div>
-        ) : (
-          <></>
-        )}
+          {props.userId ? (
+            <div>
+              <button
+                onClick={() => {setSaveModal(true);}}
+                className="Listing-heartContainer u-pointer"
+              >
+                <FaRegHeart />
+              </button>
+              {saveModal ? (
+                <SaveModal
+                  userId={props.userId}
+                  buttons={collectionButtons}
+                  toggleModal={setSaveModal}
+                />
+              ) : (<></>)}
+            </div>
+          ) : (<></>)}
+        </div>
       </div>
     </div>
   );

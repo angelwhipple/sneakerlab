@@ -1,12 +1,15 @@
 import { get } from "../../utilities";
 import React, { useState, useEffect } from "react";
 import ShoeListing from "../modules/ShoeListing";
+import { FiUser } from "react-icons/fi";
+import { TbShoe } from "react-icons/tb";
 import "./Search.css";
 import ProfileCard from "../modules/ProfileCard";
 import { socket } from "../../client-socket";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
+  const [showProducts, setShowProducts] = useState(true);
   let products = null;
   let users = null;
   // const [products, setProducts] = useState([]);
@@ -92,30 +95,53 @@ const Search = (props) => {
       />
     ));
   }
-
   return (
     <div className="searchPageContainer">
       <div className="resultsContainer">
-        <h2 className="u-textCenter">product results for: {query}</h2>
-        {products.length > 0 ? (
-          <div className="Listing-scroll">{products}</div>
-        ) : (
-          <p className="u-textCenter">no results to display</p>
-        )}
-        {props.userId && query ? (
+        {showProducts == true ? (
           <>
-            <h2 className="u-textCenter">users:</h2>
-            {users.length > 0 ? (
-              <div className="Listing-scroll">{users}</div>
+            <h2 className="u-textCenter">product results for: {query}</h2>
+            {products.length > 0 ? (
+              <div className="Search-scroll">{products}</div>
             ) : (
-              <p className="u-textCenter">no users to display</p>
+              <p className="u-textCenter">no results to display</p>
             )}
           </>
         ) : (
-          <></>
+          <>
+            {props.userId && query ? (
+              <>
+                <h2 className="u-textCenter">user results for:</h2>
+                {users.length > 0 ? (
+                  <div className="Search-scroll">{users}</div>
+                ) : (
+                  <p className="u-textCenter">no users to display</p>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </div>
-      <div className="filterBar">filters</div>
+      <div className="filterBar">
+        <button2
+          className="u-pointer"
+          onClick={() => {
+            setShowProducts(false);
+          }}
+        >
+          <FiUser className="filterIcon" />
+        </button2>
+        <button2
+          className="u-pointer"
+          onClick={() => {
+            setShowProducts(true);
+          }}
+        >
+          <TbShoe className="filterIcon" />
+        </button2>
+      </div>
     </div>
   );
 };

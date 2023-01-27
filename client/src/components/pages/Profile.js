@@ -28,9 +28,6 @@ const Profile = (props) => {
     setDisplayName(updatedInfo.name);
     setAbout(updatedInfo.about);
     setPfp(updatedInfo.pfp);
-    // let newPfp = document.createElement("img");
-    // newPfp.src = URL.createObjectURL(updatedInfo.pfp);
-    // setPfp(newPfp.src);
   });
 
   socket.on("profilechange", (user) => {
@@ -39,21 +36,22 @@ const Profile = (props) => {
     setDisplayName(user.displayName);
     setAbout(user.about);
     setPfp(user.pfp);
-    // let newPfp = document.createElement("img");
-    // newPfp.src = URL.createObjectURL(user.pfp);
-    // setPfp(newPfp.src);
     setFollowers(user.followers);
     setFollowing(user.following);
     get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
-      let collectionDisplays = collections.map((collection) => (
-        <CollectionDisplay
-          creator={collection.creator}
-          name={collection.name}
-          shoes={collection.shoes}
-          setSearch={props.setSearch}
-        />
-      ));
-      setUserCollections(collectionDisplays);
+      if (collections.length == 0) {
+        setUserCollections("no collections to display");
+      } else {
+        let collectionDisplays = collections.map((collection) => (
+          <CollectionDisplay
+            creator={collection.creator}
+            name={collection.name}
+            shoes={collection.shoes}
+            setSearch={props.setSearch}
+          />
+        ));
+        setUserCollections(collectionDisplays);
+      }
     });
   });
 
@@ -66,23 +64,24 @@ const Profile = (props) => {
       setDisplayName(user.displayName);
       setAbout(user.about);
       setPfp(user.pfp);
-      // let newPfp = document.createElement("img");
-      // newPfp.src = URL.createObjectURL(user.pfp);
-      // setPfp(newPfp.src);
       setFollowers(user.followers);
       setFollowing(user.following);
     });
 
     get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
-      let collectionDisplays = collections.map((collection) => (
-        <CollectionDisplay
-          creator={collection.creator}
-          name={collection.name}
-          shoes={collection.shoes}
-          setSearch={props.setSearch}
-        />
-      ));
-      setUserCollections(collectionDisplays);
+      if (collections.length == 0) {
+        setUserCollections("no collections to display");
+      } else {
+        let collectionDisplays = collections.map((collection) => (
+          <CollectionDisplay
+            creator={collection.creator}
+            name={collection.name}
+            shoes={collection.shoes}
+            setSearch={props.setSearch}
+          />
+        ));
+        setUserCollections(collectionDisplays);
+      }
     });
   }, []);
 
@@ -148,10 +147,16 @@ const Profile = (props) => {
       )}
       <hr></hr>
 
-      {userCollections.length > 0 ? (
-        <div className="Collection-scroll">{userCollections}</div>
+      {typeof userCollections === "string" ? (
+        <p className="u-textCenter">{userCollections}</p>
       ) : (
-        <p className="u-textCenter">loading user collections...</p>
+        <>
+          {userCollections.length > 0 ? (
+            <div className="Collection-scroll">{userCollections}</div>
+          ) : (
+            <p className="u-textCenter">loading user collections...</p>
+          )}
+        </>
       )}
     </>
   );

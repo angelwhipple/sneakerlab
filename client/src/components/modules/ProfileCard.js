@@ -1,6 +1,8 @@
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { BiMinus } from "react-icons/bi";
+import { FiUserPlus } from "react-icons/fi";
+import { FiUserMinus } from "react-icons/fi";
 import { get, post } from "../../utilities";
 import { useState, useEffect } from "react";
 import { useNavigate } from "@reach/router";
@@ -57,7 +59,7 @@ const ProfileCard = (props) => {
               }}
               className="Follow-heartContainer u-pointer"
             >
-              <BiMinus />
+              <FiUserMinus />
             </button>
           ) : (
             <button
@@ -66,7 +68,7 @@ const ProfileCard = (props) => {
               }}
               className="Follow-heartContainer u-pointer"
             >
-              <FaRegHeart />
+              <FiUserPlus />
             </button>
           )
         ) : (
