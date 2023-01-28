@@ -72,7 +72,7 @@
 }
 
 .buy-link:hover {
-  border: solid var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .Buy-links-container {
