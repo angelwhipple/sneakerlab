@@ -1,15 +1,21 @@
-.Listing-info {
-  display: flex;
+.Listing-container {
+  border-radius: 12px;
+  border: 1px solid var(--black);
+  padding: 8px;
+  display: block;
   width: 250px;
-  justify-content: space-around;
-  padding: 0;
-  margin: 0;
+  white-space: nowrap;
+}
+
+.Listing-container:hover {
+  transition-duration: 0.4s;
+  border: 1px solid var(--primary);
 }
 
 .Listing-info {
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
+  width: 250px;
 }
 
 .Listing-info::-webkit-scrollbar {
@@ -19,11 +25,15 @@
 .Listing-name {
   font-size: var(--m);
   font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Listing-colorway {
   font-size: 12px;
   font-weight: 350;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Listing-release {
@@ -40,25 +50,6 @@
   max-height: 100px;
   align-self: center;
   margin: 4px;
-}
-
-.Listing-container {
-  border-radius: 12px;
-  border: 1px solid var(--black);
-  padding: 8px;
-  display: block;
-  width: 250px;
-  white-space: nowrap;
-  overflow-x: scroll;
-}
-
-.Listing-container::-webkit-scrollbar {
-  display: none;
-}
-
-.Listing-container:hover {
-  transition-duration: 0.4s;
-  border: 1px solid var(--primary);
 }
 
 .listing-button,
