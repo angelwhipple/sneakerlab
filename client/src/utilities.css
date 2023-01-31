@@ -125,26 +125,6 @@ form {
   text-align: center;
 }
 
-.smallSplit {
-  height: 100%;
-  width: 30%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.bigSplit {
-  height: 100%;
-  width: 70%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
 .left {
   left: 0;
   background-color: var(--black);

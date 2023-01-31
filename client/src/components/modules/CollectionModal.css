@@ -1,0 +1,29 @@
+.collection-link {
+  box-sizing: border-box;
+  font-size: 10px;
+  padding: 4px 8px 4px 8px;
+  border: 1px solid var(--black);
+  margin: 4px;
+}
+
+.collection-link:hover {
+  border: solid var(--primary);
+}
+
+.Collections-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  column-gap: 8px;
+}
+
+.collection-button,
+.collection-button:visited {
+  font-size: 12px;
+  color: var(--black);
+}
+
+.collection-button:hover {
+  color: var(--primary);
+  transition-duration: 0.4s;
+}

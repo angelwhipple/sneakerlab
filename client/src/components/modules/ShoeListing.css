@@ -95,6 +95,7 @@
 
 .Listing-heartContainer {
   padding: 2px;
+  background-color: transparent;
   position: absolute;
   bottom: 0;
   right: 0;

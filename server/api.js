@@ -13,8 +13,12 @@ const express = require("express");
 const User = require("./models/user");
 const Shoe = require("./models/shoe");
 const Collection = require("./models/collection");
+const Trade = require("./models/trade");
+const Message = require("./models/message");
+const Chat = require("./models/chat");
 const SneaksAPI = require("sneaks-api");
 const sneaks = new SneaksAPI();
+const date = new Date();
 
 // import authentication library
 const auth = require("./auth");
@@ -51,7 +55,7 @@ router.post("/initsocket", (req, res) => {
 
 // get product results from sneakers API
 router.get("/searchresults", (req, res) => {
-  sneaks.getProducts(req.query.searchQuery, 100, (err, products) => {
+  sneaks.getProducts(req.query.searchQuery, 250, (err, products) => {
     res.send(products);
   });
 });
@@ -70,10 +74,30 @@ router.get("/trending", (req, res) => {
   });
 });
 
+// get newly released products
+router.get("/newreleases", (req, res) => {
+  sneaks.getProducts("", 250, (err, products) => {
+    const year = date.getFullYear();
+    // filter shoes released within the year
+    const newReleases = products.filter(
+      (shoe) => parseInt(shoe.releaseDate.substring(0, 4)) == year
+    );
+    res.send(newReleases);
+  });
+});
+
 // get a user by ID
 router.get("/getuser", (req, res) => {
   User.findOne({ _id: req.query.id }).then((userObj) => {
     res.send(userObj);
+  });
+});
+
+// set to google profile pic on login
+router.post("/setpfp", (req, res) => {
+  User.findByIdAndUpdate(req.body.id, { $set: { pfp: req.body.pfp } }).then((user) => {
+    socketManager.getIo().emit("setpfp", user);
+    res.send({});
   });
 });
 
@@ -90,11 +114,9 @@ router.post("/search", (req, res) => {
 // update user profile info
 router.post("/updateprofile", (req, res) => {
   User.findByIdAndUpdate(req.body.id, {
-    $set: { displayName: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp },
+    $set: { displayName: req.body.newName, about: req.body.newAbout },
   }).then((user) => {
-    socketManager
-      .getIo()
-      .emit("profile", { name: req.body.newName, about: req.body.newAbout, pfp: req.body.newPfp });
+    socketManager.getIo().emit("profile", { name: req.body.newName, about: req.body.newAbout });
     res.send({});
   });
 });
@@ -122,6 +144,13 @@ router.post("/createcollection", (req, res) => {
     shoes: [],
   });
   newCollection.save().then(res.send({}));
+});
+
+// delete a collection
+router.post("/deletecollection", (req, res) => {
+  Collection.findByIdAndDelete(req.body.collectionId).then(() => {
+    socketManager.getIo().emit("deletedcollection", req.body.collectionId);
+  });
 });
 
 // save a shoe to user view history
@@ -204,6 +233,132 @@ router.post("/changeprofile", (req, res) => {
   User.findById(req.body.newId).then((user) => {
     socketManager.getIo().emit("profilechange", user);
     res.send({});
+  });
+});
+
+// create a new trade listing
+router.post("/createtrade", (req, res) => {
+  const tradeDetails = {
+    shoeName: req.body.name,
+    size: req.body.size,
+    colorway: req.body.colorway,
+    brand: req.body.brand,
+    retail: req.body.retail,
+    image: req.body.image,
+  };
+  const newTrade = new Trade({
+    creator: req.body.id,
+    details: tradeDetails,
+    status: "active",
+    originalTrade: "",
+  });
+  newTrade.save().then((trade) => {
+    socketManager.getIo().emit("newtrade", trade);
+    res.send({});
+  });
+});
+
+// reply to an original trade listing
+router.post("/replytrade", (req, res) => {
+  const tradeDetails = {
+    shoeName: req.body.name,
+    size: req.body.size,
+    colorway: req.body.colorway,
+    brand: req.body.brand,
+    retail: req.body.retail,
+    image: req.body.image,
+  };
+  const newTrade = new Trade({
+    creator: req.body.id,
+    details: tradeDetails,
+    status: "pending",
+    originalTrade: req.body.originalTrade,
+  });
+  newTrade.save().then((trade) => {
+    socketManager.getIo().emit("newreplytrade", trade);
+    res.send({});
+  });
+});
+
+// get a trade listing/request by ID
+router.get("/gettrade", (req, res) => {
+  Trade.findById(req.query.tradeId).then((trade) => {
+    res.send(trade);
+  });
+});
+
+router.get("/tradelistings", (req, res) => {
+  // filter out active, original trade posts from trade listings
+  Trade.find({}).then((trades) => {
+    let tradeListings = trades.filter((trade) => trade.status == "active");
+    res.send(tradeListings);
+  });
+});
+
+router.get("/traderequests", (req, res) => {
+  let tradeRequests = [];
+  const async_process = async () => {
+    // get all trades made by the user
+    await Trade.find({ creator: req.query.creator }).then(async (trades) => {
+      // find all trades with an original post trade made by the user
+      for (const trade of trades) {
+        await Trade.find({ originalTrade: trade._id }).then((replyTrades) => {
+          // get trade requests that are active
+          let activeReplyTrades = replyTrades.filter(
+            (replyTrade) => replyTrade.status == "pending"
+          );
+          tradeRequests.push(...activeReplyTrades);
+        });
+      }
+    });
+  };
+
+  async_process().then(() => {
+    res.send(tradeRequests);
+  });
+});
+
+// accept a trade request, update trade listings, start new chat
+router.post("/accepttrade", (req, res) => {
+  Trade.findByIdAndUpdate(req.body.originalTrade, {
+    $set: { status: "complete" },
+  }).then(() => {
+    Trade.findByIdAndUpdate(req.body.requestId, {
+      $set: { status: "accepted" },
+    }).then(() => {
+      const newMessage = new Message({
+        sender: req.body.originalTradeCreator,
+        content: "Hi, I've accepted your trade offer",
+      });
+      newMessage.save().then((message) => {
+        const newChat = new Chat({
+          messages: [message._id],
+        });
+        newChat.save().then((chat) => {
+          User.findByIdAndUpdate(req.body.creator, {
+            $push: { chats: chat._id },
+          }).then(
+            User.findByIdAndUpdate(req.body.originalTradeCreator, {
+              $push: { chats: chat._id },
+            }).then(res.send({}))
+          );
+        });
+      });
+    });
+  });
+});
+
+// get a chat by its ID
+router.get("/getchat", (req, res) => {
+  Chat.findById(req.query.chatId).then((chat) => {
+    res.send(chat);
+  });
+});
+
+// get a message by its ID
+router.get("/getmessage", (req, res) => {
+  Message.findById(req.query.messageId).then((message) => {
+    res.send(message);
   });
 });
 

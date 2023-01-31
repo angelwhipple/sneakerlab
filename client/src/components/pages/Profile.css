@@ -1,12 +1,38 @@
 .Profile-all {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+}
+
+.Profilepage-30 {
+  height: 100%;
+  width: 30%;
+  position: fixed;
+  z-index: 1;
+  top: 1;
+  overflow-x: hidden;
+}
+
+.Profilepage-70 {
+  height: 100%;
+  width: 70%;
+  position: fixed;
+  z-index: 1;
+  top: 1;
+  overflow-x: hidden;
+  left: 30%;
+}
+
+.Profilepage-100 {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 1;
+  overflow-x: hidden;
 }
 
 .Profile-left {
   padding: 8px;
   margin: 8px;
-  position: relative;
   top: 100px;
 }
 
@@ -19,8 +45,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* position: relative;
-  top: 100px; */
+  top: 100px;
   position: sticky;
   top: 100px;
 }
@@ -51,9 +76,7 @@
 
 .Profile-personal {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 12px;
+  padding: var(--l) 0;
 }
 
 .Profile-button {
@@ -106,4 +129,12 @@ input {
 
 .Collection-scroll::-webkit-scrollbar {
   display: none;
+}
+
+.editButton-Container {
+  background-color: transparent;
+}
+
+.editButton-Container:hover {
+  background-color: transparent;
 }

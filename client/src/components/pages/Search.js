@@ -104,7 +104,7 @@ const Search = (props) => {
             {products.length > 0 ? (
               <div className="Search-scroll">{products}</div>
             ) : (
-              <p className="u-textCenter">no results to display</p>
+              <p className="u-textCenter">fetching search results...</p>
             )}
           </>
         ) : (

@@ -1,0 +1,36 @@
+import { get } from "../../utilities";
+import "./ChatPreview.css";
+import React, { useState, useEffect } from "react";
+
+const ChatPreview = (props) => {
+  const [image, setImage] = useState("");
+  const [lastMsg, setLastMsg] = useState("");
+
+  useEffect(() => {
+    get("/api/getchat", { chatId: props.chatId }).then((chat) => {
+      let msg = chat.messages[chat.messages.length - 1];
+      get("/api/getmessage", { messageId: msg }).then((message) => {
+        get("/api/getuser", { id: message.sender }).then((user) => {
+          setImage(user.pfp);
+          setLastMsg(message.content);
+        });
+      });
+    });
+  }, []);
+
+  return (
+    <div
+      onClick={() => {
+        props.setSelectedChat(props.chatId);
+      }}
+      className="ChatPreview-container u-pointer"
+    >
+      <div className="u-flex">
+        <img className="ChatPreview-icon" src={image}></img>
+        <p>{lastMsg}</p>
+      </div>
+    </div>
+  );
+};
+
+export default ChatPreview;

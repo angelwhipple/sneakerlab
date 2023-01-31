@@ -11,6 +11,7 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const [featured, setFeatured] = useState([]);
   const [featuredName, setFeaturedName] = useState({});
+  const [latest, setLatest] = useState([]);
 
   const navigate = useNavigate();
   const routeChange = () => {
@@ -41,6 +42,21 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
         setFeaturedName("featured: " + collection.name + " by " + user.displayName);
       });
     });
+    get("/api/newreleases").then((latestProducts) => {
+      let latestReleases = [];
+      for (const shoeObj of latestProducts) {
+        post("/api/createshoe", {
+          shoeName: shoeObj.make,
+          release: shoeObj.releaseDate,
+          colorway: shoeObj.colorway,
+          image: shoeObj.thumbnail,
+          styleId: shoeObj.styleID,
+        }).then(() => {
+          latestReleases.push(shoeObj.styleID);
+        });
+      }
+      setLatest(latestReleases);
+    });
   }, []);
 
   if (userId) {
@@ -60,10 +76,14 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
     <div>
       {userId ? (
         <>
-          {trending.length > 0 && featured.length > 0 && recentlyViewed.length > 0 ? (
+          {trending.length > 0 &&
+          latest.length > 0 &&
+          featured.length > 0 &&
+          recentlyViewed.length > 0 ? (
             <>
               <h1 className="u-textCenter">discover</h1>
               <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay name="latest" shoes={latest} setSearch={setSearch} />
               <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
               <CollectionDisplay
                 name="recently viewed"
@@ -71,11 +91,17 @@ const Discover = ({ userId, setOnLoginPage, setSearch }) => {
                 setSearch={setSearch}
               />
             </>
-          ) : trending.length > 0 && featured.length > 0 ? (
+          ) : trending.length > 0 && latest.length > 0 && featured.length > 0 ? (
             <>
               <h1 className="u-textCenter">discover</h1>
               <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay name="latest" shoes={latest} setSearch={setSearch} />
               <CollectionDisplay name={featuredName} shoes={featured} setSearch={setSearch} />
+            </>
+          ) : trending.length > 0 && latest.length > 0 ? (
+            <>
+              <CollectionDisplay name="trending" shoes={trending} setSearch={setSearch} />
+              <CollectionDisplay name="latest" shoes={latest} setSearch={setSearch} />
             </>
           ) : (
             <div className="centered">loading discover page...</div>

@@ -7,7 +7,6 @@ import { useState } from "react";
 const EditProfileModal = (props) => {
   const [temp_name, setTempName] = useState("");
   const [temp_about, setTempAbout] = useState("");
-  const [temp_pfp, setTempPfp] = useState("");
 
   const handleInput_name = (event) => {
     setTempName(event.target.value);
@@ -15,11 +14,6 @@ const EditProfileModal = (props) => {
 
   const handleInput_about = (event) => {
     setTempAbout(event.target.value);
-  };
-
-  // reads a FileList obj, extract File
-  const handleInput_pfp = (event) => {
-    setTempPfp(event.target.files[0]);
   };
 
   // update info to user profile document
@@ -38,13 +32,6 @@ const EditProfileModal = (props) => {
       body["newAbout"] = temp_about;
     } else {
       body["newAbout"] = props.oldAbout;
-    }
-    if (temp_pfp) {
-      const newPfp = document.createElement("img");
-      newPfp.src = URL.createObjectURL(temp_pfp);
-      body["newPfp"] = newPfp.src;
-    } else {
-      body["newPfp"] = props.oldPfp;
     }
     console.log("body: ", body);
     post("/api/updateprofile", body);
@@ -90,10 +77,6 @@ const EditProfileModal = (props) => {
               placeholder="enter new about info"
               onChange={handleInput_about}
             />
-          </div>
-          <div>
-            <label className="col-20">profile picture</label>
-            <input className="col-70" type="file" accept="image/*" onChange={handleInput_pfp} />
           </div>
         </div>
       </div>

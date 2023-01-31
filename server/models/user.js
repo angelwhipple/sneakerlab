@@ -9,6 +9,8 @@ const UserSchema = new mongoose.Schema({
   clickHistory: [String],
   followers: [],
   following: [],
+  // array of String chat IDs
+  chats: [],
 });
 
 // compile model from schema

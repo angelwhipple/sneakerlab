@@ -1,0 +1,48 @@
+.TradeListing-container {
+  border-radius: 12px;
+  border: 2px solid var(--black);
+  padding: 8px;
+  display: block;
+  width: 250px;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.TradeListing-icon {
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  max-width: 140px;
+  height: auto;
+  max-height: 80px;
+  align-self: center;
+  margin: 4px;
+}
+
+.Trade-shoename {
+  font-size: var(--m);
+  font-weight: 500;
+}
+.TradeListing-colorway {
+  font-size: 12px;
+  font-weight: 350;
+}
+
+.TradeListing-info {
+  display: inline-block;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  align-self: center;
+}
+
+.TradeListing-infoColumns {
+  display: flex;
+  justify-content: center;
+  column-gap: var(--m);
+}
+
+.replyButton-Container {
+  align-self: center;
+}

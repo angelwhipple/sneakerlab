@@ -35,6 +35,7 @@ function getOrCreateUser(user) {
       clickHistory: [],
       followers: [],
       following: [],
+      chats: [],
     });
 
     return newUser.save();

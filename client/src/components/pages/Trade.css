@@ -1,0 +1,87 @@
+.page-30 {
+  height: 100%;
+  width: 30%;
+  position: fixed;
+  z-index: 1;
+  top: 1;
+  overflow-x: hidden;
+  background-color: black;
+}
+
+.page-70 {
+  height: 100%;
+  width: 70%;
+  position: fixed;
+  z-index: 1;
+  top: 1;
+  overflow-x: hidden;
+  left: 30%;
+}
+
+.button2 {
+  background-color: var(--black);
+}
+
+.toggleIcon,
+.toggleIcon:visited {
+  color: var(--white);
+  opacity: 1;
+  transition-duration: 0.4s;
+}
+
+.toggleIcon:hover {
+  color: var(--primary);
+}
+
+.toggleIcon-Container {
+  padding-top: var(--m);
+  display: flex;
+  justify-content: center;
+  column-gap: 100px;
+}
+
+.verticalView {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  margin: var(--s);
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+  justify-content: center;
+}
+
+.verticalView::-webkit-scrollbar {
+  display: none;
+}
+
+.tradeAction {
+  border: 2px solid var(--white);
+  border-radius: 12px;
+  padding: 12px;
+  -webkit-text-fill-color: var(--white);
+  text-align: center;
+  transition-duration: 0.4s;
+  align-self: center;
+}
+
+.tradeAction-Container {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--l);
+  padding-top: var(--m);
+}
+
+.tradeAction:hover {
+  -webkit-text-fill-color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.inputs-Container {
+  display: flex;
+  column-gap: var(--m);
+  padding-bottom: var(--l);
+}
+
+.centerButton {
+  text-align: center;
+}

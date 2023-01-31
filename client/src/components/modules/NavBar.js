@@ -20,9 +20,8 @@ const NavBar = (props) => {
     });
   }
 
-  socket.on("profile", (updatedInfo) => {
-    console.log(updatedInfo);
-    setPfp(updatedInfo.pfp);
+  socket.on("setpfp", (user) => {
+    setPfp(user.pfp);
   });
 
   // return to home onClick logout button

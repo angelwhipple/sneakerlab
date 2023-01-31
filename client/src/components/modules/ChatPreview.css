@@ -1,0 +1,28 @@
+.ChatPreview-container {
+  border: 2px solid var(--white);
+  border-radius: 12px;
+  padding: 10px;
+  -webkit-text-fill-color: var(--white);
+  text-align: center;
+  transition-duration: 0.4s;
+  white-space: nowrap;
+  overflow-x: hidden;
+  align-self: center;
+}
+
+.ChatPreview-container:hover {
+  border: 2px solid var(--primary);
+  -webkit-text-fill-color: var(--primary);
+}
+
+.ChatPreview-icon {
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  max-width: 50px;
+  height: auto;
+  max-height: 50px;
+  align-self: center;
+  border-radius: 50%;
+  padding: 2%;
+}

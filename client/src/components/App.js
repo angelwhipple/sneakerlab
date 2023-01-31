@@ -51,6 +51,7 @@ const App = () => {
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
+      post("/api/setpfp", { id: user._id, pfp: decodedCredential.picture });
     });
   };
 
@@ -87,7 +88,7 @@ const App = () => {
           setSearch={setSearchQuery}
         />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
-        <Trade path="/trade/" />
+        <Trade path="/trade/" userId={userId} />
         <Search
           path="/search/"
           query={searchQuery}

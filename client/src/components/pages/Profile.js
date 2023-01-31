@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import { googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "@reach/router";
 import EditProfileModal from "../modules/EditProfileModal";
+import CollectionModal from "../modules/CollectionModal";
 import { socket } from "../../client-socket";
 import CollectionDisplay from "../modules/CollectionDisplay";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import "./Search.css";
 
 const Profile = (props) => {
@@ -16,7 +18,7 @@ const Profile = (props) => {
   const [following, setFollowing] = useState([]);
   const [profileModal, setProfileModal] = useState(false);
   const [userCollections, setUserCollections] = useState([]);
-  // const [currentProfileId, setCurrentProfileId] = useState("");
+  const [collectionModal, setCollectionModal] = useState(false);
 
   // return to home onClick logout button
   const navigate = useNavigate();
@@ -24,15 +26,17 @@ const Profile = (props) => {
     navigate("/");
   };
 
-  // socket.on("profile", (updatedInfo) => {
-  //   setDisplayName(updatedInfo.name);
-  //   setAbout(updatedInfo.about);
-  //   setPfp(updatedInfo.pfp);
-  // });
+  socket.on("profile", (updatedInfo) => {
+    setDisplayName(updatedInfo.name);
+    setAbout(updatedInfo.about);
+  });
+
+  socket.on("setpfp", (user) => {
+    setPfp(user.pfp);
+  });
 
   socket.on("profilechange", (user) => {
     console.log("received profile change emission");
-    // setCurrentProfileId(user._id);
     setDisplayName(user.displayName);
     setAbout(user.about);
     setPfp(user.pfp);
@@ -55,10 +59,27 @@ const Profile = (props) => {
     });
   });
 
+  socket.on("deletedcollection", (collectionId) => {
+    get("/api/usercollections", { id: props.currentProfileId }).then((collections) => {
+      if (collections.length == 0) {
+        setUserCollections("no collections to display");
+      } else {
+        let collectionDisplays = collections.map((collection) => (
+          <CollectionDisplay
+            creator={collection.creator}
+            name={collection.name}
+            shoes={collection.shoes}
+            setSearch={props.setSearch}
+          />
+        ));
+        setUserCollections(collectionDisplays);
+      }
+    });
+  });
+
   // mount profile page
   useEffect(() => {
     console.log("mounted profile page");
-    // setCurrentProfileId(props.userId);
 
     get("/api/getuser", { id: props.currentProfileId }).then((user) => {
       setDisplayName(user.displayName);
@@ -86,76 +107,89 @@ const Profile = (props) => {
   }, []);
 
   return (
-    <div className="Profile-all">
-      <div className="Profile-left">
-        {displayName != "" && pfp != "" && about != "" ? (
-          <div className="Profile-container">
-            <div className="Profile-picContainer">
-              <img src={pfp} width="100" className="Profile-pic" />
-            </div>
-            <div className="Profile-name">{displayName}</div>
-            <div className="Profile-about">{about}</div>
-            <div className="Profile-interaction">
-              {followers.length} followers | {following.length} following
-            </div>
-            {/* only display edit/logout on main user profile  */}
-            {props.currentProfileId == props.userId ? (
-              <div className="Profile-personal">
+    <>
+      {displayName != "" && pfp != "" && about != "" ? (
+        <div className="Profile-container">
+          <div className="Profile-picContainer">
+            <img src={pfp} width="100" className="Profile-pic" />
+          </div>
+          <div className="Profile-name">{displayName}</div>
+          <div className="Profile-about">{about}</div>
+          <div className="Profile-interaction">
+            {followers.length} followers | {following.length} following
+          </div>
+          {/* only display edit/logout on main user profile  */}
+          {props.currentProfileId == props.userId ? (
+            <div className="Profile-personal">
+              <button
+                onClick={() => {
+                  setProfileModal(true);
+                }}
+                className="Profile-button u-pointer"
+              >
+                edit profile
+              </button>
+              {profileModal ? (
+                <EditProfileModal
+                  userId={props.userId}
+                  oldName={displayName}
+                  oldAbout={about}
+                  toggleModal={setProfileModal}
+                />
+              ) : (
+                <></>
+              )}
+              <GoogleOAuthProvider>
                 <button
                   onClick={() => {
-                    setProfileModal(true);
+                    googleLogout();
+                    props.handleLogout();
+                    routeChange();
                   }}
                   className="Profile-button u-pointer"
                 >
-                  edit profile
+                  logout
                 </button>
-                {profileModal ? (
-                  <EditProfileModal
-                    userId={props.userId}
-                    oldName={displayName}
-                    oldPfp={pfp}
-                    oldAbout={about}
-                    toggleModal={setProfileModal}
-                  />
-                ) : (
-                  <></>
-                )}
-                <GoogleOAuthProvider>
-                  <button
-                    onClick={() => {
-                      googleLogout();
-                      props.handleLogout();
-                      routeChange();
-                    }}
-                    className="Profile-button u-pointer"
-                  >
-                    logout
-                  </button>
-                </GoogleOAuthProvider>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-        ) : (
-          <p className="u-textCenter">awaiting profile content...</p>
-        )}
-      </div>
+              </GoogleOAuthProvider>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      ) : (
+        <p className="u-textCenter">awaiting profile content...</p>
+      )}
+      <hr></hr>
 
-      <div className="profile-right">
-        {typeof userCollections === "string" ? (
-          <p className="u-textCenter">{userCollections}</p>
-        ) : (
-          <>
-            {userCollections.length > 0 ? (
-              <div className="Collection-scroll">{userCollections}</div>
-            ) : (
-              <p className="u-textCenter">loading user collections...</p>
-            )}
-          </>
-        )}
-      </div>
-    </div>
+      {typeof userCollections === "string" ? (
+        <p className="u-textCenter">{userCollections}</p>
+      ) : (
+        <>
+          {userCollections.length > 0 ? (
+            <>
+              <div className="u-flex">
+                <button
+                  onClick={() => {
+                    setCollectionModal(true);
+                  }}
+                  className="editButton-Container u-pointer"
+                >
+                  <BsThreeDotsVertical />
+                </button>
+                <div className="Collection-scroll">{userCollections}</div>
+              </div>
+              {collectionModal ? (
+                <CollectionModal setCollectionModal={setCollectionModal} userId={props.userId} />
+              ) : (
+                <></>
+              )}
+            </>
+          ) : (
+            <p className="u-textCenter">loading user collections...</p>
+          )}
+        </>
+      )}
+    </>
   );
 };
 
