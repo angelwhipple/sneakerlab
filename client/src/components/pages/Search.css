@@ -88,11 +88,11 @@
 }
 
 .brown {
-  background-color: rgb(139,69,19);
+  background-color: rgb(139, 69, 19);
 }
 
 .red {
-  background-color: rgb(220,20,60);
+  background-color: rgb(220, 20, 60);
 }
 
 .orange {
@@ -137,15 +137,7 @@
   font-weight: bold;
 }
 
-.priceMin {
-
-}
-
-.priceMax {
-
-}
-
-.priceCriteria input[type=range] {
+.priceCriteria input[type="range"] {
   -webkit-appearance: none;
   background: transparent;
   position: absolute;

@@ -127,30 +127,38 @@ const Search = (props) => {
       </div>
 
       <div className="filterBarContainer filterBar">
-        <div>filter results by:</div>
+        <div className="u-textCenter">filter by:</div>
 
         <div className="filterCriteria">category</div>
         <div className="criteriaContainer">
           <div className="u-flex">
             <button2
-            className="u-pointer categoryCriteria"
-            onClick={() => {
-              setShowProducts(true);
-            }}
+              className="u-pointer categoryCriteria"
+              onClick={() => {
+                setShowProducts(true);
+              }}
             >
-            {showProducts == true ? (<TbShoe size="1x" strokeWidth="2px" className="filterIcon" />) : (<TbShoe size="1x" strokeWidth="1px" className="filterIcon" />)}
+              {showProducts == true ? (
+                <TbShoe size="1x" strokeWidth="2px" className="filterIcon" />
+              ) : (
+                <TbShoe size="1x" strokeWidth="1px" className="filterIcon" />
+              )}
             </button2>
             <button2
-            className="u-pointer categoryCriteria"
-            onClick={() => {
-              setShowProducts(false);
-            }}
+              className="u-pointer categoryCriteria"
+              onClick={() => {
+                setShowProducts(false);
+              }}
             >
-            {showProducts == false && props.userId ? (<FiUser size="1x" strokeWidth="2px" className="filterIcon" />) : (<FiUser size="1x" strokeWidth="1px" className="filterIcon" />)}
+              {showProducts == false && props.userId ? (
+                <FiUser size="1x" strokeWidth="2px" className="filterIcon" />
+              ) : (
+                <FiUser size="1x" strokeWidth="1px" className="filterIcon" />
+              )}
             </button2>
           </div>
         </div>
-        
+
         <div className="filterCriteria">size (US mens')</div>
         <div className="criteriaContainer sizeCriteria">
           <input type="checkbox" id="5" />
@@ -185,14 +193,13 @@ const Search = (props) => {
         </div>
 
         <div className="filterCriteria">price range</div>
-        <div className="priceCriteria" >
+        <div className="priceCriteria">
           <input type="range" min="0" max="1000" className="priceMin" />
           <input type="range" min="0" max="1000" className="priceMax" />
         </div>
-      
+
         <input type="reset" className="button"></input>
         <input type="submit" className="button"></input>
-         
       </div>
     </div>
   );
