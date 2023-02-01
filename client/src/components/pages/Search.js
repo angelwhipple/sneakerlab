@@ -5,12 +5,15 @@ import { FiUser } from "react-icons/fi";
 import { TbShoe } from "react-icons/tb";
 import "./Search.css";
 import ProfileCard from "../modules/ProfileCard";
+import SaveModal from "../modules/SaveModal";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
   const [showProducts, setShowProducts] = useState(true);
   let products = null;
   let users = null;
+  const [saveModal, setSaveModal] = useState(false);
+  const [collectionButtons, setCollectionButtons] = useState([]);
 
   useEffect(() => {
     setQuery(props.query);
@@ -41,6 +44,8 @@ const Search = (props) => {
         links={shoe.resellLinks}
         styleId={shoe.styleID}
         userId={props.userId}
+        saveModal={saveModal}
+        setSaveModal={setSaveModal}
       />
     ));
   }
@@ -83,6 +88,17 @@ const Search = (props) => {
             )}
           </>
         )}
+      </div>
+      
+      <div>
+      {saveModal ? (
+        <SaveModal
+          userId={props.userId}
+          buttons={collectionButtons}
+          setCollectionButtons={setCollectionButtons}
+          toggleModal={setSaveModal}
+        />
+      ) : (<></>)}
       </div>
 
       <div className="filterBarContainer filterBar">
@@ -151,11 +167,11 @@ const Search = (props) => {
           <input type="checkbox" id="purple" className="colorwayCriteria purple" />
         </div>
 
-        <div className="filterCriteria">price range</div>
+        {/* <div className="filterCriteria">price range</div>
         <div className="priceCriteria">
-          {/* <input type="range" min="0" max="1000" className="priceMin" /> */}
-          {/* <input type="range" min="0" max="1000" className="priceMax" /> */}
-        </div>
+          <input type="range" min="0" max="1000" valu="0" className="priceMin" />
+          <input type="range" min="0" max="1000" valu="1000" className="priceMax" />
+        </div> */}
 
         <input type="submit" className="button"></input>
       </div>
