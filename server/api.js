@@ -362,6 +362,22 @@ router.get("/getmessage", (req, res) => {
   });
 });
 
+// send a new chat message
+router.post("/sendmessage", (req, res) => {
+  const newMessage = new Message({
+    sender: req.body.sender,
+    content: req.body.content,
+  });
+  newMessage.save().then((message) => {
+    Chat.findByIdAndUpdate(req.body.chatId, {
+      $push: { messages: message._id },
+    }).then(() => {
+      socketManager.getIo().emit("newmessage", message._id);
+      res.send({});
+    });
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

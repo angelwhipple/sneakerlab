@@ -1,0 +1,90 @@
+import React, { useState, useEffect } from "react";
+import { get, post } from "../../utilities";
+import { socket } from "../../client-socket";
+import "./ChatView.css";
+
+const ChatView = (props) => {
+  const [chatBubbles, setChatBubbles] = useState([]);
+  const [temp_msg, setTempMsg] = useState("");
+
+  const handleInput_msg = (event) => {
+    setTempMsg(event.target.value);
+  };
+
+  let chats = [];
+  const async_process = async () => {
+    await get("/api/getchat", { chatId: props.chatId }).then(async (chat) => {
+      for (const msg of chat.messages) {
+        await get("/api/getmessage", { messageId: msg }).then((message) => {
+          if (message.sender == props.userId) {
+            let userBubble = (
+              <div className="u-reverseFlex">
+                <div className="UserBubble-container">{message.content}</div>
+              </div>
+            );
+            chats.push(userBubble);
+          } else {
+            let chatBubble = (
+              <div className="u-flex">
+                <div className="ChatBubble-container">{message.content}</div>
+              </div>
+            );
+            chats.push(chatBubble);
+          }
+        });
+      }
+      setChatBubbles(chats);
+    });
+  };
+
+  // listen for new messages
+  socket.on("newmessage", (msg) => {
+    console.log("received newmessage emission");
+    async_process();
+  });
+
+  useEffect(() => {
+    async_process();
+  }, []);
+
+  return (
+    <div>
+      <div className="messageView">
+        {chatBubbles.length > 0 ? (
+          chatBubbles
+        ) : (
+          <p className="u-textCenter">fetching messages...</p>
+        )}
+      </div>
+      <div className="Chatbox-container">
+        <input
+          type="text"
+          value={temp_msg}
+          placeholder="enter a new message"
+          size="123"
+          onChange={handleInput_msg}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleInput_msg(event);
+            }
+          }}
+        ></input>
+        <button
+          className="Chatbox-send u-pointer"
+          onClick={() => {
+            post("/api/sendmessage", {
+              chatId: props.chatId,
+              content: temp_msg,
+              sender: props.userId,
+            });
+            setTempMsg("");
+          }}
+        >
+          send
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ChatView;

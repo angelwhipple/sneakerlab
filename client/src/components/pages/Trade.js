@@ -5,6 +5,7 @@ import { get, post } from "../../utilities";
 import TradeListing from "../modules/TradeListing";
 import TradeRequest from "../modules/TradeRequest";
 import ChatPreview from "../modules/ChatPreview";
+import ChatView from "../modules/ChatView";
 import { socket } from "../../client-socket";
 import PostTrade from "../modules/PostTrade";
 import "./Trade.css";
@@ -105,6 +106,7 @@ const Trade = (props) => {
             onClick={() => {
               setListingPage(true);
               setMessagePage(false);
+              setSelectedChat("");
             }}
             className="u-pointer"
           >
@@ -216,7 +218,11 @@ const Trade = (props) => {
             <></>
           )
         ) : messagePage == true ? (
-          <p className="u-textCenter">no messages to show</p>
+          selectedChat == "" ? (
+            <p className="u-textCenter">no messages to show</p>
+          ) : (
+            <ChatView userId={props.userId} chatId={selectedChat} />
+          )
         ) : (
           <></>
         )}

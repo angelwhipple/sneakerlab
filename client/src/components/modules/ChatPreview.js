@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 
 const ChatPreview = (props) => {
   const [image, setImage] = useState("");
+  const [name, setName] = useState("");
   const [lastMsg, setLastMsg] = useState("");
 
   useEffect(() => {
@@ -12,6 +13,7 @@ const ChatPreview = (props) => {
       get("/api/getmessage", { messageId: msg }).then((message) => {
         get("/api/getuser", { id: message.sender }).then((user) => {
           setImage(user.pfp);
+          setName(user.displayName);
           setLastMsg(message.content);
         });
       });
@@ -27,7 +29,9 @@ const ChatPreview = (props) => {
     >
       <div className="u-flex">
         <img className="ChatPreview-icon" src={image}></img>
-        <p>{lastMsg}</p>
+        <p>
+          {name}: {lastMsg}
+        </p>
       </div>
     </div>
   );

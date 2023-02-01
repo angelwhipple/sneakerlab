@@ -8,6 +8,7 @@
   white-space: nowrap;
   overflow-x: hidden;
   align-self: center;
+  width: 25vw;
 }
 
 .ChatPreview-container:hover {

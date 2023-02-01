@@ -1,0 +1,48 @@
+.UserBubble-container {
+  border: 2px solid var(--primary);
+  background-color: var(--primary);
+  border-radius: 12px;
+  padding: 10px;
+  -webkit-text-fill-color: var(--white);
+  width: fit-content;
+}
+
+.ChatBubble-container {
+  border: 2px solid var(--medgrey);
+  background-color: var(--medgrey);
+  border-radius: 12px;
+  padding: 10px;
+  -webkit-text-fill-color: var(--white);
+  width: fit-content;
+}
+
+.messageView {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  margin: var(--s);
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+}
+
+.messageView::-webkit-scrollbar {
+  display: none;
+}
+
+.Chatbox-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+}
+
+.Chatbox-send {
+  background-color: var(--black);
+  -webkit-text-fill-color: var(--white);
+  font-size: var(--m);
+  border-radius: 0%;
+}
+
+.Chatbox-send:hover {
+  background-color: var(--black);
+  -webkit-text-fill-color: var(--primary);
+}
