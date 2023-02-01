@@ -2,9 +2,14 @@ import { get, post } from "../../utilities";
 import React, { useState, useEffect } from "react";
 import "./ShoeListing.css";
 import { FaRegHeart } from "react-icons/fa";
+import SaveModal from "./SaveModal";
 
 const ShoeListing = (props) => {
+  const [saveModal, setSaveModal] = useState(false);
   let buyLinks = [];
+
+  // for saving to user collections
+  const [collectionButtons, setCollectionButtons] = useState([]);
 
   // check for non-null price object first
   if (props.prices) {
@@ -49,14 +54,14 @@ const ShoeListing = (props) => {
                 image: props.image,
                 styleId: props.styleId,
               });
-              props.setSaveModal(false);
+              setSaveModal(false);
             }}
             className="buy-link u-pointer"
           >
             {collection.name}
           </button>
         ));
-        props.setCollectionButtons(buttons);
+        setCollectionButtons(buttons);
       });
     }
   });
@@ -74,13 +79,26 @@ const ShoeListing = (props) => {
         {props.userId ? (
           <div className="u-relative">
             <button
-              onClick={() => {props.setSaveModal(true);}}
+              onClick={() => {
+                setSaveModal(true);
+              }}
               className="Listing-heartContainer u-pointer"
             >
               <FaRegHeart />
             </button>
+            {saveModal ? (
+              <SaveModal
+                userId={props.userId}
+                buttons={collectionButtons}
+                toggleModal={setSaveModal}
+              />
+            ) : (
+              <></>
+            )}
           </div>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
