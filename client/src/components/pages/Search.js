@@ -5,57 +5,17 @@ import { FiUser } from "react-icons/fi";
 import { TbShoe } from "react-icons/tb";
 import "./Search.css";
 import ProfileCard from "../modules/ProfileCard";
-import { socket } from "../../client-socket";
 
 const Search = (props) => {
   const [query, setQuery] = useState("");
   const [showProducts, setShowProducts] = useState(true);
   let products = null;
   let users = null;
-  // const [products, setProducts] = useState([]);
-  // const [users, setUsers] = useState([]);
 
-  console.log("mounted search results page");
   useEffect(() => {
     setQuery(props.query);
     props.setOnLoginPage(false);
   });
-
-  // listen for search query emission
-  // socket.on("newsearch", (newSearch) => {
-  //   console.log(newSearch);
-  //   setQuery(newSearch);
-  //   get("/api/searchresults", { searchQuery: newSearch }).then((productResults) => {
-  //     temp_products = productResults;
-  //   });
-  //   console.log(temp_products);
-  //   if (newSearch) {
-  //     get("/api/userresults", { searchQuery: query }).then((userResults) => {
-  //       temp_users = userResults;
-  //     });
-  //   }
-  //   let listingCards = temp_products.map((shoe) => (
-  //     <ShoeListing
-  //       name={shoe.make}
-  //       release={shoe.releaseDate}
-  //       colorway={shoe.colorway}
-  //       image={shoe.thumbnail}
-  //       prices={shoe.lowestResellPrice}
-  //       links={shoe.resellLinks}
-  //       styleId={shoe.styleID}
-  //       userId={props.userId}
-  //     />
-  //   ));
-  //   setProducts(listingCards);
-  //   let userCards = temp_users.map((user) => (
-  //     <ProfileCard
-  //       profileId={user._id}
-  //       userId={props.userId}
-  //       setCurrentProfileId={props.setCurrentProfileId}
-  //     />
-  //   ));
-  //   setUsers(userCards);
-  // });
 
   // only update search results when search query changes
   useEffect(() => {
@@ -69,7 +29,6 @@ const Search = (props) => {
       });
     }
   }, [query]);
-  console.log(props.results);
 
   if (props.results) {
     products = props.results.map((shoe) => (
@@ -198,7 +157,6 @@ const Search = (props) => {
           <input type="range" min="0" max="1000" className="priceMax" />
         </div>
 
-        <input type="reset" className="button"></input>
         <input type="submit" className="button"></input>
       </div>
     </div>

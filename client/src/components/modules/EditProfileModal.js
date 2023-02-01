@@ -22,10 +22,8 @@ const EditProfileModal = (props) => {
 
     const body = { id: props.userId };
     if (temp_name) {
-      console.log("new name entered");
       body["newName"] = temp_name;
     } else {
-      console.log("new name not entered");
       body["newName"] = props.oldName;
     }
     if (temp_about) {
@@ -33,7 +31,6 @@ const EditProfileModal = (props) => {
     } else {
       body["newAbout"] = props.oldAbout;
     }
-    console.log("body: ", body);
     post("/api/updateprofile", body);
     props.toggleModal(false);
   };

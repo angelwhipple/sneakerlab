@@ -39,7 +39,6 @@ const ChatView = (props) => {
 
   // listen for new messages
   socket.on("newmessage", (msg) => {
-    console.log("received newmessage emission");
     async_process();
   });
 

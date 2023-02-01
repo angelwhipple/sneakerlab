@@ -31,15 +31,11 @@ const SearchBar = (props) => {
   // called when user hits "search"
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log("hit submit");
 
     // save to user's recent searches, emit search query
     const body = { id: props.id, searchQuery: query };
-    console.log(body);
 
-    post("/api/search", body).then((search) => {
-      console.log("posted search query");
-    });
+    post("/api/search", body);
 
     // set overall app search query state
     props.setSearch(query);

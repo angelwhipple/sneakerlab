@@ -36,7 +36,6 @@ const Profile = (props) => {
   });
 
   socket.on("profilechange", (user) => {
-    console.log("received profile change emission");
     setDisplayName(user.displayName);
     setAbout(user.about);
     setPfp(user.pfp);
@@ -79,8 +78,6 @@ const Profile = (props) => {
 
   // mount profile page
   useEffect(() => {
-    console.log("mounted profile page");
-
     get("/api/getuser", { id: props.currentProfileId }).then((user) => {
       setDisplayName(user.displayName);
       setAbout(user.about);
