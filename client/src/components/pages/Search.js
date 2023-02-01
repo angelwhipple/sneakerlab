@@ -118,7 +118,7 @@ const Search = (props) => {
           </div>
         </div>
 
-        <div className="filterCriteria">size (US mens')</div>
+        <div className="filterCriteria">size (US mens)</div>
         <div className="criteriaContainer sizeCriteria">
           <input type="checkbox" id="5" />
           <label for="5">5</label>
