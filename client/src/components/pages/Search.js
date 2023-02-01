@@ -95,8 +95,9 @@ const Search = (props) => {
       />
     ));
   }
+
   return (
-    <div className="searchPageContainer">
+    <div>
       <div className="resultsContainer">
         {showProducts == true ? (
           <>
@@ -124,23 +125,74 @@ const Search = (props) => {
           </>
         )}
       </div>
-      <div className="filterBar">
-        <button2
-          className="u-pointer"
-          onClick={() => {
-            setShowProducts(false);
-          }}
-        >
-          <FiUser className="filterIcon" />
-        </button2>
-        <button2
-          className="u-pointer"
-          onClick={() => {
-            setShowProducts(true);
-          }}
-        >
-          <TbShoe className="filterIcon" />
-        </button2>
+
+      <div className="filterBarContainer filterBar">
+        <div>filter results by:</div>
+
+        <div className="filterCriteria">category</div>
+        <div className="criteriaContainer">
+          <div className="u-flex">
+            <button2
+            className="u-pointer categoryCriteria"
+            onClick={() => {
+              setShowProducts(true);
+            }}
+            >
+            {showProducts == true ? (<TbShoe size="1x" strokeWidth="2px" className="filterIcon" />) : (<TbShoe size="1x" strokeWidth="1px" className="filterIcon" />)}
+            </button2>
+            <button2
+            className="u-pointer categoryCriteria"
+            onClick={() => {
+              setShowProducts(false);
+            }}
+            >
+            {showProducts == false && props.userId ? (<FiUser size="1x" strokeWidth="2px" className="filterIcon" />) : (<FiUser size="1x" strokeWidth="1px" className="filterIcon" />)}
+            </button2>
+          </div>
+        </div>
+        
+        <div className="filterCriteria">size (US mens')</div>
+        <div className="criteriaContainer sizeCriteria">
+          <input type="checkbox" id="5" />
+          <label for="5">5</label>
+          <input type="checkbox" id="5.5" />
+          <label for="5.5">5.5</label>
+          <input type="checkbox" id="6" />
+          <label for="6">6</label>
+          <input type="checkbox" id="6.5" />
+          <label for="6.5">6.5</label>
+          <input type="checkbox" id="7" />
+          <label for="7">7</label>
+          <input type="checkbox" id="7.5" />
+          <label for="7.5">7.5</label>
+          <input type="checkbox" id="8" />
+          <label for="8">8</label>
+          <input type="checkbox" id="8.5" />
+          <label for="8.5">8.5</label>
+        </div>
+
+        <div className="filterCriteria">colorway</div>
+        <div className="criteriaContainer">
+          <input type="checkbox" id="white" className="colorwayCriteria white" />
+          <input type="checkbox" id="black" className="colorwayCriteria black" />
+          <input type="checkbox" id="brown" className="colorwayCriteria brown" />
+          <input type="checkbox" id="red" className="colorwayCriteria red" />
+          <input type="checkbox" id="orange" className="colorwayCriteria orange" />
+          <input type="checkbox" id="yellow" className="colorwayCriteria yellow" />
+          <input type="checkbox" id="green" className="colorwayCriteria green" />
+          <input type="checkbox" id="blue" className="colorwayCriteria blue" />
+          <input type="checkbox" id="purple" className="colorwayCriteria purple" />
+        </div>
+
+        <div className="filterCriteria">price range</div>
+        <div className="priceCriteria" >
+          <input type="range" min="0" max="1000" className="priceMin" />
+          <input type="range" min="0" max="1000" className="priceMax" />
+        </div>
+      
+        <input type="reset" className="button"></input>
+        <input type="submit" className="button"></input>
+         
       </div>
     </div>
   );
