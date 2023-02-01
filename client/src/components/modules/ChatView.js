@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get, post } from "../../utilities";
 import { socket } from "../../client-socket";
+import { useNavigate } from "@reach/router";
 import "./ChatView.css";
 
 const ChatView = (props) => {
@@ -11,26 +12,41 @@ const ChatView = (props) => {
     setTempMsg(event.target.value);
   };
 
+  const navigate = useNavigate();
+  const routeProfile = () => {
+    navigate("/profile/");
+  };
+
   let chats = [];
   const async_process = async () => {
     await get("/api/getchat", { chatId: props.chatId }).then(async (chat) => {
       for (const msg of chat.messages) {
-        await get("/api/getmessage", { messageId: msg }).then((message) => {
-          if (message.sender == props.userId) {
-            let userBubble = (
-              <div className="u-reverseFlex">
-                <div className="UserBubble-container">{message.content}</div>
-              </div>
-            );
-            chats.push(userBubble);
-          } else {
-            let chatBubble = (
-              <div className="u-flex">
-                <div className="ChatBubble-container">{message.content}</div>
-              </div>
-            );
-            chats.push(chatBubble);
-          }
+        await get("/api/getmessage", { messageId: msg }).then(async (message) => {
+          await get("/api/getuser", { id: message.sender }).then((user) => {
+            if (message.sender == props.userId) {
+              let userBubble = (
+                <div className="u-reverseFlex u-flex-alignCenter">
+                  <div className="UserBubble-container">{message.content}</div>
+                </div>
+              );
+              chats.push(userBubble);
+            } else {
+              let chatBubble = (
+                <div className="u-flex u-flex-alignCenter">
+                  <img
+                    src={user.pfp}
+                    onClick={() => {
+                      props.setCurrentProfileId(message.sender);
+                      routeProfile();
+                    }}
+                    className="u-pointer Chat-icon"
+                  ></img>
+                  <div className="ChatBubble-container">{message.content}</div>
+                </div>
+              );
+              chats.push(chatBubble);
+            }
+          });
         });
       }
       setChatBubbles(chats);

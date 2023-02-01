@@ -38,7 +38,7 @@ const TradeListing = (props) => {
           </div>
           <div className="TradeListing-info">
             <p className="Trade-shoename">{props.details.brand}</p>
-            <p className="TradeListing-colorway">retail: {props.details.retail}</p>
+            <p className="TradeListing-colorway">retail: ${props.details.retail}</p>
           </div>
         </div>
       </div>

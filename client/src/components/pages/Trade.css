@@ -42,10 +42,9 @@
 
 .verticalView {
   display: flex;
-  flex-direction: column;
   padding: 12px;
   margin: var(--s);
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-y: scroll;
   justify-content: center;
 }

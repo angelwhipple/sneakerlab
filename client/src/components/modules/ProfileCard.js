@@ -1,6 +1,4 @@
 import React from "react";
-import { FaRegHeart } from "react-icons/fa";
-import { BiMinus } from "react-icons/bi";
 import { FiUserPlus } from "react-icons/fi";
 import { FiUserMinus } from "react-icons/fi";
 import { get, post } from "../../utilities";
@@ -37,7 +35,6 @@ const ProfileCard = (props) => {
         <button
           onClick={() => {
             props.setCurrentProfileId(props.profileId);
-            // post("/api/changeprofile", { newId: props.profileId });
             routeProfile();
           }}
           className="u-pointer"
