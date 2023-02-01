@@ -153,8 +153,8 @@ const Search = (props) => {
 
         <div className="filterCriteria">price range</div>
         <div className="priceCriteria">
-          <input type="range" min="0" max="1000" className="priceMin" />
-          <input type="range" min="0" max="1000" className="priceMax" />
+          {/* <input type="range" min="0" max="1000" className="priceMin" /> */}
+          {/* <input type="range" min="0" max="1000" className="priceMax" /> */}
         </div>
 
         <input type="submit" className="button"></input>
