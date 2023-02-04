@@ -1,8 +1,5 @@
 # How to code a webapp with this skeleton
 
-## Initial setup
-
-
 ## Downloading these files
 
 - .babelrc (hidden)
