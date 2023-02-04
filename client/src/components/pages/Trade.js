@@ -27,6 +27,31 @@ const Trade = (props) => {
   // either set to "post" or the trade listing ID being replied to
   const [postOrReply, setPostOrReply] = useState("post");
 
+  const getTradeRequests = () => {
+    get("/api/traderequests", { creator: props.userId }).then((tradeRequests) => {
+      if (tradeRequests.length == 0) {
+        setTradeRequests("no trade requests");
+      } else {
+        let requestCards = tradeRequests.map((request) => (
+          <TradeRequest
+            requestId={request._id}
+            creator={request.creator}
+            details={request.details}
+            status={request.status}
+            originalTradeId={request.originalTrade}
+            setViewTrades={setViewTrades}
+            setMessagePage={setMessagePage}
+            setListingPage={setListingPage}
+          />
+        ));
+        setTradeRequests(requestCards);
+      }
+    });
+    setViewTrades(true);
+    setMakeListing(false);
+    setViewListings(false);
+  };
+
   socket.on("newtrade", (trade) => {
     get("/api/tradelistings").then((listings) => {
       let listingCards = listings.map((listing) => (
@@ -83,7 +108,12 @@ const Trade = (props) => {
     });
     get("/api/getuser", { id: props.userId }).then((user) => {
       let chatPreviews = user.chats.map((chat) => (
-        <ChatPreview chatId={chat} userId={props.userId} setSelectedChat={setSelectedChat} />
+        <ChatPreview
+          chatId={chat}
+          userId={props.userId}
+          selectedChat={selectedChat}
+          setSelectedChat={setSelectedChat}
+        />
       ));
       setChats(chatPreviews);
     });
@@ -100,7 +130,11 @@ const Trade = (props) => {
             }}
             className="u-pointer"
           >
-            <FiMessageSquare className="toggleIcon" />
+            {messagePage ? (
+              <FiMessageSquare className="toggleIcon-selected" />
+            ) : (
+              <FiMessageSquare className="toggleIcon" />
+            )}
           </button2>
           <button2
             onClick={() => {
@@ -110,7 +144,11 @@ const Trade = (props) => {
             }}
             className="u-pointer"
           >
-            <FaList className="toggleIcon" />
+            {listingPage ? (
+              <FaList className="toggleIcon-selected" />
+            ) : (
+              <FaList className="toggleIcon" />
+            )}
           </button2>
         </div>
         <hr></hr>
@@ -118,56 +156,63 @@ const Trade = (props) => {
           <div className="verticalView">{chats}</div>
         ) : listingPage == true ? (
           <div className="tradeAction-Container">
-            <div
-              onClick={() => {
-                setViewListings(true);
-                setMakeListing(false);
-                setViewTrades(false);
-              }}
-              className="tradeAction u-pointer"
-            >
-              view trade listings
-            </div>
-            <div
-              onClick={() => {
-                setPostOrReply("post");
-                setMakeListing(true);
-                setViewListings(false);
-                setViewTrades(false);
-              }}
-              className="tradeAction u-pointer"
-            >
-              make a listing
-            </div>
-            <div
-              onClick={() => {
-                get("/api/traderequests", { creator: props.userId }).then((tradeRequests) => {
-                  if (tradeRequests.length == 0) {
-                    setTradeRequests("no trade requests");
-                  } else {
-                    let requestCards = tradeRequests.map((request) => (
-                      <TradeRequest
-                        requestId={request._id}
-                        creator={request.creator}
-                        details={request.details}
-                        status={request.status}
-                        originalTradeId={request.originalTrade}
-                        setViewTrades={setViewTrades}
-                        setMessagePage={setMessagePage}
-                        setListingPage={setListingPage}
-                      />
-                    ));
-                    setTradeRequests(requestCards);
-                  }
-                });
-                setViewTrades(true);
-                setMakeListing(false);
-                setViewListings(false);
-              }}
-              className="tradeAction u-pointer"
-            >
-              trade requests
-            </div>
+            {viewListings ? (
+              <div
+                onClick={() => {
+                  setViewListings(true);
+                  setMakeListing(false);
+                  setViewTrades(false);
+                }}
+                className="tradeAction-selected u-pointer"
+              >
+                view trade listings
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  setViewListings(true);
+                  setMakeListing(false);
+                  setViewTrades(false);
+                }}
+                className="tradeAction u-pointer"
+              >
+                view trade listings
+              </div>
+            )}
+            {makeListing ? (
+              <div
+                onClick={() => {
+                  setPostOrReply("post");
+                  setMakeListing(true);
+                  setViewListings(false);
+                  setViewTrades(false);
+                }}
+                className="tradeAction-selected u-pointer"
+              >
+                make a listing
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  setPostOrReply("post");
+                  setMakeListing(true);
+                  setViewListings(false);
+                  setViewTrades(false);
+                }}
+                className="tradeAction u-pointer"
+              >
+                make a listing
+              </div>
+            )}
+            {viewTrades ? (
+              <div onClick={getTradeRequests} className="tradeAction-selected u-pointer">
+                trade requests
+              </div>
+            ) : (
+              <div onClick={getTradeRequests} className="tradeAction u-pointer">
+                trade requests
+              </div>
+            )}
           </div>
         ) : (
           <></>

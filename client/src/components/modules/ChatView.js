@@ -25,7 +25,7 @@ const ChatView = (props) => {
           await get("/api/getuser", { id: message.sender }).then((user) => {
             if (message.sender == props.userId) {
               let userBubble = (
-                <div className="u-reverseFlex u-flex-alignCenter">
+                <div className="u-reverseFlex ">
                   <div className="UserBubble-container">{message.content}</div>
                 </div>
               );

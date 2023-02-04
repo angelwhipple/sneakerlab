@@ -20,7 +20,21 @@ const ChatPreview = (props) => {
     });
   }, []);
 
-  return (
+  return props.selectedChat == props.chatId ? (
+    <div
+      onClick={() => {
+        props.setSelectedChat(props.chatId);
+      }}
+      className="ChatPreviewContainer-selected u-pointer"
+    >
+      <div className="u-flex">
+        <img className="ChatPreview-icon" src={image}></img>
+        <p>
+          {name}: {lastMsg}
+        </p>
+      </div>
+    </div>
+  ) : (
     <div
       onClick={() => {
         props.setSelectedChat(props.chatId);

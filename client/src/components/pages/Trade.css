@@ -40,6 +40,10 @@
   column-gap: 100px;
 }
 
+.toggleIcon-selected {
+  color: var(--primary);
+}
+
 .verticalView {
   display: flex;
   padding: 12px;
@@ -58,6 +62,16 @@
   border-radius: 12px;
   padding: 12px;
   -webkit-text-fill-color: var(--white);
+  text-align: center;
+  transition-duration: 0.4s;
+  align-self: center;
+}
+
+.tradeAction-selected {
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 12px;
+  -webkit-text-fill-color: var(--primary);
   text-align: center;
   transition-duration: 0.4s;
   align-self: center;

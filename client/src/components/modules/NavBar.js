@@ -37,12 +37,12 @@ const NavBar = (props) => {
       <nav className="navContainer ">
         {props.id ? (
           <Link to="/">
-            <img src={logo} className="logo-icon floatLeft u-pointer u-relative" />
+            <img src={logo} className="logo-icon u-pointer" />
           </Link>
         ) : (
           <></>
         )}
-        <div className="u-reverseFlex">
+        <div className="ml-auto u-reverseFlex">
           {props.id ? (
             <>
               <button1 onClick={routeProfile} className="nav-link u-pointer">

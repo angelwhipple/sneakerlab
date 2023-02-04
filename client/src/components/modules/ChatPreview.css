@@ -16,6 +16,19 @@
   -webkit-text-fill-color: var(--primary);
 }
 
+.ChatPreviewContainer-selected {
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 10px;
+  -webkit-text-fill-color: var(--primary);
+  text-align: center;
+  transition-duration: 0.4s;
+  white-space: nowrap;
+  overflow-x: hidden;
+  align-self: center;
+  width: 25vw;
+}
+
 .ChatPreview-icon {
   background-position-y: center;
   background-position-x: center;
