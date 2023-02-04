@@ -47,5 +47,3 @@ server/server-socket.js
 package-lock.json
 webpack.config.js
 ```
-
-## Good luck on your project :)
