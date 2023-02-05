@@ -165,14 +165,18 @@ const Profile = (props) => {
           {userCollections.length > 0 ? (
             <>
               <div className="u-flex">
-                <button
-                  onClick={() => {
-                    setCollectionModal(true);
-                  }}
-                  className="editButton-Container u-pointer"
-                >
-                  <BsThreeDotsVertical />
-                </button>
+                {props.currentProfileId == props.userId ? (
+                  <button
+                    onClick={() => {
+                      setCollectionModal(true);
+                    }}
+                    className="editButton-Container u-pointer"
+                  >
+                    <BsThreeDotsVertical />
+                  </button>
+                ) : (
+                  <></>
+                )}
                 <div className="Collection-scroll">{userCollections}</div>
               </div>
               {collectionModal ? (

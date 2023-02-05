@@ -12,6 +12,9 @@ const GOOGLE_CLIENT_ID = "577941677274-3aeilnjtp2hj98r8jvcsa6jvkoq9r5kc.apps.goo
 
 const NavBar = (props) => {
   const [pfp, setPfp] = useState("");
+  const [trade, setTrade] = useState(false);
+  const [discover, setDiscover] = useState(true);
+  const [profile, setProfile] = useState(false);
 
   // always get current user's pfp
   if (props.id) {
@@ -45,15 +48,81 @@ const NavBar = (props) => {
         <div className="ml-auto u-reverseFlex">
           {props.id ? (
             <>
-              <button1 onClick={routeProfile} className="nav-link u-pointer">
-                <img src={pfp} className="profile-icon" />
-              </button1>
-              <Link to="/" className="nav-link">
-                discover
-              </Link>
-              <Link to="/trade/" className="nav-link">
-                trade
-              </Link>
+              {profile ? (
+                <button1
+                  onClick={() => {
+                    routeProfile();
+                    setProfile(true);
+                    setTrade(false);
+                    setDiscover(false);
+                  }}
+                  className="nav-link-selected u-pointer"
+                >
+                  <img src={pfp} className="profile-icon" />
+                </button1>
+              ) : (
+                <button1
+                  onClick={() => {
+                    routeProfile();
+                    setProfile(true);
+                    setTrade(false);
+                    setDiscover(false);
+                  }}
+                  className="nav-link u-pointer"
+                >
+                  <img src={pfp} className="profile-icon" />
+                </button1>
+              )}
+              {discover ? (
+                <Link
+                  to="/"
+                  onClick={() => {
+                    setDiscover(true);
+                    setProfile(false);
+                    setTrade(false);
+                  }}
+                  className="nav-link-selected"
+                >
+                  discover
+                </Link>
+              ) : (
+                <Link
+                  to="/"
+                  onClick={() => {
+                    setDiscover(true);
+                    setProfile(false);
+                    setTrade(false);
+                  }}
+                  className="nav-link"
+                >
+                  discover
+                </Link>
+              )}
+              {trade ? (
+                <Link
+                  to="/trade/"
+                  onClick={() => {
+                    setTrade(true);
+                    setProfile(false);
+                    setDiscover(false);
+                  }}
+                  className="nav-link-selected"
+                >
+                  trade
+                </Link>
+              ) : (
+                <Link
+                  to="/trade/"
+                  onClick={() => {
+                    setTrade(true);
+                    setProfile(false);
+                    setDiscover(false);
+                  }}
+                  className="nav-link"
+                >
+                  trade
+                </Link>
+              )}
             </>
           ) : props.onLoginPage ? (
             <></>
