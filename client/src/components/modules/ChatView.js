@@ -12,6 +12,15 @@ const ChatView = (props) => {
     setTempMsg(event.target.value);
   };
 
+  const handleSend = () => {
+    post("/api/sendmessage", {
+      chatId: props.chatId,
+      content: temp_msg,
+      sender: props.userId,
+    });
+    setTempMsg("");
+  };
+
   const navigate = useNavigate();
   const routeProfile = () => {
     navigate("/profile/");
@@ -80,21 +89,11 @@ const ChatView = (props) => {
           onChange={handleInput_msg}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              handleInput_msg(event);
+              handleSend();
             }
           }}
         ></input>
-        <button
-          className="Chatbox-send u-pointer"
-          onClick={() => {
-            post("/api/sendmessage", {
-              chatId: props.chatId,
-              content: temp_msg,
-              sender: props.userId,
-            });
-            setTempMsg("");
-          }}
-        >
+        <button className="Chatbox-send u-pointer" onClick={handleSend}>
           send
         </button>
       </div>

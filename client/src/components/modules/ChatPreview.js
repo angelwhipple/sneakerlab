@@ -6,6 +6,7 @@ const ChatPreview = (props) => {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [lastMsg, setLastMsg] = useState("");
+  const [selectedChat, setSelectedChat] = useState("");
 
   useEffect(() => {
     get("/api/getchat", { chatId: props.chatId }).then((chat) => {
@@ -20,10 +21,11 @@ const ChatPreview = (props) => {
     });
   }, []);
 
-  return props.selectedChat == props.chatId ? (
+  return selectedChat == props.chatId ? (
     <div
       onClick={() => {
         props.setSelectedChat(props.chatId);
+        setSelectedChat(props.chatId);
       }}
       className="ChatPreviewContainer-selected u-pointer"
     >
@@ -38,6 +40,7 @@ const ChatPreview = (props) => {
     <div
       onClick={() => {
         props.setSelectedChat(props.chatId);
+        setSelectedChat(props.chatId);
       }}
       className="ChatPreview-container u-pointer"
     >

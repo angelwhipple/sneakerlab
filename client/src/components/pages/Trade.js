@@ -266,7 +266,11 @@ const Trade = (props) => {
           selectedChat == "" ? (
             <p className="u-textCenter">no messages to show</p>
           ) : (
-            <ChatView userId={props.userId} chatId={selectedChat} />
+            <ChatView
+              userId={props.userId}
+              chatId={selectedChat}
+              setCurrentProfileId={props.setCurrentProfileId}
+            />
           )
         ) : (
           <></>

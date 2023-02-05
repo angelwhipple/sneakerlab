@@ -88,7 +88,7 @@ const App = () => {
           setSearch={setSearchQuery}
         />
         <Login path="/login/" handleLogin={handleLogin} setOnLoginPage={setPageLogin} />
-        <Trade path="/trade/" userId={userId} />
+        <Trade path="/trade/" userId={userId} setCurrentProfileId={setCurrentProfileId} />
         <Search
           path="/search/"
           query={searchQuery}
