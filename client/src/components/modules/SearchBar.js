@@ -41,6 +41,12 @@ const SearchBar = (props) => {
     props.setSearch(query);
     setQuery(DEFAULT_TEXT);
 
+    // set navbar highlights
+    props.setSearchBar(true);
+    props.setDiscover(false);
+    props.setProfile(false);
+    props.setTrade(false);
+
     // navigate to search results component
     routeChange();
   };
@@ -59,14 +65,25 @@ const SearchBar = (props) => {
         }}
         className="search-input"
       />
-      <button
-        type="submit"
-        onClick={handleSearch}
-        className="search-button u-pointer"
-        value="Submit"
-      >
-        search
-      </button>
+      {props.searchBar ? (
+        <button
+          type="submit"
+          onClick={handleSearch}
+          className="search-button-selected u-pointer"
+          value="Submit"
+        >
+          search
+        </button>
+      ) : (
+        <button
+          type="submit"
+          onClick={handleSearch}
+          className="search-button u-pointer"
+          value="Submit"
+        >
+          search
+        </button>
+      )}
     </div>
   );
 };

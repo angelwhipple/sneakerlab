@@ -15,6 +15,7 @@ const NavBar = (props) => {
   const [trade, setTrade] = useState(false);
   const [discover, setDiscover] = useState(true);
   const [profile, setProfile] = useState(false);
+  const [searchBar, setSearchBar] = useState(false);
 
   // always get current user's pfp
   if (props.id) {
@@ -55,6 +56,7 @@ const NavBar = (props) => {
                     setProfile(true);
                     setTrade(false);
                     setDiscover(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link-selected u-pointer"
                 >
@@ -67,6 +69,7 @@ const NavBar = (props) => {
                     setProfile(true);
                     setTrade(false);
                     setDiscover(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link u-pointer"
                 >
@@ -80,6 +83,7 @@ const NavBar = (props) => {
                     setDiscover(true);
                     setProfile(false);
                     setTrade(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link-selected"
                 >
@@ -92,6 +96,7 @@ const NavBar = (props) => {
                     setDiscover(true);
                     setProfile(false);
                     setTrade(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link"
                 >
@@ -105,6 +110,7 @@ const NavBar = (props) => {
                     setTrade(true);
                     setProfile(false);
                     setDiscover(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link-selected"
                 >
@@ -117,6 +123,7 @@ const NavBar = (props) => {
                     setTrade(true);
                     setProfile(false);
                     setDiscover(false);
+                    setSearchBar(false);
                   }}
                   className="nav-link"
                 >
@@ -129,7 +136,15 @@ const NavBar = (props) => {
           ) : (
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}
-          <SearchBar id={props.id} setSearch={props.setSearch} />
+          <SearchBar
+            id={props.id}
+            setSearch={props.setSearch}
+            searchBar={searchBar}
+            setSearchBar={setSearchBar}
+            setTrade={setTrade}
+            setProfile={setProfile}
+            setDiscover={setDiscover}
+          />
         </div>
       </nav>
     </GoogleOAuthProvider>
