@@ -64,11 +64,6 @@ const ShoeListing = (props) => {
         setCollectionButtons(buttons);
       });
     }
-
-    // cleanup function
-    return () => {
-      setSaveModal(false);
-    };
   });
 
   return (
