@@ -3,6 +3,7 @@ import { get } from "../../utilities";
 import { useNavigate } from "@reach/router";
 import "./ShoeListing.css";
 import "./CollectionDisplay.css";
+import logo from "../../public/sneakerlab.png";
 
 /**
  * Component to render a single collection for discover or profile
@@ -20,10 +21,10 @@ const CollectionDisplay = (props) => {
   };
 
   useEffect(() => {
-    for (const shoeId of props.shoes) {
+    for (const [index, shoeId] of props.shoes.entries()) {
       get("/api/getshoe", { id: shoeId }).then((shoe) => {
         let shoeImage = (
-          <div className="Shoe-container">
+          <div key={index} className="Shoe-container">
             <button
               className="u-pointer"
               // search shoe on select
@@ -46,6 +47,7 @@ const CollectionDisplay = (props) => {
   return (
     <div>
       <div className="Collection-shoeContainer">{shoeImages}</div>
+      {/* <div className="slideshow">{shoeImages}</div> */}
       <h3 className="Collection-name">{props.name}</h3>
     </div>
   );

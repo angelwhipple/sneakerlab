@@ -63,6 +63,12 @@
 
 .filterIcon {
   color: var(--black);
+  transition-duration: 0.4s;
+}
+
+.filterIcon:hover {
+  color: var(--primary);
+  transition-duration: 0.4s;
 }
 
 .colorwayCriteria {

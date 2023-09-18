@@ -14,10 +14,10 @@ const ShoeListing = (props) => {
   // check for non-null price object first
   if (props.prices) {
     // create buttons redirecting to purchase links
-    for (const [reseller, price] of Object.entries(props.prices)) {
+    for (const [index, [reseller, price]] of Object.entries(Object.entries(props.prices))) {
       let link = props.links[reseller];
       buyLinks.push(
-        <a href={link} target="_blank">
+        <a key={index} href={link} target="_blank">
           <button
             onClick={() => {
               post("/api/savetoclickhistory", {
@@ -64,6 +64,11 @@ const ShoeListing = (props) => {
         setCollectionButtons(buttons);
       });
     }
+
+    // cleanup function
+    return () => {
+      setSaveModal(false);
+    };
   });
 
   return (

@@ -123,33 +123,33 @@ const Trade = (props) => {
     <>
       <div className="page-30">
         <div className="toggleIcon-Container">
-          <button2
+          <button
             onClick={() => {
               setMessagePage(true);
               setListingPage(false);
             }}
-            className="u-pointer"
+            className="u-pointer toggle-button"
           >
             {messagePage ? (
               <FiMessageSquare className="toggleIcon-selected" />
             ) : (
               <FiMessageSquare className="toggleIcon" />
             )}
-          </button2>
-          <button2
+          </button>
+          <button
             onClick={() => {
               setListingPage(true);
               setMessagePage(false);
               setSelectedChat("");
             }}
-            className="u-pointer"
+            className="u-pointer toggle-button"
           >
             {listingPage ? (
               <FaList className="toggleIcon-selected" />
             ) : (
               <FaList className="toggleIcon" />
             )}
-          </button2>
+          </button>
         </div>
         <hr></hr>
         {messagePage == true ? (
@@ -219,7 +219,7 @@ const Trade = (props) => {
         )}
       </div>
       <div className="page-70">
-        {listingPage == true ? (
+        {/* {listingPage == true ? (
           viewListings == true ? (
             <>
               {typeof tradeListings === "string" ? (
@@ -274,7 +274,8 @@ const Trade = (props) => {
           )
         ) : (
           <></>
-        )}
+        )} */}
+        <p className="centered">Coming soon...</p>
       </div>
     </>
   );

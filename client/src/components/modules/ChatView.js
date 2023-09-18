@@ -29,19 +29,21 @@ const ChatView = (props) => {
   let chats = [];
   const async_process = async () => {
     await get("/api/getchat", { chatId: props.chatId }).then(async (chat) => {
-      for (const msg of chat.messages) {
+      for (const [index, msg] of chat.messages.entries()) {
         await get("/api/getmessage", { messageId: msg }).then(async (message) => {
           await get("/api/getuser", { id: message.sender }).then((user) => {
             if (message.sender == props.userId) {
               let userBubble = (
                 <div className="u-reverseFlex ">
-                  <div className="UserBubble-container">{message.content}</div>
+                  <div key={index} className="UserBubble-container">
+                    {message.content}
+                  </div>
                 </div>
               );
               chats.push(userBubble);
             } else {
               let chatBubble = (
-                <div className="u-flex u-flex-alignCenter">
+                <div key={index} className="u-flex u-flex-alignCenter">
                   <img
                     src={user.pfp}
                     onClick={() => {

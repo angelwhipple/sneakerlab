@@ -15,7 +15,7 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
 :root {
   --primary: #ff8400;
@@ -153,6 +153,8 @@ button {
   padding: 10px 30px;
   font-size: var(--l);
   font-family: "Poppins";
+  height: fit-content;
+  width: 50px;
   transition-duration: 0.4s;
 }
 

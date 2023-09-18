@@ -22,17 +22,17 @@ const Search = (props) => {
     get("/api/searchresults", { searchQuery: query }).then((productResults) => {
       props.setResults(productResults);
     });
-
-    if (query) {
-      get("/api/userresults", { searchQuery: query }).then((userResults) => {
-        props.setUsers(userResults);
-      });
-    }
+    // if (query) {
+    //   get("/api/userresults", { searchQuery: query }).then((userResults) => {
+    //     props.setUsers(userResults);
+    //   });
+    // }
   }, [query]);
 
   if (props.results) {
-    products = props.results.map((shoe) => (
+    products = props.results.map((shoe, index) => (
       <ShoeListing
+        key={index}
         name={shoe.make}
         release={shoe.releaseDate}
         colorway={shoe.colorway}
@@ -46,8 +46,9 @@ const Search = (props) => {
   }
 
   if (props.users) {
-    users = props.users.map((user) => (
+    users = props.users.map((user, index) => (
       <ProfileCard
+        key={index}
         profileId={user._id}
         userId={props.userId}
         setCurrentProfileId={props.setCurrentProfileId}
@@ -91,30 +92,30 @@ const Search = (props) => {
         <div className="filterCriteria">category</div>
         <div className="criteriaContainer">
           <div className="u-flex">
-            <button2
+            <button
               className="u-pointer categoryCriteria"
               onClick={() => {
                 setShowProducts(true);
               }}
             >
               {showProducts == true ? (
-                <TbShoe size="1x" className="filterIcon-selected" />
+                <TbShoe className="filterIcon-selected" />
               ) : (
-                <TbShoe size="1x" className="filterIcon" />
+                <TbShoe className="filterIcon" />
               )}
-            </button2>
-            <button2
+            </button>
+            <button
               className="u-pointer categoryCriteria"
               onClick={() => {
                 setShowProducts(false);
               }}
             >
               {showProducts == false ? (
-                <FiUser size="1x" className="filterIcon-selected" />
+                <FiUser className="filterIcon-selected" />
               ) : (
-                <FiUser size="1x" className="filterIcon" />
+                <FiUser className="filterIcon" />
               )}
-            </button2>
+            </button>
           </div>
         </div>
 

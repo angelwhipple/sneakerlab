@@ -18,8 +18,12 @@
   left: 30%;
 }
 
-.button2 {
-  background-color: var(--black);
+.toggle-button {
+  background-color: black;
+}
+
+.toggle-button:hover {
+  background-color: black;
 }
 
 .toggleIcon,

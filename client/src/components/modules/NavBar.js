@@ -1,5 +1,5 @@
 import { Link } from "@reach/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "@reach/router";
 import { get, post } from "../../utilities";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
@@ -38,7 +38,7 @@ const NavBar = (props) => {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <nav className="navContainer ">
+      <nav className="navContainer">
         {props.id ? (
           <Link to="/">
             <img src={logo} className="logo-icon u-pointer" />
@@ -50,7 +50,7 @@ const NavBar = (props) => {
           {props.id ? (
             <>
               {profile ? (
-                <button1
+                <button
                   onClick={() => {
                     routeProfile();
                     setProfile(true);
@@ -58,12 +58,12 @@ const NavBar = (props) => {
                     setDiscover(false);
                     setSearchBar(false);
                   }}
-                  className="nav-link-selected u-pointer"
+                  className="nav-link-selected button1 u-pointer"
                 >
                   <img src={pfp} className="profile-icon" />
-                </button1>
+                </button>
               ) : (
-                <button1
+                <button
                   onClick={() => {
                     routeProfile();
                     setProfile(true);
@@ -71,10 +71,10 @@ const NavBar = (props) => {
                     setDiscover(false);
                     setSearchBar(false);
                   }}
-                  className="nav-link u-pointer"
+                  className="nav-link button1 u-pointer"
                 >
                   <img src={pfp} className="profile-icon" />
-                </button1>
+                </button>
               )}
               {discover ? (
                 <Link

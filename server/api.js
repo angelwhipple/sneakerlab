@@ -88,9 +88,13 @@ router.get("/newreleases", (req, res) => {
 
 // get a user by ID
 router.get("/getuser", (req, res) => {
-  User.findOne({ _id: req.query.id }).then((userObj) => {
+  // console.log(typeof req.query.id);
+  User.findById(String(req.query.id)).then((userObj) => {
     res.send(userObj);
   });
+  // User.findOne({ _id: req.query.id }).then((userObj) => {
+  //   res.send(userObj);
+  // });
 });
 
 // set to google profile pic on login

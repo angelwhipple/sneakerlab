@@ -45,8 +45,9 @@ const Profile = (props) => {
       if (collections.length == 0) {
         setUserCollections("no collections to display");
       } else {
-        let collectionDisplays = collections.map((collection) => (
+        let collectionDisplays = collections.map((collection, index) => (
           <CollectionDisplay
+            key={index}
             creator={collection.creator}
             name={collection.name}
             shoes={collection.shoes}
